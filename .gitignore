@@ -1,0 +1,32 @@
+#
+# Normal rules
+#
+.*
+*.o
+*.o.txt
+*.lds
+*.elf
+*.bin
+*.patch
+
+#
+# Generated include files
+#
+include/config.h
+
+#
+# git files that we don't want to ignore even it they are dot-files
+#
+!.gitignore
+
+# cscope files
+cscope.*
+ncscope.*
+
+# gnu global files
+GPATH
+GRTAGS
+GSYMS
+GTAGS
+
+*~

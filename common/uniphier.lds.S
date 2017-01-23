@@ -1,0 +1,46 @@
+/*
+ * Copyright (C) 2017 Socionext Inc.
+ *   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
+ *
+ * SPDX-License-Identifier:	GPL-2.0+
+ */
+
+OUTPUT_FORMAT("elf64-littleaarch64")
+OUTPUT_ARCH(aarch64)
+SECTIONS
+{
+	. = CONFIG_TEXT_BASE;
+
+	.head : {
+		KEEP(*(.head))
+	}
+
+	. = CONFIG_TEXT_BASE + 0x200;
+
+	.text : {
+		_stext = .;
+		*(.text_entry*)
+		*(.text*)
+	}
+
+	.rodata : {
+		*(.rodata*)
+	}
+
+	.data : {
+		_sdata = .;
+		*(.data*)
+		_edata = .;
+	}
+
+	__image_end = .;
+
+	. = CONFIG_BSS_BASE;
+
+	.bss : {
+		_sbss = .;
+		*(.bss*)
+		*(COMMON)
+		_ebss = .;
+	}
+}
