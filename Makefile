@@ -98,8 +98,8 @@ dir-y		+= common
 dir-y		+= dram
 dir-y		+= lib
 
-board-$(CONFIG_UNIPHIER_LD11)	+= ld11_ref
-board-$(CONFIG_UNIPHIER_LD20)	+= ld20_ref ld20_global \
+board-$(CONFIG_SOC_LD11)	+= ld11_ref
+board-$(CONFIG_SOC_LD20)	+= ld20_ref ld20_global \
 				   ld21_ref ld21_global
 
 lds := common/uniphier.lds
