@@ -166,7 +166,7 @@ distclean: clean
 
 PHONY += help
 help:
-	@echo "Generic targets"
+	@echo "Generic targets:"
 	@echo "  all       - Build all board images"
 	@echo "  clean     - Remove all build artifacts"
 	@echo "  distclean - clean + remove editor back, patch, tag files"
