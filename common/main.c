@@ -136,7 +136,7 @@ void main(const struct soc_data *sd, const struct board_data *bd)
 	uart_soc_init(sd, bd);
 
 	/* The console is ready now; print welcome message */
-	pr_info("\nUniPhier Boot version %s (", version);
+	pr_info("\nUniPhier BL version %s (", version);
 	if (git_head[0])
 		pr_info("git: %s, ", git_head);
 	pr_info("built: %s)\n", time_stamp);
