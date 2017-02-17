@@ -47,3 +47,19 @@ ENTRY(ld11_ref)
 {
 	ld11_init(&ld11_ref_data);
 }
+
+static const struct board_data ld11_global_data = {
+	.board_name = "LD11 Global",
+	.uart_port = 0,
+	.dram_ch[0] = {
+		.size = 0x20000000,
+	},
+	.dram_ch[1] = {
+		.size = 0x20000000,
+	},
+};
+
+ENTRY(ld11_global)
+{
+	ld11_init(&ld11_global_data);
+}
