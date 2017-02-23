@@ -26,14 +26,14 @@ static void __puts(const char *s)
 }
 
 #define get_num_va_args(args, lcount) \
-	((lcount) > 1 ? va_arg(args, long long int) :	\
-	 ((lcount) ? va_arg(args, long int) : va_arg(args, int)))
+	((lcount) > 1 ? va_arg(args, long long) :	\
+	 ((lcount) ? va_arg(args, long) : va_arg(args, int)))
 
 #define get_unum_va_args(args, lcount) \
-	((lcount) > 1 ? va_arg(args, unsigned long long int) :	\
-	 ((lcount) ? va_arg(args, unsigned long int) : va_arg(args, unsigned int)))
+	((lcount) > 1 ? va_arg(args, unsigned long long) :	\
+	 ((lcount) ? va_arg(args, unsigned long) : va_arg(args, unsigned int)))
 
-static void unsigned_num_print(unsigned long long int unum, unsigned int radix)
+static void unsigned_num_print(unsigned long long unum, unsigned int radix)
 {
 	unsigned char buf[32];
 	int i = 0, rem;
@@ -50,8 +50,8 @@ static void unsigned_num_print(unsigned long long int unum, unsigned int radix)
 static void vprintk(const char *fmt, va_list args)
 {
 	int l_count;
-	long long int num;
-	unsigned long long int unum;
+	long long num;
+	unsigned long long unum;
 	char *str;
 	char c;
 
