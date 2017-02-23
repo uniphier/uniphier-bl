@@ -76,7 +76,9 @@ OBJCOPY		:= $(CROSS_COMPILE)objcopy
 UNPH_CPPFLAGS	:= -include include/generated/config.h \
 		   -Iinclude -I$(srctree)/include \
 		   -mlittle-endian -fdata-sections -ffunction-sections
-UNPH_CFLAGS	:= -Wall -std=gnu89 -ffreestanding -Os -mgeneral-regs-only \
+UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
+		   -fno-common -Werror-implicit-function-declaration \
+		   -std=gnu89 -ffreestanding -Os -mgeneral-regs-only \
 		   -mstrict-align
 UNPH_AFLAGS	:= -D__ASSEMBLY__
 OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment -S
