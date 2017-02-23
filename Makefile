@@ -73,7 +73,8 @@ CPP		:= $(CC) -E
 LD		:= $(CROSS_COMPILE)ld
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
 
-UNPH_CPPFLAGS	:= -include include/generated/config.h -I$(srctree)/include \
+UNPH_CPPFLAGS	:= -include include/generated/config.h \
+		   -Iinclude -I$(srctree)/include \
 		   -mlittle-endian -fdata-sections -ffunction-sections
 UNPH_CFLAGS	:= -Wall -std=gnu89 -ffreestanding -Os -mgeneral-regs-only \
 		   -mstrict-align
@@ -92,6 +93,13 @@ endef
 
 include/generated/config.h: $(srctree)/config.mk FORCE
 	$(call filechk,config)
+
+define filechk_version
+	echo \#define VERSION \"$(VERSION)\"
+endef
+
+include/generated/version.h: $(srctree)/Makefile FORCE
+	$(call filechk,version)
 
 dir-y		+= boards
 dir-y		+= common
@@ -113,7 +121,7 @@ all: $(bins)
 quiet_cmd_link = LD      $@
       cmd_link = $(LD) $(LDFLAGS) --gc-sections -o $@ \
 	-e $(patsubst bl_%.elf,entry_%,$@) -T $(lds) \
-	--start-group $(shell cat $(objlists)) __version.o --end-group
+	--start-group $(shell cat $(objlists)) __timestamp.o --end-group
 
 quiet_cmd_objcopy = OBJCOPY $@
       cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $< $@
@@ -121,25 +129,24 @@ quiet_cmd_objcopy = OBJCOPY $@
 $(bins): %.bin: %.elf FORCE
 	$(call if_changed,objcopy)
 
-$(elfs): $(objlists) __version.o $(lds) FORCE
+$(elfs): $(objlists) __timestamp.o $(lds) FORCE
 	$(call if_changed,link)
 
-quiet_cmd_cc_version = CC      $@
-      cmd_cc_version = echo \
-	"const char version[] = \"$(VERSION)\";" \
+quiet_cmd_cc_timestamp = CC      $@
+      cmd_cc_timestamp = echo \
 	"const char time_stamp[] = \"$$(LC_ALL=C date)\";" \
 	"const char git_head[] = \"$$(git describe --always --dirty --tags 2> /dev/null)\";" \
 	| $(CC) $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) -xc - -c -o $@
 
-have-cmd-files += __version.o
-__version.o: $(objlists) $(lds) FORCE
-	$(call if_changed,cc_version)
+have-cmd-files += __timestamp.o
+__timestamp.o: $(objlists) $(lds) FORCE
+	$(call if_changed,cc_timestamp)
 
 $(objlists): %/link.o.txt: % ;
 $(lds): $(patsubst %/,%,$(dir $(lds))) ;
 
 PHONY += $(dir-y)
-$(dir-y): include/generated/config.h
+$(dir-y): include/generated/config.h include/generated/version.h
 	$(Q)$(MAKE) $(build)=$@
 
 FIND_IGNORE := -name .git -prune -o

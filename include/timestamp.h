@@ -5,9 +5,10 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#ifndef __TIMESTAMP_H__
+#define __TIMESTAMP_H__
 
-#include <generated/version.h>
+extern const char time_stamp[];
+extern const char git_head[];
 
-#endif /* __VERSION_H__ */
+#endif /* __TIMESTAMP_H__ */

@@ -10,6 +10,7 @@
 #include <gunzip.h>
 #include <init.h>
 #include <printk.h>
+#include <timestamp.h>
 #include <version.h>
 
 #define DRAM_CH0_BASE		0x80000000
@@ -136,7 +137,7 @@ void main(const struct soc_data *sd, const struct board_data *bd)
 	uart_soc_init(sd, bd);
 
 	/* The console is ready now; print welcome message */
-	pr_info("\nUniPhier BL version %s (", version);
+	pr_info("\nUniPhier BL version " VERSION " (");
 	if (git_head[0])
 		pr_info("git: %s, ", git_head);
 	pr_info("built: %s)\n", time_stamp);
