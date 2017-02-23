@@ -57,7 +57,7 @@ MAKEFLAGS += --no-print-directory
 ifeq ($(SRCDIR),$(CURDIR))
 srctree := .
 else
-$(shell ln -s $(SRCDIR) srctree)
+$(shell ln -fns $(SRCDIR) srctree)
 srctree := srctree
 endif
 
