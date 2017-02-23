@@ -73,7 +73,7 @@ CPP		:= $(CC) -E
 LD		:= $(CROSS_COMPILE)ld
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
 
-UNPH_CPPFLAGS	:= -include include/config.h -I$(srctree)/include \
+UNPH_CPPFLAGS	:= -include include/generated/config.h -I$(srctree)/include \
 		   -mlittle-endian -fdata-sections -ffunction-sections
 UNPH_CFLAGS	:= -Wall -std=gnu89 -ffreestanding -Os -mgeneral-regs-only \
 		   -mstrict-align
@@ -90,7 +90,7 @@ define filechk_config
 	 $(if $($v), echo \#define $v $(if $(filter y,$($v)),1,'$($v)');)))
 endef
 
-include/config.h: $(srctree)/config.mk FORCE
+include/generated/config.h: $(srctree)/config.mk FORCE
 	$(call filechk,config)
 
 dir-y		+= boards
@@ -139,7 +139,7 @@ $(objlists): %/link.o.txt: % ;
 $(lds): $(patsubst %/,%,$(dir $(lds))) ;
 
 PHONY += $(dir-y)
-$(dir-y): include/config.h
+$(dir-y): include/generated/config.h
 	$(Q)$(MAKE) $(build)=$@
 
 FIND_IGNORE := -name .git -prune -o
@@ -147,7 +147,7 @@ FIND_IGNORE := -name .git -prune -o
 quiet_cmd_clean = $(if $(wildcard $($2)),CLEAN   $(wildcard $($2)))
       cmd_clean = rm -rf $($2)
 
-clean-files := $(wildcard include/config.h)
+clean-files := $(wildcard include/generated)
 clean-dirs := $(addprefix _clean_,$(dir-y) $(dir-))
 PHONY += $(clean-dirs)
 $(clean-dirs):
