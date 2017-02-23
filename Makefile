@@ -110,6 +110,7 @@ board-$(CONFIG_SOC_LD11)	+= ld11_ref ld11_global
 board-$(CONFIG_SOC_LD20)	+= ld20_ref ld20_global \
 				   ld21_ref ld21_global
 
+timestamp := common/timestamp.o
 lds := common/uniphier.lds
 objlists := $(addsuffix /link.o.txt, $(dir-y))
 elfs := $(patsubst %,bl_%.elf, $(board-y))
@@ -121,7 +122,7 @@ all: $(bins)
 quiet_cmd_link = LD      $@
       cmd_link = $(LD) $(LDFLAGS) --gc-sections -o $@ \
 	-e $(patsubst bl_%.elf,entry_%,$@) -T $(lds) \
-	--start-group $(shell cat $(objlists)) __timestamp.o --end-group
+	--start-group $(shell cat $(objlists)) $(timestamp) --end-group
 
 quiet_cmd_objcopy = OBJCOPY $@
       cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $< $@
@@ -129,18 +130,11 @@ quiet_cmd_objcopy = OBJCOPY $@
 $(bins): %.bin: %.elf FORCE
 	$(call if_changed,objcopy)
 
-$(elfs): $(objlists) __timestamp.o $(lds) FORCE
+$(elfs): $(objlists) $(timestamp) $(lds) FORCE
 	$(call if_changed,link)
 
-quiet_cmd_cc_timestamp = CC      $@
-      cmd_cc_timestamp = echo \
-	"const char time_stamp[] = \"$$(LC_ALL=C date)\";" \
-	"const char git_head[] = \"$$(git describe --always --dirty --tags 2> /dev/null)\";" \
-	| $(CC) $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) -xc - -c -o $@
-
-have-cmd-files += __timestamp.o
-__timestamp.o: $(objlists) $(lds) FORCE
-	$(call if_changed,cc_timestamp)
+$(timestamp): $(objlists) $(lds)
+	$(Q)$(MAKE) $(build)=$(@D) $@
 
 $(objlists): %/link.o.txt: % ;
 $(lds): $(patsubst %/,%,$(dir $(lds))) ;
