@@ -111,14 +111,9 @@ all: $(bins)
 	@:
 
 quiet_cmd_link = LD      $@
-      cmd_link = echo \
-	"const char version[] = \"$(VERSION)\";" \
-	"const char time_stamp[] = \"$$(LC_ALL=C date)\";" \
-	"const char git_head[] = \"$$(git describe --always --dirty --tags 2> /dev/null)\";" \
-	| $(CC) $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) -xc - -c -o .__version.o; \
-	$(LD) $(LDFLAGS) --gc-sections -o $@ \
+      cmd_link = $(LD) $(LDFLAGS) --gc-sections -o $@ \
 	-e $(patsubst bl_%.elf,entry_%,$@) -T $(lds) \
-	--start-group $(shell cat $(objlists)) .__version.o --end-group
+	--start-group $(shell cat $(objlists)) __version.o --end-group
 
 quiet_cmd_objcopy = OBJCOPY $@
       cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $< $@
@@ -126,8 +121,19 @@ quiet_cmd_objcopy = OBJCOPY $@
 $(bins): %.bin: %.elf FORCE
 	$(call if_changed,objcopy)
 
-$(elfs): $(objlists) $(lds) FORCE
+$(elfs): $(objlists) __version.o $(lds) FORCE
 	$(call if_changed,link)
+
+quiet_cmd_cc_version = CC      $@
+      cmd_cc_version = echo \
+	"const char version[] = \"$(VERSION)\";" \
+	"const char time_stamp[] = \"$$(LC_ALL=C date)\";" \
+	"const char git_head[] = \"$$(git describe --always --dirty --tags 2> /dev/null)\";" \
+	| $(CC) $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) -xc - -c -o $@
+
+have-cmd-files += __version.o
+__version.o: $(objlists) $(lds) FORCE
+	$(call if_changed,cc_version)
 
 $(objlists): %/link.o.txt: % ;
 $(lds): $(patsubst %/,%,$(dir $(lds))) ;
