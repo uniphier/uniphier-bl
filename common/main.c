@@ -33,7 +33,8 @@ static int soc_id_check(const struct soc_data *sd)
 
 	soc_id = get_soc_id();
 	if (soc_id != sd->soc_id) {
-		pr_err("SoC ID unmatch: (read as: %x, expected: %x)\n",
+		pr_err("SoC ID unmatch: (read as: %x, expected: %x)\n"
+		       "You are running an image built for a different SoC\n",
 		       soc_id, sd->soc_id);
 		return -EINVAL;
 	}
