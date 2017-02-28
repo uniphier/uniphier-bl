@@ -81,7 +81,7 @@ static const struct board_data ld21_ref_data = {
 	.dram_ch[1] = {
 		.size = 0x40000000,
 	},
-	.flags = BD_BOARD_LD21_REF,
+	.flags = BD_BOARD_DRAM_SPARSE | BD_BOARD_LD21_REF,
 };
 
 ENTRY(ld21_ref)
@@ -98,7 +98,7 @@ static const struct board_data ld21_global_data = {
 	.dram_ch[1] = {
 		.size = 0x40000000,
 	},
-	.flags = BD_BOARD_LD21_GLOBAL,
+	.flags = BD_BOARD_DRAM_SPARSE | BD_BOARD_LD21_GLOBAL,
 };
 
 ENTRY(ld21_global)
