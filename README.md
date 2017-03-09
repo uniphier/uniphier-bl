@@ -50,7 +50,7 @@ Boot flow
 
 3. ARM Trusted Firmware BL1
 
-  This runs on the DRAM.  This extracts the BL2 from a image container called
+  This runs on the DRAM.  This extracts the BL2 from an image container called
   FIP (Firmware Image Package), onto the DRAM.  If TBBR is enabled, the BL2 is
   authenticated in the standard mechanism of ARM Trusted Firmware.
 
