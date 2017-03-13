@@ -27,14 +27,14 @@ endif
 
 export quiet Q
 
-SRCDIR := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+SRCDIR := $(realpath $(dir $(lastword $(MAKEFILE_LIST))))
 
 ifeq ("$(origin O)", "command line")
   UNPH_OUTPUT := $O
 endif
 
 ifneq ($(UNPH_OUTPUT),)
-UNPH_OUTPUT := $(abspath $(UNPH_OUTPUT))
+UNPH_OUTPUT := $(realpath $(UNPH_OUTPUT))
 endif
 
 ifneq ($(filter-out $(CURDIR),$(UNPH_OUTPUT)),)
