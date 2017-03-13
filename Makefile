@@ -1,5 +1,11 @@
 VERSION := 0.2
 
+# Check make version
+MIN_MAKE_VERSION = 3.81
+ifneq ($(firstword $(sort $(MAKE_VERSION) $(MIN_MAKE_VERSION))),$(MIN_MAKE_VERSION))
+$(error GNU Make >= $(MIN_MAKE_VERSION) is required.  You are running version $(MAKE_VERSION))
+endif
+
 PHONY += all
 all:
 
