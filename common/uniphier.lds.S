@@ -10,12 +10,13 @@ OUTPUT_ARCH(aarch64)
 SECTIONS
 {
 	. = CONFIG_TEXT_BASE;
+	__image_start = .;
 
 	.head : {
 		KEEP(*(.head))
 	}
 
-	. = CONFIG_TEXT_BASE + 0x200;
+	. = __image_start + 0x200;
 
 	.text : {
 		_stext = .;
