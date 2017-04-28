@@ -17,4 +17,13 @@ typedef unsigned short		u16;
 typedef unsigned int		u32;
 typedef unsigned long long	u64;
 
+#define __bitwise
+
+typedef u16 __bitwise		le16;
+typedef u16 __bitwise		be16;
+typedef u32 __bitwise		le32;
+typedef u32 __bitwise		be32;
+typedef u64 __bitwise		le64;
+typedef u64 __bitwise		be64;
+
 #endif /* __TYPES_H__ */
