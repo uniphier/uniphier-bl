@@ -8,6 +8,7 @@
 #define __force
 #define __iomem
 #define __noreturn		__attribute__((noreturn))
+#define __packed		__attribute__((packed))
 #define __printf(a, b)		__attribute__((format(printf, a, b)))
 #define __section(S)		__attribute__((__section__(#S)))
 
