@@ -40,12 +40,13 @@ ifeq ("$(origin O)", "command line")
 endif
 
 ifneq ($(UNPH_OUTPUT),)
+saved-output := $(UNPH_OUTPUT)
+$(shell mkdir -p $(UNPH_OUTPUT))
 UNPH_OUTPUT := $(realpath $(UNPH_OUTPUT))
+$(if $(UNPH_OUTPUT),,$(error cannot create output directory "$(saved-output)"))
 endif
 
 ifneq ($(filter-out $(CURDIR),$(UNPH_OUTPUT)),)
-
-$(shell mkdir -p $(UNPH_OUTPUT))
 
 PHONY += $(MAKECMDGOALS)
 $(filter-out all, $(MAKECMDGOALS)): all
