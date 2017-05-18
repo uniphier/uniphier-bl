@@ -17,7 +17,7 @@ quiet_cmd_timestamp = GEN     $@
 define cmd_timestamp
 	( \
 	echo \#define TIME_STAMP \"$$(LC_ALL=C date)\"; \
-	echo \#define GIT_HEAD \"$$(git describe --always --dirty --tags 2> /dev/null)\"; \
+	echo \#define GIT_HEAD \"$$(cd $(srctree); git describe --always --dirty --tags 2> /dev/null)\"; \
 	) > $@
 endef
 
