@@ -124,7 +124,7 @@ int memconf_init(const struct board_data *bd, int have_ch2)
 	}
 
 	/* is sparse mem? */
-	if (bd->flags & BD_BOARD_DRAM_SPARSE)
+	if (bd->flags & BD_DRAM_SPARSE)
 		val |= SG_MEMCONF_SPARSEMEM;
 
 	if (!have_ch2)

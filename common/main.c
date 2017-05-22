@@ -57,11 +57,11 @@ static void dram_param_check(const struct soc_data *sd, struct board_data *bd)
 		if (!size)
 			break;
 
-		if (i == 1 && bd->flags & BD_BOARD_DRAM_SPARSE) {
+		if (i == 1 && bd->flags & BD_DRAM_SPARSE) {
 			if (base > DRAM_CH1_SPARSE_BASE) {
 				pr_warn("DRAM ch1 size is too large.\n");
 				pr_warn("Sparse mem flag is ignored.\n");
-				bd->flags &= ~BD_BOARD_DRAM_SPARSE;
+				bd->flags &= ~BD_DRAM_SPARSE;
 			} else {
 				base = DRAM_CH1_SPARSE_BASE;
 			}
