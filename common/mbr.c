@@ -31,6 +31,8 @@ struct mbr_tail {
 	u8 signature[2];
 } __packed;
 
+/* declaration to suppress "Should it be static?" warning of sparse */
+extern const struct mbr_tail mbr_tail;
 const struct mbr_tail mbr_tail __section(.mbr) = {
 	.usb_boot_sig = {0xaa, 0x55, 0x55, 0xaa},
 	.partition[0] = {

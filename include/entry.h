@@ -11,6 +11,8 @@
 #include <compiler.h>
 
 #define ENTRY(name)						\
+	/* declaration to suppress "Should it be static?" warning of sparse */ \
+	void __noreturn entry_##name(void);			\
 	void __noreturn __section(.text_entry_##name) entry_##name(void)
 
 #endif /* __ENTRY_H__ */

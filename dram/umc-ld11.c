@@ -29,11 +29,11 @@ enum dram_size {
 };
 
 /* PHY */
-const int rof_pos_shift_pre[RANK_BLOCKS_TR][2] = { {0, 0}, {0, 0} };
-const int rof_neg_shift_pre[RANK_BLOCKS_TR][2] = { {0, 0}, {0, 0} };
-const int rof_pos_shift[RANK_BLOCKS_TR][2] = { {-35, -35}, {-35, -35} };
-const int rof_neg_shift[RANK_BLOCKS_TR][2] = { {-17, -17}, {-17, -17} };
-const int tof_shift[RANK_BLOCKS_TR][2] = { {-50, -50}, {-50, -50} };
+static const int rof_pos_shift_pre[RANK_BLOCKS_TR][2] = { {0, 0}, {0, 0} };
+static const int rof_neg_shift_pre[RANK_BLOCKS_TR][2] = { {0, 0}, {0, 0} };
+static const int rof_pos_shift[RANK_BLOCKS_TR][2] = { {-35, -35}, {-35, -35} };
+static const int rof_neg_shift[RANK_BLOCKS_TR][2] = { {-17, -17}, {-17, -17} };
+static const int tof_shift[RANK_BLOCKS_TR][2] = { {-50, -50}, {-50, -50} };
 
 /* Register address */
 #define PHY_ZQ0CR1	0x00000184
