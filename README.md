@@ -93,6 +93,12 @@ Build options
 
   Specify the prefix of the toolchains.
 
+- `C=<level>`
+
+  Turn on C code check.  The default checker is sparse (Semantic Parser for C).
+  Currently, the valid value for `<level>` is `1`; all C files are checked,
+  regardless of whether they are re-compiled or not.
+
 - `O=<directory>`
 
   Specify the directory to store output files.  By default, all files generated
@@ -112,6 +118,11 @@ Environment variables
 - `CROSS_COMPILE`
 
   This can be set as an environment as well.
+
+- `UNPH_CHECKSRC`
+
+  Equivalent to specifying `C=<level>` from the command line.
+  Setting `C=...` takes precedence over `UNPH_CHECKSRC`.
 
 - `UNPH_OUTPUT`
 

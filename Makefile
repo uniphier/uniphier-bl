@@ -61,6 +61,14 @@ else # ($(filter-out $(CURDIR),$(UNPH_OUTPUT)),)
 # so that IDEs/editors are able to understand relative filenames.
 MAKEFLAGS += --no-print-directory
 
+ifeq ("$(origin C)", "command line")
+  UNPH_CHECKSRC = $(C)
+endif
+ifndef UNPH_CHECKSRC
+  UNPH_CHECKSRC = 0
+endif
+export UNPH_CHECKSRC
+
 ifeq ($(SRCDIR),$(CURDIR))
 srctree := .
 else
@@ -79,6 +87,7 @@ CC		:= $(CROSS_COMPILE)gcc
 CPP		:= $(CC) -E
 LD		:= $(CROSS_COMPILE)ld
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
+CHECK		:= sparse
 
 UNPH_CPPFLAGS	:= -include include/generated/config.h \
 		   -Iinclude -I$(srctree)/include \
@@ -89,9 +98,10 @@ UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -mstrict-align
 UNPH_AFLAGS	:= -D__ASSEMBLY__
 OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment -S
+CHECKFLAGS	:= -Wbitwise -Wno-return-void
 
-export CROSS_COMPILE AS CC CPP LD
-export UNPH_CPPFLAGS UNPH_CFLAGS UNPH_AFLAGS
+export CROSS_COMPILE AS CC CPP LD CHECK
+export UNPH_CPPFLAGS UNPH_CFLAGS UNPH_AFLAGS CHECKFLAGS
 
 include $(srctree)/scripts/common.mk
 

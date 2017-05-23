@@ -35,10 +35,16 @@ a_flags		= $(dep_flags) $(UNPH_CPPFLAGS) $(UNPH_AFLAGS) \
 cpp_flags	= $(dep_flags) $(UNPH_CPPFLAGS) $(UNPH_CPPFLAGS) \
 		  $(CPPFLAGS_$($F))
 
+quiet_cmd_checksrc = CHECK   $<
+      cmd_checksrc = $(CHECK) $(CHECKFLAGS) $(c_flags) $<
+
 quiet_cmd_cc_o_c = CC      $@
       cmd_cc_o_c = $(CC) $(c_flags) -c -o $@ $<
 
 $(obj)/%.o: $(src)/%.c FORCE
+ifeq ($(UNPH_CHECKSRC),1)
+	$(call cmd,checksrc)
+endif
 	$(call if_changed_dep,cc_o_c)
 
 quiet_cmd_as_o_S = AS      $@
