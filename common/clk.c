@@ -8,10 +8,10 @@
 #include <init.h>
 #include <io.h>
 
-#define SC_RSTCTRL_BASE		((void __iomem *)0x61842000)
+#define SC_RSTCTRL_BASE		(IOMEM(0x61842000))
 #define SC_RSTCTRL7		((SC_RSTCTRL_BASE) + 0x18)
 
-#define SC_CLKCTRL_BASE		((void __iomem *)0x61842100)
+#define SC_CLKCTRL_BASE		(IOMEM(0x61842100))
 #define SC_CLKCTRL4		((SC_CLKCTRL_BASE) + 0x0c)
 #define SC_CLKCTRL7		((SC_CLKCTRL_BASE) + 0x18)
 

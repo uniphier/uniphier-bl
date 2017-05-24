@@ -8,7 +8,7 @@
 #include <init.h>
 #include <io.h>
 
-#define SG_REVISION		((void *)0x5f800000)
+#define SG_REVISION		(IOMEM(0x5f800000))
 #define   SG_REVISION_TYPE_SHIFT	16
 #define   SG_REVISION_TYPE_MASK		(0xff << SG_REVISION_TYPE_SHIFT)
 

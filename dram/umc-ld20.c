@@ -173,7 +173,7 @@ static void ddrphy_select_lane(void __iomem *phy_base, unsigned int lane,
 	       phy_base + PHY_LANE_SEL);
 }
 
-#define DDRPHY_EFUSEMON		(void *)0x5f900118
+#define DDRPHY_EFUSEMON		(IOMEM(0x5f900118))
 
 static void ddrphy_init(void __iomem *phy_base, enum dram_board board, int ch)
 {
@@ -580,9 +580,9 @@ static void um_init(void __iomem *um_base)
 
 int ld20_umc_init(const struct board_data *bd)
 {
-	void __iomem *um_base = (void __iomem *)0x5b600000;
-	void __iomem *umc_ch_base = (void __iomem *)0x5b800000;
-	void __iomem *phy_ch_base = (void __iomem *)0x6e200000;
+	void __iomem *um_base = IOMEM(0x5b600000);
+	void __iomem *umc_ch_base = IOMEM(0x5b800000);
+	void __iomem *phy_ch_base = IOMEM(0x6e200000);
 	enum dram_board board;
 	int ch, ret;
 

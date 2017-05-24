@@ -66,7 +66,7 @@ static const int tof_shift[RANK_BLOCKS_TR][2] = { {-50, -50}, {-50, -50} };
 #define PHY_DSWBD_MASK		0x3F000000	/* bit[29:24] */
 #define PHY_DSDQOE_MASK		0x00000FFF
 
-static void ddrphy_maskwritel(u32 data, u32 mask, void *addr)
+static void ddrphy_maskwritel(u32 data, u32 mask, void __iomem *addr)
 {
 	u32 value;
 
@@ -74,7 +74,7 @@ static void ddrphy_maskwritel(u32 data, u32 mask, void *addr)
 	writel(value, addr);
 }
 
-static u32 ddrphy_maskreadl(u32 mask, void *addr)
+static u32 ddrphy_maskreadl(u32 mask, void __iomem *addr)
 {
 	return readl(addr) & mask;
 }

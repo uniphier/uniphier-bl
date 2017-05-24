@@ -11,44 +11,46 @@
 #include <compiler.h>
 #include <types.h>
 
-static inline void writeb(u8 val, void *__iomem addr)
+#define IOMEM(addr)		((void __force __iomem *)(addr))
+
+static inline void writeb(u8 val, void __iomem *addr)
 {
-	*(volatile u8 *)addr = val;
+	*(volatile u8 __force *)addr = val;
 }
 
-static inline void writew(u16 val, void *__iomem addr)
+static inline void writew(u16 val, void __iomem *addr)
 {
-	*(volatile u16 *)addr = val;
+	*(volatile u16 __force *)addr = val;
 }
 
-static inline void writel(u32 val, void *__iomem addr)
+static inline void writel(u32 val, void __iomem *addr)
 {
-	*(volatile u32 *)addr = val;
+	*(volatile u32 __force *)addr = val;
 }
 
-static inline void writeq(u64 val, void *__iomem addr)
+static inline void writeq(u64 val, void __iomem *addr)
 {
-	*(volatile u64 *)addr = val;
+	*(volatile u64 __force *)addr = val;
 }
 
-static inline u8 readb(void *addr)
+static inline u8 readb(void __iomem *addr)
 {
-	return *(volatile u8 *)addr;
+	return *(volatile u8 __force *)addr;
 }
 
-static inline u16 readw(void *addr)
+static inline u16 readw(void __iomem *addr)
 {
-	return *(volatile u16 *)addr;
+	return *(volatile u16 __force *)addr;
 }
 
-static inline u32 readl(void *addr)
+static inline u32 readl(void __iomem *addr)
 {
-	return *(volatile u32 *)addr;
+	return *(volatile u32 __force *)addr;
 }
 
-static inline u64 readq(void *addr)
+static inline u64 readq(void __iomem *addr)
 {
-	return *(volatile u64 *)addr;
+	return *(volatile u64 __force *)addr;
 }
 
 #endif /* __IO_H__ */

@@ -11,7 +11,7 @@
 #include <printk.h>
 #include <sizes.h>
 
-#define SG_MEMCONF		(void *)0x5f800400
+#define SG_MEMCONF		(IOMEM(0x5f800400))
 
 #define SG_MEMCONF_CH0_SZ_MASK		((0x1 << 10) | (0x03 << 0))
 #define SG_MEMCONF_CH0_SZ_64M		((0x0 << 10) | (0x01 << 0))
