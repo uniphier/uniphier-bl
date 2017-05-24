@@ -17,7 +17,11 @@ typedef unsigned short		u16;
 typedef unsigned int		u32;
 typedef unsigned long long	u64;
 
+#ifdef __CHECKER__
+#define __bitwise		__attribute__((bitwise))
+#else
 #define __bitwise
+#endif
 
 typedef u16 __bitwise		le16;
 typedef u16 __bitwise		be16;

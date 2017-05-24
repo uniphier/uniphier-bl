@@ -5,8 +5,14 @@
 #ifndef __COMPILER_H__
 #define __COMPILER_H__
 
+#ifdef __CHECKER__
+#define __force			__attribute__((force))
+#define __iomem			__attribute__((noderef, address_space(2)))
+#else
 #define __force
 #define __iomem
+#endif
+
 #define __noreturn		__attribute__((noreturn))
 #define __packed		__attribute__((packed))
 #define __printf(a, b)		__attribute__((format(printf, a, b)))
