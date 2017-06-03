@@ -20,7 +20,7 @@ ifndef UNPH_VERBOSE
   UNPH_VERBOSE = 0
 endif
 
-ifneq ($(filter s% %s,$(firstword $(MAKEFLAGS))),)
+ifneq ($(findstring s,$(filter-out --%,$(MAKEFLAGS))),)
   quiet := silent_
   Q = @
 else ifneq ($(UNPH_VERBOSE),1)
