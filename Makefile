@@ -1,4 +1,4 @@
-VERSION := 0.2
+VERSION := 0.3
 
 # Check make version
 MIN_MAKE_VERSION = 3.81
