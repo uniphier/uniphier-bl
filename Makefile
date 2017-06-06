@@ -94,6 +94,7 @@ UNPH_CPPFLAGS	:= -include include/generated/config.h \
 		   -mlittle-endian -fdata-sections -ffunction-sections
 UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-common -Werror-implicit-function-declaration \
+		   -Werror=date-time \
 		   -std=gnu89 -ffreestanding -Os -mgeneral-regs-only \
 		   -mstrict-align
 UNPH_AFLAGS	:= -D__ASSEMBLY__
