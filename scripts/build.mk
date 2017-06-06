@@ -11,20 +11,20 @@ include $(srctree)/config.mk
 include $(src)/Makefile
 
 subdir-y	+= $(patsubst %/,%,$(filter %/, $(obj-y)))
-obj-y		:= $(patsubst %/,%/link.o.txt, $(obj-y))
+obj-y		:= $(patsubst %/,%/link.o, $(obj-y))
 
 extra-y		:= $(strip $(addprefix $(obj)/,$(extra-y)))
 subdir-y	:= $(strip $(addprefix $(obj)/,$(subdir-y)))
 obj-y		:= $(strip $(addprefix $(obj)/,$(obj-y)))
-subdir-obj-y	:= $(filter %/link.o.txt, $(obj-y))
-objlist		:= $(obj)/link.o.txt
-have-cmd-files	:= $(obj-y) $(extra-y) $(objlist)
+subdir-obj-y	:= $(filter %/link.o, $(obj-y))
+link-target	:= $(obj)/link.o
+have-cmd-files	:= $(obj-y) $(extra-y) $(link-target)
 
 ifneq ($(srctree),.)
 $(shell mkdir -p $(sort $(patsubst %/,%,$(obj) $(dir $(obj-y) $(extra-y)))))
 endif
 
-__build:  $(if $(strip $(obj-y) $(obj-)),$(objlist)) $(extra-y) $(subdir-y)
+__build: $(if $(strip $(obj-y) $(obj-)),$(link-target)) $(extra-y) $(subdir-y)
 	@:
 
 dep_flags	= -Wp,-MD,$(depfile),-MP -MT $@
@@ -62,14 +62,13 @@ quiet_cmd_cpp_lds_S = CPP     $@
 $(obj)/%.lds: $(src)/%.lds.S FORCE
 	$(call if_changed_dep,cpp_lds_S)
 
-# Rule to generate a list of objects
+# Rule to generate an intermediate .o file
 # ---------------------------------------------------------------------------
-quiet_cmd_gen_objlist = GEN     $@
-      cmd_gen_objlist = ($(foreach o, $(filter-out $(PHONY), $^), \
-			$(if $(filter %/link.o.txt, $o), cat $o, echo $o);)) > $@
+quiet_cmd_ar_link_o = AR      $@
+      cmd_ar_link_o = rm -f $@; $(AR) rcST $@ $(obj-y)
 
-$(objlist): $(obj-y) FORCE
-	$(call if_changed,gen_objlist)
+$(link-target): $(obj-y) FORCE
+	$(call if_changed,ar_link_o)
 
 $(sort $(subdir-obj-y)): $(subdir-y) ;
 

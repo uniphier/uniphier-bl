@@ -82,6 +82,7 @@ include $(srctree)/config.mk
 
 CROSS_COMPILE	?= aarch64-linux-gnu-
 
+AR		:= $(CROSS_COMPILE)ar
 AS		:= $(CROSS_COMPILE)as
 CC		:= $(CROSS_COMPILE)gcc
 CPP		:= $(CC) -E
@@ -101,7 +102,7 @@ UNPH_AFLAGS	:= -D__ASSEMBLY__
 OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment -S
 CHECKFLAGS	:= -Wbitwise -Wno-return-void
 
-export CROSS_COMPILE AS CC CPP LD CHECK
+export CROSS_COMPILE AR AS CC CPP LD CHECK
 export UNPH_CPPFLAGS UNPH_CFLAGS UNPH_AFLAGS CHECKFLAGS
 
 include $(srctree)/scripts/common.mk
@@ -132,7 +133,7 @@ board-$(CONFIG_SOC_LD20)	+= ld20_ref ld20_global \
 
 timestamp := common/timestamp.o
 lds := common/uniphier.lds
-objlists := $(addsuffix /link.o.txt, $(dir-y))
+objs := $(addsuffix /link.o, $(dir-y))
 elfs := $(patsubst %,bl_%.elf, $(board-y))
 bins := $(patsubst %,bl_%.bin, $(board-y))
 have-cmd-files := $(elfs) $(bins)
@@ -142,7 +143,7 @@ all: $(bins)
 quiet_cmd_link = LD      $@
       cmd_link = $(LD) $(LDFLAGS) --gc-sections -o $@ \
 	-e $(patsubst bl_%.elf,entry_%,$@) -T $(lds) \
-	--start-group $(shell cat $(objlists)) $(timestamp) --end-group
+	$(timestamp) --whole-archive $(objs)
 
 quiet_cmd_objcopy = OBJCOPY $@
       cmd_objcopy = $(OBJCOPY) $(OBJCOPYFLAGS) $< $@
@@ -150,13 +151,13 @@ quiet_cmd_objcopy = OBJCOPY $@
 $(bins): %.bin: %.elf FORCE
 	$(call if_changed,objcopy)
 
-$(elfs): $(objlists) $(timestamp) $(lds) FORCE
+$(elfs): $(objs) $(timestamp) $(lds) FORCE
 	$(call if_changed,link)
 
-$(timestamp): $(objlists) $(lds)
+$(timestamp): $(objs) $(lds)
 	$(Q)$(MAKE) $(build)=$(@D) $@
 
-$(objlists): %/link.o.txt: % ;
+$(objs): %/link.o: % ;
 $(lds): $(patsubst %/,%,$(dir $(lds))) ;
 
 PHONY += $(dir-y)
@@ -178,7 +179,7 @@ clean: $(clean-dirs)
 	$(call cmd,clean,clean-files)
 	@find . $(FIND_IGNORE) \
 		\( -name '*.[oas]' -o -name '*.elf' -o -name '*.bin' \
-		-o -name '*.o.txt' -o -name '.*.cmd' -o -name '.*.d' \) \
+		-o -name '.*.cmd' -o -name '.*.d' \) \
 		-type f -print | xargs rm -f
 
 distclean-files := tags TAGS cscope* GPATH GTAGS GRTAGS GSYMS
