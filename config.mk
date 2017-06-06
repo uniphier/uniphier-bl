@@ -23,5 +23,8 @@ CONFIG_STACK_BASE=0x30014000
 # base (entry) address of the next image
 CONFIG_NEXT_IMAGE_BASE=0x80000000
 
+# disable time-stamp and git hash for reproducible build
+#CONFIG_REPRODUCIBLE_BUILD=y
+
 # Include optional user-config.mk if exists, so you can tweak configuration
 -include user-config.mk

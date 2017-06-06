@@ -24,7 +24,11 @@ endef
 $(obj)/timestamp-inc.h: FORCE
 	$(call cmd,timestamp)
 
+ifeq ($(CONFIG_REPRODUCIBLE_BUILD),y)
+CFLAGS_timestamp.o = -include $(src)/timestamp-null.h
+else
 $(obj)/timestamp.o: $(obj)/timestamp-inc.h
 CFLAGS_timestamp.o = -include $(obj)/timestamp-inc.h
+endif
 
 clean-files := timestamp-inc.h

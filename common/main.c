@@ -138,10 +138,11 @@ void __noreturn main(const struct soc_data *sd, const struct board_data *bd)
 	uart_soc_init(sd, bd);
 
 	/* The console is ready now; print welcome message */
-	pr_info("\nUniPhier BL version " VERSION " (");
+	pr_info("\nUniPhier BL version " VERSION "\n");
 	if (git_head[0])
-		pr_info("git: %s, ", git_head);
-	pr_info("built: %s)\n", time_stamp);
+		pr_info("Git: %s\n", git_head);
+	if (time_stamp[0])
+		pr_info("Built: %s\n", time_stamp);
 
 	if (bd->board_name)
 		pr_info("Board: %s\n", bd->board_name);
