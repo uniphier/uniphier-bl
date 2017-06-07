@@ -40,6 +40,26 @@ quiet_cmd_checksrc = CHECK   $<
       cmd_checksrc = $(CHECK) $(CHECKFLAGS) $(c_flags) $<
 endif
 
+quiet_cmd_cpp_i_c = CPP     $@
+      cmd_cpp_i_c = $(CPP) $(c_flags) -o $@ $<
+
+$(obj)/%.i: $(src)/%.c FORCE
+	$(call cmd,checksrc)
+	$(call if_changed_dep,cpp_i_c)
+
+quiet_cmd_cpp_s_S = CPP     $@
+      cmd_cpp_s_S = $(CPP) $(a_flags) -o $@ $<
+
+$(obj)/%.s: $(src)/%.S FORCE
+	$(call if_changed_dep,cpp_s_S)
+
+quiet_cmd_cc_s_c = CC      $@
+      cmd_cc_s_c = $(CC) $(c_flags) -S -o $@ $<
+
+$(obj)/%.s: $(src)/%.c FORCE
+	$(call cmd,checksrc)
+	$(call if_changed_dep,cc_s_c)
+
 quiet_cmd_cc_o_c = CC      $@
       cmd_cc_o_c = $(CC) $(c_flags) -c -o $@ $<
 
@@ -81,7 +101,8 @@ $(subdir-y):
 PHONY += FORCE
 
 FORCE:
-cmd_files := $(wildcard $(foreach f,$(have-cmd-files),$(dir $(f)).$(notdir $(f)).cmd))
+cmd_files := $(wildcard $(foreach f,$(have-cmd-files) $(MAKECMDGOALS), \
+					$(dir $(f)).$(notdir $(f)).cmd))
 ifneq ($(cmd_files),)
   include $(cmd_files)
 endif

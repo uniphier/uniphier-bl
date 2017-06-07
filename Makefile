@@ -181,7 +181,7 @@ PHONY += clean
 clean: $(clean-dirs)
 	$(call cmd,clean,clean-files)
 	@find . $(FIND_IGNORE) \
-		\( -name '*.[oas]' -o -name '*.elf' -o -name '*.bin' \
+		\( -name '*.[aios]' -o -name '*.elf' -o -name '*.bin' \
 		-o -name '.*.cmd' -o -name '.*.d' \) \
 		-type f -print | xargs rm -f
 
@@ -206,6 +206,11 @@ ifneq ($(bins),)
 	@echo "Individual board targets:"
 	@$(foreach b, $(bins), echo "  $b";)
 endif
+
+# Single targets
+single-targets := $(filter-out $(objs), $(filter %.i %o %s, $(MAKECMDGOALS)))
+$(single-targets): prepare FORCE
+	$(Q)$(MAKE) $(build)=$(patsubst %/,%, $(dir $@)) $@
 
 cmd_files := $(wildcard $(foreach f,$(have-cmd-files),$(dir $f).$(notdir $f).cmd))
 ifneq ($(cmd_files),)
