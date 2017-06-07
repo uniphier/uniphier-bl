@@ -122,6 +122,9 @@ endef
 include/generated/version.h: $(srctree)/Makefile FORCE
 	$(call filechk,version)
 
+PHONY += prepare
+prepare: include/generated/config.h include/generated/version.h
+
 dir-y		+= boards
 dir-y		+= common
 dir-y		+= dram
@@ -161,7 +164,7 @@ $(objs): %/link.o: % ;
 $(lds): $(patsubst %/,%,$(dir $(lds))) ;
 
 PHONY += $(dir-y)
-$(dir-y): include/generated/config.h include/generated/version.h
+$(dir-y): prepare
 	$(Q)$(MAKE) $(build)=$@
 
 FIND_IGNORE := -name .git -prune -o
