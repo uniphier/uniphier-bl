@@ -85,7 +85,7 @@ $(obj)/%.lds: $(src)/%.lds.S FORCE
 # Rule to generate an intermediate .o file
 # ---------------------------------------------------------------------------
 quiet_cmd_ar_link_o = AR      $@
-      cmd_ar_link_o = rm -f $@; $(AR) rcST $@ $(obj-y)
+      cmd_ar_link_o = rm -f $@; $(AR) rcPST $@ $(obj-y)
 
 $(link-target): $(obj-y) FORCE
 	$(call if_changed,ar_link_o)
