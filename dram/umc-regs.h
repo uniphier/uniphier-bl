@@ -2,8 +2,8 @@
  * Copyright (C) 2016 Socionext Inc.
  */
 
-#ifndef UMC_LD20_REGS_H
-#define UMC_LD20_REGS_H
+#ifndef __UMC_REGS_H__
+#define __UMC_REGS_H__
 
 #include <utils.h>
 
@@ -84,4 +84,4 @@
 #define UMC_A2DRST		0x00000764
 #define UMC_DMDRST		0x00000770
 
-#endif /* UMC_LD20_REGS_H */
+#endif /* __UMC_REGS_H__ */
