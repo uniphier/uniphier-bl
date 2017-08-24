@@ -37,6 +37,7 @@ static const struct soc_data ld11_data = {
 	.dram_default_freq = 1600,
 	.dram_default_width = { 16, 16, },
 	.dram_have_ch2 = 0,
+	.dpll = { 6, -1, -1, },
 	.umc_init = ld11_umc_init,
 	.soc_init = ld11_soc_init,
 };

@@ -85,6 +85,8 @@ static int dram_init(const struct soc_data *sd, const struct board_data *bd)
 
 	pr_info("Initializing DRAM... ");
 
+	dpll_init(sd->dpll);
+
 	ret = memconf_init(bd, sd->dram_have_ch2);
 	if (ret) {
 		pr_err("failed to init MEMCONF (%d)\n", ret);

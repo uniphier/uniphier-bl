@@ -24,6 +24,7 @@ static const struct soc_data ld20_data = {
 	.dram_default_freq = 1866,
 	.dram_default_width = { 32, 32, 32, },
 	.dram_have_ch2 = 1,
+	.dpll = { 6, 7, 8, },
 	.umc_init = ld20_umc_init,
 };
 

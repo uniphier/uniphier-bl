@@ -53,6 +53,7 @@ struct soc_data {
 	unsigned int dram_default_freq;
 	unsigned int dram_default_width[MAX_NR_DRAM_CH];
 	int dram_have_ch2;
+	int dpll[MAX_NR_DRAM_CH];
 	int (*umc_init)(const struct board_data *); /* DRAM controller init */
 	int (*soc_init)(const struct board_data *); /* SoC-specific init */
 };
@@ -62,6 +63,7 @@ void __noreturn main(const struct soc_data *sd, const struct board_data *bd);
 void uart_init(unsigned int port, unsigned int clk_rate);
 void uart_putc(char c);
 
+void dpll_init(const int *dpll);
 void clk_enable_uart(unsigned int clk_bits);
 void clk_enable_dram(unsigned int clk_bits, unsigned int rst_bits);
 
