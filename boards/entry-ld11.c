@@ -8,6 +8,19 @@
 #include <compiler.h>
 #include <entry.h>
 #include <init.h>
+#include <io.h>
+
+#define SC_CPU_GEAR_BASE	(IOMEM(0x61848000))
+#define SC_CA53_GEAR_SET	((SC_CPU_GEAR_BASE) + 0x84)
+#define SC_CA53_GEAR_UPD	((SC_CPU_GEAR_BASE) + 0x88)
+
+static int ld11_soc_init(const struct board_data *bd)
+{
+	writel(0, SC_CA53_GEAR_SET);	/* Gear0: CPLL/2 */
+	writel(1, SC_CA53_GEAR_UPD);	/* update */
+
+	return 0;
+}
 
 static const struct soc_data ld11_data = {
 	.soc_id = 0x31,
@@ -25,6 +38,7 @@ static const struct soc_data ld11_data = {
 	.dram_default_width = { 16, 16, },
 	.dram_have_ch2 = 0,
 	.umc_init = ld11_umc_init,
+	.soc_init = ld11_soc_init,
 };
 
 static void __noreturn ld11_init(const struct board_data *bd)
