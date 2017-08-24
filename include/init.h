@@ -53,7 +53,8 @@ struct soc_data {
 	unsigned int dram_default_freq;
 	unsigned int dram_default_width[MAX_NR_DRAM_CH];
 	int dram_have_ch2;
-	int (*umc_init)(const struct board_data *);
+	int (*umc_init)(const struct board_data *); /* DRAM controller init */
+	int (*soc_init)(const struct board_data *); /* SoC-specific init */
 };
 
 void __noreturn main(const struct soc_data *sd, const struct board_data *bd);
