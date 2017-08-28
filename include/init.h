@@ -22,7 +22,6 @@ struct board_data {
 	const char *board_name;
 	unsigned int uart_port;
 	unsigned int dram_freq;
-	unsigned int dram_nr_ch;
 	struct dram_ch dram_ch[MAX_NR_DRAM_CH];
 	unsigned int flags;
 
