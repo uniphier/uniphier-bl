@@ -439,9 +439,9 @@ static void um_init(void __iomem *um_base)
 
 int ld11_umc_init(const struct board_data *bd)
 {
-	void __iomem *um_base = (void __iomem *)0x5B800000;
-	void __iomem *umc_ch_base = (void __iomem *)0x5BC00000;
-	void __iomem *phy_base = (void __iomem *)0x5BC01000;
+	void __iomem *um_base = IOMEM(0x5B800000);
+	void __iomem *umc_ch_base = IOMEM(0x5BC00000);
+	void __iomem *phy_base = IOMEM(0x5BC01000);
 	enum dram_freq freq;
 	int ch, ret;
 

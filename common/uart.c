@@ -9,7 +9,7 @@
 #include <io.h>
 #include <utils.h>
 
-#define UART_BASE	((void __iomem *)0x54006800)
+#define UART_BASE	(IOMEM(0x54006800))
 #define UART_OFFSET	0x100
 
 #define UART_TX		0x00	/* Out: Transmit buffer */
