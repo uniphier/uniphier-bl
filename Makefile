@@ -100,7 +100,7 @@ UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -mstrict-align
 UNPH_AFLAGS	:= -D__ASSEMBLY__
 OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment -S
-CHECKFLAGS	:= -Wbitwise -Wno-return-void
+CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as
 
 export CROSS_COMPILE AR AS CC CPP LD CHECK
 export UNPH_CPPFLAGS UNPH_CFLAGS UNPH_AFLAGS CHECKFLAGS
