@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 2016-2017 Socionext Inc.
  *
- * based on commit 5ffd75ecd4929f22361ef65a35f0331d2fbc0f35 of Diag
+ * based on commit 87cb0fa1cfe945be6d8d64dc4cacd5b707d76b9c of Diag
  */
 
 #include <errno.h>
@@ -47,7 +47,7 @@ static const int ddrphy_adrctrl[DRAM_BOARD_NR][DRAM_CH_NR] = {
 
 static const int ddrphy_dlltrimclk[DRAM_BOARD_NR][DRAM_CH_NR] = {
 	{268, 268, 268},			/* LD20 reference */
-	{268, 268, 268},			/* LD20 TV */
+	{189, 189, 189},			/* LD20 TV */
 	{189, 189, 189},			/* LD20 TV C1 */
 	{268, 268 + 252, /* No CH2 */},		/* LD21 reference */
 	{268, 268 + 202, /* No CH2 */},		/* LD21 TV */
