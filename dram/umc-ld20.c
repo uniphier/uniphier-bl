@@ -563,6 +563,16 @@ static int umc_ch_init(void __iomem *umc_ch_base, void __iomem *phy_ch_base,
 	return 0;
 }
 
+#define SC_PVTCTRL_BASE		(IOMEM(0x6184e000))
+
+static void dram_voltage_set(void)
+{
+	/* increase the VDD09 voltage line up to 0.93V to suppress jitter */
+	writel(0x00000002, SC_PVTCTRL_BASE + 0x4);
+	writel(0x0000001e, SC_PVTCTRL_BASE + 0x78);
+	writel(0x00000001, SC_PVTCTRL_BASE + 0x0);
+}
+
 static void um_init(void __iomem *um_base)
 {
 	writel(0x000000ff, um_base + UMC_MBUS0);
@@ -607,6 +617,8 @@ int ld20_umc_init(const struct board_data *bd)
 		       BD_BOARD_GET_TYPE(bd->flags));
 		return -EINVAL;
 	}
+
+	dram_voltage_set();
 
 	for (ch = 0; ch < DRAM_CH_NR; ch++) {
 		unsigned long size = bd->dram_ch[ch].size;
