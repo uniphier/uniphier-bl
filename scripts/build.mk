@@ -76,7 +76,7 @@ $(obj)/%.o: $(src)/%.S FORCE
 # Linker scripts preprocessor (.lds.S -> .lds)
 # ---------------------------------------------------------------------------
 quiet_cmd_cpp_lds_S = CPP     $@
-      cmd_cpp_lds_S = $(CPP) $(cpp_flags) -P -C \
+      cmd_cpp_lds_S = $(CPP) $(cpp_flags) -P \
 			-D__ASSEMBLY__ -DLINKER_SCRIPT -o $@ $<
 
 $(obj)/%.lds: $(src)/%.lds.S FORCE
