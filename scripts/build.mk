@@ -98,9 +98,6 @@ PHONY += $(subdir-y)
 $(subdir-y):
 	$(Q)$(MAKE) $(build)=$@
 
-PHONY += FORCE
-
-FORCE:
 cmd_files := $(wildcard $(foreach f,$(have-cmd-files) $(MAKECMDGOALS), \
 					$(dir $(f)).$(notdir $(f)).cmd))
 ifneq ($(cmd_files),)
