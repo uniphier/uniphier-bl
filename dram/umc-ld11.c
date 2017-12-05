@@ -1,5 +1,7 @@
 /*
  * Copyright (C) 2016-2017 Socionext Inc.
+ *
+ * based on commit ef1813d43db467f7a2839e819f8c53530a5ffbac of Diag
  */
 
 #include <errno.h>
@@ -110,9 +112,10 @@ static void ddrphy_vt_ctrl(void __iomem *phy_base, int enable)
 	}
 }
 
-static void ddrphy_set_ckoffset_qoffset(int delay_ckoffset0, int delay_ckoffset1,
-					int delay_qoffset, int enable,
-					void __iomem *phy_base)
+static void ddrphy_set_ckoffset_qoffset(void __iomem *phy_base,
+					int delay_ckoffset0,
+					int delay_ckoffset1,
+					int delay_qoffset)
 {
 	u8 ck_step0, ck_step1;	/* ckoffset_step for clock */
 	u8 q_step;	/*  qoffset_step for clock */
@@ -127,16 +130,15 @@ static void ddrphy_set_ckoffset_qoffset(int delay_ckoffset0, int delay_ckoffset1
 	ddrphy_vt_ctrl(phy_base, 0);
 
 	/* Q->[23:18], CK1->[11:6], CK0->bit[5:0] */
-	if (enable == 1)
-		ddrphy_maskwritel((q_step << 18) + (ck_step1 << 6) + ck_step0,
-				  PHY_ACBD_MASK | PHY_CK1BD_MASK | PHY_CK0BD_MASK,
-				  phy_base + PHY_ACBDLR);
+	ddrphy_maskwritel((q_step << 18) + (ck_step1 << 6) + ck_step0,
+			  PHY_ACBD_MASK | PHY_CK1BD_MASK | PHY_CK0BD_MASK,
+			  phy_base + PHY_ACBDLR);
 
 	ddrphy_vt_ctrl(phy_base, 1);
 }
 
-static void ddrphy_set_wl_delay_dx(int dx, int r0_delay, int r1_delay,
-				   int enable, void __iomem *phy_base)
+static void ddrphy_set_wl_delay_dx(void __iomem *phy_base, int dx,
+				   int r0_delay, int r1_delay)
 {
 	int rank;
 	int delay_wl[4];
@@ -156,14 +158,13 @@ static void ddrphy_set_wl_delay_dx(int dx, int r0_delay, int r1_delay,
 		wl_value |= ddrphy_hpstep(delay_wl[rank], dx, phy_base) << (8 * rank);
 	}
 
-	if (enable == 1)
-		ddrphy_maskwritel(wl_value, wl_mask, phy_base + PHY_DXLCDLR0(dx));
+	ddrphy_maskwritel(wl_value, wl_mask, phy_base + PHY_DXLCDLR0(dx));
 
 	ddrphy_vt_ctrl(phy_base, 1);
 }
 
-static void ddrphy_set_dqsg_delay_dx(int dx, int r0_delay, int r1_delay,
-				     int enable, void __iomem *phy_base)
+static void ddrphy_set_dqsg_delay_dx(void __iomem *phy_base, int dx,
+				     int r0_delay, int r1_delay)
 {
 	int rank;
 	int delay_dqsg[4];
@@ -183,13 +184,12 @@ static void ddrphy_set_dqsg_delay_dx(int dx, int r0_delay, int r1_delay,
 		dqsg_value |= ddrphy_hpstep(delay_dqsg[rank], dx, phy_base) << (8 * rank);
 	}
 
-	if (enable == 1)
-		ddrphy_maskwritel(dqsg_value, dqsg_mask, phy_base + PHY_DXLCDLR2(dx));
+	ddrphy_maskwritel(dqsg_value, dqsg_mask, phy_base + PHY_DXLCDLR2(dx));
 
 	ddrphy_vt_ctrl(phy_base, 1);
 }
 
-static void ddrphy_set_dswb_delay_dx(int dx, int delay, int enable, void __iomem *phy_base)
+static void ddrphy_set_dswb_delay_dx(void __iomem *phy_base, int dx, int delay)
 {
 	u8 dswb_step;
 
@@ -197,14 +197,13 @@ static void ddrphy_set_dswb_delay_dx(int dx, int delay, int enable, void __iomem
 
 	dswb_step = ddrphy_hpstep(delay, dx, phy_base);     /* DQS-BDL's delay */
 
-	if (enable == 1)
-		ddrphy_maskwritel(dswb_step << 24, PHY_DSWBD_MASK, phy_base + PHY_DXBDLR1(dx));
+	ddrphy_maskwritel(dswb_step << 24, PHY_DSWBD_MASK, phy_base + PHY_DXBDLR1(dx));
 
 	ddrphy_vt_ctrl(phy_base, 1);
 }
 
-static void ddrphy_set_oe_delay_dx(int dx, int dqs_delay, int dq_delay,
-				   int enable, void __iomem *phy_base)
+static void ddrphy_set_oe_delay_dx(void __iomem *phy_base, int dx,
+				   int dqs_delay, int dq_delay)
 {
 	u8 dqs_oe_step, dq_oe_step;
 	u32 wdata;
@@ -216,8 +215,7 @@ static void ddrphy_set_oe_delay_dx(int dx, int dqs_delay, int dq_delay,
 	dq_oe_step = ddrphy_hpstep(dq_delay, dx, phy_base);     /* DQ-oe's delay */
 	wdata = ((dq_oe_step<<6) + dqs_oe_step) & 0xFFF;
 
-	if (enable == 1)
-		ddrphy_maskwritel(wdata, PHY_DSDQOE_MASK, phy_base + PHY_DXBDLR2(dx));
+	ddrphy_maskwritel(wdata, PHY_DSDQOE_MASK, phy_base + PHY_DXBDLR2(dx));
 
 	ddrphy_vt_ctrl(phy_base, 1);
 }
@@ -333,23 +331,23 @@ static void ddrphy_init(void __iomem *phy_base, enum dram_freq freq)
 	writel(0x00000019, phy_base + PHY_ZQ2CR1);
 	writel(0x30FC6C20, phy_base + PHY_PGCR2);
 
-	ddrphy_set_ckoffset_qoffset(119, 0, 0, 1, phy_base);
-	ddrphy_set_wl_delay_dx(0, 220, 220, 1, phy_base);
-	ddrphy_set_wl_delay_dx(1, 160, 160, 1, phy_base);
-	ddrphy_set_wl_delay_dx(2, 190, 190, 1, phy_base);
-	ddrphy_set_wl_delay_dx(3, 150, 150, 1, phy_base);
-	ddrphy_set_dqsg_delay_dx(0, 750, 750, 1, phy_base);
-	ddrphy_set_dqsg_delay_dx(1, 750, 750, 1, phy_base);
-	ddrphy_set_dqsg_delay_dx(2, 750, 750, 1, phy_base);
-	ddrphy_set_dqsg_delay_dx(3, 750, 750, 1, phy_base);
-	ddrphy_set_dswb_delay_dx(0, 0, 1, phy_base);
-	ddrphy_set_dswb_delay_dx(1, 0, 1, phy_base);
-	ddrphy_set_dswb_delay_dx(2, 0, 1, phy_base);
-	ddrphy_set_dswb_delay_dx(3, 0, 1, phy_base);
-	ddrphy_set_oe_delay_dx(0, 0, 0, 1, phy_base);
-	ddrphy_set_oe_delay_dx(1, 0, 0, 1, phy_base);
-	ddrphy_set_oe_delay_dx(2, 0, 0, 1, phy_base);
-	ddrphy_set_oe_delay_dx(3, 0, 0, 1, phy_base);
+	ddrphy_set_ckoffset_qoffset(phy_base, 119, 0, 0);
+	ddrphy_set_wl_delay_dx(phy_base, 0, 220, 220);
+	ddrphy_set_wl_delay_dx(phy_base, 1, 160, 160);
+	ddrphy_set_wl_delay_dx(phy_base, 2, 190, 190);
+	ddrphy_set_wl_delay_dx(phy_base, 3, 150, 150);
+	ddrphy_set_dqsg_delay_dx(phy_base, 0, 750, 750);
+	ddrphy_set_dqsg_delay_dx(phy_base, 1, 750, 750);
+	ddrphy_set_dqsg_delay_dx(phy_base, 2, 750, 750);
+	ddrphy_set_dqsg_delay_dx(phy_base, 3, 750, 750);
+	ddrphy_set_dswb_delay_dx(phy_base, 0, 0);
+	ddrphy_set_dswb_delay_dx(phy_base, 1, 0);
+	ddrphy_set_dswb_delay_dx(phy_base, 2, 0);
+	ddrphy_set_dswb_delay_dx(phy_base, 3, 0);
+	ddrphy_set_oe_delay_dx(phy_base, 0, 0, 0);
+	ddrphy_set_oe_delay_dx(phy_base, 1, 0, 0);
+	ddrphy_set_oe_delay_dx(phy_base, 2, 0, 0);
+	ddrphy_set_oe_delay_dx(phy_base, 3, 0, 0);
 
 	writel(0x44000E81, phy_base + PHY_DX0GCR);
 	writel(0x44000E81, phy_base + PHY_DX1GCR);
