@@ -6,6 +6,7 @@ obj-y			+= main.o
 obj-y			+= mbr.o
 obj-y			+= next-entry.o
 obj-y			+= pinctrl.o
+obj-y			+= pll.o
 obj-y			+= printk.o
 obj-y			+= soc-info.o
 obj-y			+= timer.o

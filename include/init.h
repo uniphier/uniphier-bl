@@ -25,6 +25,7 @@ struct board_data {
 	struct dram_ch dram_ch[MAX_NR_DRAM_CH];
 	unsigned int flags;
 
+/* board type */
 #define BD_BOARD_GET_TYPE(f)		((f) & 0x7)
 #define BD_BOARD_LD20_REF		0	/* LD20 reference */
 #define BD_BOARD_LD20_GLOBAL		1	/* LD20 TV Set */
@@ -32,7 +33,17 @@ struct board_data {
 #define BD_BOARD_LD21_REF		3	/* LD21 reference */
 #define BD_BOARD_LD21_GLOBAL		4	/* LD21 TV Set */
 
+/* DRAM layout */
 #define BD_DRAM_SPARSE			BIT(8)
+
+/* DRAM PLL */
+#define BD_DPLL_SSC_CHANGE_RATE		BIT(9)
+#define BD_DPLL_SSC_GET_RATE(f)		(((f) >> 10) & 0x7)
+
+#define BD_DPLL_SSC_RATE_0		((0 << 10) | BD_DPLL_SSC_CHANGE_RATE)
+#define BD_DPLL_SSC_RATE_1		((1 << 10) | BD_DPLL_SSC_CHANGE_RATE)
+#define BD_DPLL_SSC_RATE_2		((2 << 10) | BD_DPLL_SSC_CHANGE_RATE)
+#define BD_DPLL_SSC_RATE_3		((3 << 10) | BD_DPLL_SSC_CHANGE_RATE)
 };
 
 #define MAX_NR_UART_PORTS	4
@@ -65,7 +76,8 @@ void uart_putc(char c);
 
 int timer_init(unsigned int clk_rate);
 
-void dpll_init(const int *dpll);
+void dpll_init(const struct soc_data *sd, const struct board_data *bd);
+
 void clk_enable_uart(unsigned int clk_bits);
 void clk_enable_dram(unsigned int clk_bits, unsigned int rst_bits);
 
