@@ -10,6 +10,12 @@
 
 #define NULL			((void *)0)
 
+enum {
+	false	= 0,
+	true	= 1
+};
+
+typedef _Bool			bool;
 typedef unsigned int		size_t;
 
 typedef unsigned char		u8;
