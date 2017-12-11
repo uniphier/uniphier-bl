@@ -8,6 +8,7 @@ obj-y			+= next-entry.o
 obj-y			+= pinctrl.o
 obj-y			+= printk.o
 obj-y			+= soc-info.o
+obj-y			+= timer.o
 obj-y			+= uart.o
 
 extra-y			+= uniphier.lds

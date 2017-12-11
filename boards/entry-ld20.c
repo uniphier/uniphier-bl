@@ -19,6 +19,7 @@ static const struct soc_data ld20_data = {
 		{ .pin = 90, .mux = 1, },
 		{ .pin = 94, .mux = 1, },
 	},
+	.timer_clk_rate = 50000000,
 	.dram_rst_bits = 0x00010707,
 	.dram_clk_bits = 0x00010007,
 	.dram_default_freq = 1866,

@@ -32,6 +32,7 @@ static const struct soc_data ld11_data = {
 		{ .pin = 90, .mux = 1, },
 		{ .pin = 94, .mux = 1, },
 	},
+	.timer_clk_rate = 50000000,
 	.dram_rst_bits = 0x00000003,
 	.dram_clk_bits = 0x00000003,
 	.dram_default_freq = 1600,

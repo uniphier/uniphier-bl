@@ -153,6 +153,10 @@ void __noreturn main(const struct soc_data *sd, const struct board_data *bd)
 	if (ret)
 		goto die;
 
+	ret = timer_init(sd->timer_clk_rate);
+	if (ret)
+		goto die;
+
 	if (sd->soc_init) {
 		ret = sd->soc_init(bd);
 		if (ret)

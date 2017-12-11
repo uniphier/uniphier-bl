@@ -47,6 +47,7 @@ struct soc_data {
 	unsigned int uart_clk_bits;
 	unsigned int uart_clk_rate;
 	const struct uart_pinmux uart_pinmux[MAX_NR_UART_PORTS];
+	unsigned int timer_clk_rate;
 	unsigned int dram_rst_bits;
 	unsigned int dram_clk_bits;
 	unsigned int dram_default_freq;
@@ -61,6 +62,8 @@ void __noreturn main(const struct soc_data *sd, const struct board_data *bd);
 
 void uart_init(unsigned int port, unsigned int clk_rate);
 void uart_putc(char c);
+
+int timer_init(unsigned int clk_rate);
 
 void dpll_init(const int *dpll);
 void clk_enable_uart(unsigned int clk_bits);
