@@ -4,6 +4,7 @@
  * based on commit 87cb0fa1cfe945be6d8d64dc4cacd5b707d76b9c of Diag
  */
 
+#include <bug.h>
 #include <errno.h>
 #include <init.h>
 #include <io.h>

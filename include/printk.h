@@ -31,13 +31,4 @@ void __printf(1, 2) printk(const char *fmt, ...);
 #define pr_info(fmt, ...)	__printk(6, pr_fmt(fmt), ##__VA_ARGS__)
 #define pr_debug(fmt, ...)	__printk(7, pr_fmt(fmt), ##__VA_ARGS__)
 
-#define __WARN()
-
-#define WARN_ON(condition) ({			\
-	int __ret_warn_on = !!(condition);	\
-	if (__ret_warn_on)			\
-		__WARN();			\
-	(__ret_warn_on);			\
-})
-
 #endif /* __PRINTK_H__ */
