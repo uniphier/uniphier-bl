@@ -84,3 +84,10 @@ void dpll_init(const struct soc_data *sd, const struct board_data *bd)
 		pll_enable_ssc_mod(pll_id);
 	}
 }
+
+void pll_set_freq(int pll_id, unsigned int freq, unsigned int divn)
+{
+	pll_set_ssc_mod_val(pll_id, freq, SSC_RATE_DEFAULT, divn);
+	udelay(50);
+	pll_enable_ssc_mod(pll_id);
+}

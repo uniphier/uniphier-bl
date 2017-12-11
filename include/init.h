@@ -77,6 +77,7 @@ void uart_putc(char c);
 int timer_init(unsigned int clk_rate);
 
 void dpll_init(const struct soc_data *sd, const struct board_data *bd);
+void pll_set_freq(int pll_id, unsigned int freq, unsigned int divn);
 
 void clk_enable_uart(unsigned int clk_bits);
 void clk_enable_dram(unsigned int clk_bits, unsigned int rst_bits);

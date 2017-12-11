@@ -16,6 +16,7 @@
 
 static int ld11_soc_init(const struct board_data *bd)
 {
+	pll_set_freq(0, 1960, 2);	/* CPLL: 2000MHz -> 1960MHz */
 	writel(0, SC_CA53_GEAR_SET);	/* Gear0: CPLL/2 */
 	writel(1, SC_CA53_GEAR_UPD);	/* update */
 
