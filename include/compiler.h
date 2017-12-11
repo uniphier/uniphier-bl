@@ -18,6 +18,9 @@
 #define __printf(a, b)		__attribute__((format(printf, a, b)))
 #define __section(S)		__attribute__((__section__(#S)))
 
+#define likely(x)		__builtin_expect(!!(x), 1)
+#define unlikely(x)		__builtin_expect(!!(x), 0)
+
 /*
  * Common definitions for all gcc versions go here.
  */
