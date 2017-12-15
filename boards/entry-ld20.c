@@ -8,6 +8,19 @@
 #include <compiler.h>
 #include <entry.h>
 #include <init.h>
+#include <io.h>
+
+#define SC_PVTCTRL_BASE		(IOMEM(0x6184e000))
+
+static int ld20_soc_init(const struct board_data *bd)
+{
+	/* increase the VDD09 voltage line up to 0.93V to suppress jitter */
+	writel(0x00000002, SC_PVTCTRL_BASE + 0x4);
+	writel(0x0000001e, SC_PVTCTRL_BASE + 0x78);
+	writel(0x00000001, SC_PVTCTRL_BASE + 0x0);
+
+	return 0;
+}
 
 static const struct soc_data ld20_data = {
 	.soc_id = 0x32,
@@ -27,6 +40,7 @@ static const struct soc_data ld20_data = {
 	.dram_have_ch2 = 1,
 	.dpll = { 6, 7, 8, },
 	.umc_init = ld20_umc_init,
+	.soc_init = ld20_soc_init,
 };
 
 static void __noreturn ld20_init(const struct board_data *bd)
