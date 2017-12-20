@@ -30,13 +30,15 @@ __build: $(if $(strip $(obj-y) $(obj-)),$(link-target)) $(extra-y) $(subdir-y)
 dep_flags	= -Wp,-MD,$(depfile),-MP -MT $@
 c_flags		= $(dep_flags) \
 		  $(filter-out $(CFLAGS_REMOVE_$(basetarget).o), \
-		  $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) $(CFLAGS_$(basetarget).o))
+		  $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) $(cflags-y) \
+		  $(CFLAGS_$(basetarget).o))
 a_flags		= $(dep_flags) \
 		  $(filter-out $(AFLAGS_REMOVE_$(basetarget).o), \
-		  $(UNPH_CPPFLAGS) $(UNPH_AFLAGS) $(AFLAGS_$(basetarget).o))
+		  $(UNPH_CPPFLAGS) $(UNPH_AFLAGS) $(aflags-y) \
+		  $(AFLAGS_$(basetarget).o))
 cpp_flags	= $(dep_flags) \
 		  $(filter-out $(CPPFLAGS_REMOVE_$(@F)), \
-		  $(UNPH_CPPFLAGS) $(CPPFLAGS_$(@F)))
+		  $(UNPH_CPPFLAGS) $(cppflags-y) $(CPPFLAGS_$(@F)))
 
 ifeq ($(UNPH_CHECKSRC),1)
 quiet_cmd_checksrc = CHECK   $<
