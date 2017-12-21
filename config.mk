@@ -17,8 +17,9 @@ CONFIG_SOC_LD20=y
 
 # choose malloc implementation
 #  malloc() is needed for zlib.  The simple malloc should be enough for our
-#  purpose.
+#  purpose.  You can play with dlmalloc if you like, though.
 CONFIG_MALLOC_SIMPLE=y
+#CONFIG_MALLOC_DL=y
 
 # no need to change
 CONFIG_TEXT_BASE=0x30000000
