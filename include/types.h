@@ -17,6 +17,7 @@ enum {
 
 typedef _Bool			bool;
 typedef unsigned long		size_t;
+typedef long			ptrdiff_t;
 
 typedef unsigned char		u8;
 typedef unsigned short		u16;
