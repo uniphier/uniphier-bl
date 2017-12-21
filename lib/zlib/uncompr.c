@@ -5,8 +5,32 @@
 
 /* @(#) $Id$ */
 
+#include <errno.h>
+#include <types.h>
+#include <printk.h>
+#include <malloc.h>
+
 #define ZLIB_INTERNAL
 #include "zlib.h"
+
+voidpf ZLIB_INTERNAL zcalloc(voidpf opaque, unsigned items, unsigned size)
+{
+	void *ptr;
+
+	ptr = calloc(items, size);
+
+	pr_info("zcalloc : items=%d, size=%d, p=%p\n",
+		items, size, ptr);
+
+	return ptr;
+}
+
+void ZLIB_INTERNAL zcfree(voidpf opque, voidpf ptr)
+{
+	pr_info("zcfree : ptr=%p\n", ptr);
+
+	free(ptr);
+}
 
 /* ===========================================================================
      Decompresses the source buffer into the destination buffer.  *sourceLen is
@@ -48,8 +72,8 @@ int ZEXPORT uncompress2 (dest, destLen, source, sourceLen)
 
     stream.next_in = (z_const Bytef *)source;
     stream.avail_in = 0;
-    stream.zalloc = (alloc_func)0;
-    stream.zfree = (free_func)0;
+    stream.zalloc = zcalloc;
+    stream.zfree = zcfree;
     stream.opaque = (voidpf)0;
 
     err = inflateInit(&stream);
@@ -67,6 +91,7 @@ int ZEXPORT uncompress2 (dest, destLen, source, sourceLen)
             stream.avail_in = len > (uLong)max ? max : (uInt)len;
             len -= stream.avail_in;
         }
+
         err = inflate(&stream, Z_NO_FLUSH);
     } while (err == Z_OK);
 
@@ -92,7 +117,15 @@ int ZEXPORT uncompress (dest, destLen, source, sourceLen)
     return uncompress2(dest, destLen, source, &sourceLen);
 }
 
-int str_size(void)
+int gunzip(const void *in_buf, unsigned long in_len,
+	   void *out_buf, void **out_pos)
 {
-	return sizeof(Bytef);
+	unsigned long out_buf_len = 0x80000;
+	int ret;
+
+	ret = uncompress(out_buf, &out_buf_len, in_buf, in_len);
+
+	*out_pos = (void *)out_buf_len;
+
+	return ret;
 }
