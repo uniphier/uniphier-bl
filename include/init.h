@@ -58,6 +58,8 @@ struct soc_data {
 	unsigned int uart_clk_bits;
 	unsigned int uart_clk_rate;
 	const struct uart_pinmux uart_pinmux[MAX_NR_UART_PORTS];
+	unsigned long heap_start;
+	unsigned long heap_end;
 	unsigned int timer_clk_rate;
 	unsigned int dram_rst_bits;
 	unsigned int dram_clk_bits;
