@@ -5,9 +5,9 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
+#include <bitops.h>
 #include <init.h>
 #include <io.h>
-#include <utils.h>
 
 #define SC_RSTCTRL_BASE		(IOMEM(0x61842000))
 #define SC_RSTCTRL7		((SC_RSTCTRL_BASE) + 0x18)

@@ -4,6 +4,7 @@
  * based on commit ef1813d43db467f7a2839e819f8c53530a5ffbac of Diag
  */
 
+#include <bitops.h>
 #include <errno.h>
 #include <init.h>
 #include <io.h>

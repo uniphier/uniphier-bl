@@ -8,8 +8,8 @@
 #ifndef __INIT_H__
 #define __INIT_H__
 
+#include <bitops.h>
 #include <compiler.h>
-#include <utils.h>
 
 #define MAX_NR_DRAM_CH		3
 

@@ -10,7 +10,7 @@
 #ifndef __DDRPHY_REGS_H__
 #define __DDRPHY_REGS_H__
 
-#include <utils.h>
+#include <bitops.h>
 
 #define PHY_REG_SHIFT		2
 

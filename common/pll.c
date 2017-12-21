@@ -6,6 +6,7 @@
  */
 
 #include <bitfield.h>
+#include <bitops.h>
 #include <delay.h>
 #include <init.h>
 #include <io.h>

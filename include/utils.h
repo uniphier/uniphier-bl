@@ -5,8 +5,6 @@
 #ifndef __UTILS_H__
 #define __UTILS_H__
 
-#define BITS_PER_LONG 64
-
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 
 /*
@@ -24,16 +22,6 @@
 		(((__x) - ((__d) / 2)) / (__d));	\
 }							\
 )
-
-#define BIT(nr)			(1UL << (nr))
-
-/*
- * Create a contiguous bitmask starting at bit position @l and ending at
- * position @h. For example
- * GENMASK_ULL(39, 21) gives us the 64bit vector 0x000000ffffe00000.
- */
-#define GENMASK(h, l) \
-	(((~0UL) << (l)) & (~0UL >> (BITS_PER_LONG - 1 - (h))))
 
 /*
  * abs() handles unsigned and signed longs, ints, shorts and chars.  For all
