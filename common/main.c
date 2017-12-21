@@ -11,6 +11,7 @@
 #include <init.h>
 #include <printk.h>
 #include <timestamp.h>
+#include <utils.h>
 #include <version.h>
 
 #define DRAM_CH0_BASE		0x80000000
