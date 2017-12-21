@@ -7,6 +7,7 @@
 
 #include <errno.h>
 #include <gunzip.h>
+#include <malloc.h>
 #include <printk.h>
 #include <types.h>
 
@@ -19,17 +20,18 @@ int gunzip(const void *in_buf, unsigned long in_len, void *out_buf,
 	   void **out_pos)
 {
 	const u8 *zbuf = in_buf;
-	struct z_stream_s stream;
-	struct z_stream_s *strm = &stream;
-	/*
-	 * This array is bigger than 9KB.  Be careful for stack over-run.
-	 * It is allocated in the stack instead of .bss because it does not
-	 * need zero-out except inflate_state.wsize and inflate_state.window.
-	 */
-	char workspace[sizeof(struct inflate_state)];
+	struct z_stream_s *strm;
 	int zret, ret = 0;
 
-	strm->workspace = &workspace;
+	strm = malloc(sizeof(*strm));
+	if (!strm)
+		return -ENOMEM;
+
+	strm->workspace = malloc(sizeof(struct inflate_state));
+	if (!strm->workspace) {
+		ret = -ENOMEM;
+		goto free;
+	}
 
 	if (!in_len)
 		in_len = ~0UL;
@@ -38,7 +40,8 @@ int gunzip(const void *in_buf, unsigned long in_len, void *out_buf,
 	if (in_len < 10 ||
 	    zbuf[0] != 0x1f || zbuf[1] != 0x8b || zbuf[2] != 0x08) {
 		pr_err("Not a gzip file\n");
-		return -EIO;
+		ret = -EIO;
+		goto free;
 	}
 
 	/*
@@ -52,7 +55,8 @@ int gunzip(const void *in_buf, unsigned long in_len, void *out_buf,
 		do {
 			if (strm->avail_in == 0) {
 				pr_err("header error\n");
-				return -EIO;
+				ret = -EIO;
+				goto free;
 			}
 			--strm->avail_in;
 		} while (*strm->next_in++);
@@ -85,6 +89,9 @@ end:
 	zlib_inflateEnd(strm);
 	if (out_pos)
 		*out_pos = strm->next_out;
+free:
+	free(strm->workspace);
+	free(strm);
 
 	return ret;
 }
