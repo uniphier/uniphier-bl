@@ -33,7 +33,7 @@ c_flags		= $(dep_flags) $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) \
 a_flags		= $(dep_flags) $(UNPH_CPPFLAGS) $(UNPH_AFLAGS) \
 		  $(AFLAGS_$(basetarget).o)
 cpp_flags	= $(dep_flags) $(UNPH_CPPFLAGS) $(UNPH_CPPFLAGS) \
-		  $(CPPFLAGS_$($F))
+		  $(CPPFLAGS_$(@F))
 
 ifeq ($(UNPH_CHECKSRC),1)
 quiet_cmd_checksrc = CHECK   $<
