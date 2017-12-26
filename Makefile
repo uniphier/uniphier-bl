@@ -91,12 +91,11 @@ OBJCOPY		:= $(CROSS_COMPILE)objcopy
 CHECK		:= sparse
 
 UNPH_CPPFLAGS	:= -include include/generated/config.h \
-		   -Iinclude -I$(srctree)/include \
-		   -fdata-sections -ffunction-sections
+		   -Iinclude -I$(srctree)/include
 UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-common -Werror-implicit-function-declaration \
-		   -Werror=date-time \
-		   -std=gnu89 -ffreestanding -Os \
+		   -Werror=date-time -std=gnu89 \
+		   -ffreestanding -ffunction-sections -fdata-sections -Os \
 		   -mgeneral-regs-only -mlittle-endian -mstrict-align
 UNPH_AFLAGS	:= -D__ASSEMBLY__ -mlittle-endian
 OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment -S
