@@ -1,3 +1,10 @@
+/*
+ * Copyright (C) 2017 Socionext Inc.
+ *   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
+ *
+ * SPDX-License-Identifier:	GPL-2.0+
+ */
+
 #ifndef __DLCONF_H__
 #define __DLCONF_H__
 
