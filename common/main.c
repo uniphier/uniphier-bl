@@ -12,6 +12,7 @@
 #include <init.h>
 #include <printk.h>
 #include <soc-info.h>
+#include <timer.h>
 #include <timestamp.h>
 #include <uart.h>
 #include <utils.h>

@@ -73,8 +73,6 @@ struct soc_data {
 
 void __noreturn main(const struct soc_data *sd, const struct board_data *bd);
 
-int timer_init(unsigned int clk_rate);
-
 void dpll_init(const struct soc_data *sd, const struct board_data *bd);
 void pll_set_freq(int pll_id, unsigned int freq, unsigned int divn);
 

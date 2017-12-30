@@ -9,9 +9,9 @@
 #include <delay.h>
 #include <bitops.h>
 #include <errno.h>
-#include <init.h>
 #include <io.h>
 #include <sysreg.h>
+#include <timer.h>
 #include <types.h>
 #include <utils.h>
 
