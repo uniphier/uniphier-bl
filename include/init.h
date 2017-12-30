@@ -88,8 +88,6 @@ int memconf_init(const struct board_data *bd, int have_ch2);
 int ld11_umc_init(const struct board_data *bd);
 int ld20_umc_init(const struct board_data *bd);
 
-unsigned int get_soc_id(void);
-
 void __noreturn next_entry(unsigned long entry_addr);
 
 #endif /* __INIT_H__ */

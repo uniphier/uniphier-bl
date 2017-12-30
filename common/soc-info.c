@@ -5,8 +5,8 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
-#include <init.h>
 #include <io.h>
+#include <soc-info.h>
 
 #define SG_REVISION		(IOMEM(0x5f800000))
 #define   SG_REVISION_TYPE_SHIFT	16
