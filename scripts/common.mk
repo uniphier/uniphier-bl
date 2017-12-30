@@ -93,6 +93,6 @@ if_changed = $(if $(strip $(any-prereq) $(arg-check)),                       \
 if_changed_dep = $(if $(strip $(any-prereq) $(arg-check) ),                  \
 	@set -e;                                                             \
 	$(echo-cmd) $(cmd_$(1));                                             \
-	printf '%s\n' 'cmd_$@ := $(make-cmd)' > $(dot-target).cmd;           \
+	printf '%s\n\n' 'cmd_$@ := $(make-cmd)' > $(dot-target).cmd;         \
 	cat $(depfile) >> $(dot-target).cmd;                                 \
 	rm -f $(depfile), @:)
