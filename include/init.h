@@ -73,9 +73,6 @@ struct soc_data {
 
 void __noreturn main(const struct soc_data *sd, const struct board_data *bd);
 
-void uart_init(unsigned int port, unsigned int clk_rate);
-void uart_putc(char c);
-
 int timer_init(unsigned int clk_rate);
 
 void dpll_init(const struct soc_data *sd, const struct board_data *bd);

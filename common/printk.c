@@ -7,8 +7,8 @@
 
 #include <stdarg.h>
 
-#include <init.h>
 #include <printk.h>
+#include <uart.h>
 
 static void __putc(char c)
 {

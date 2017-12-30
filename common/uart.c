@@ -5,8 +5,8 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
-#include <init.h>
 #include <io.h>
+#include <uart.h>
 #include <utils.h>
 
 #define UART_BASE	(IOMEM(0x54006800))
