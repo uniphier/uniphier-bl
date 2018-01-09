@@ -20,6 +20,7 @@
 void *memalign(size_t alignment, size_t size)
 {
 	void *brk, *p;
+	ptrdiff_t offset;
 
 	if (unlikely(!size))
 		return ZERO_SIZE_PTR;
@@ -31,13 +32,14 @@ void *memalign(size_t alignment, size_t size)
 	 * 'alignment' must be a power of two.
 	 *  If not, should it be rounded up to the nearest power of two?
 	 */
-	size += PTR_ALIGN(brk, alignment) - brk;
+	offset = PTR_ALIGN(brk, alignment) - brk;
+	size += offset;
 
 	p = sbrk(size);
 	if (unlikely(p == (void *)-1))
 		return NULL;
 
-	return p;
+	return p + offset;
 }
 
 void *malloc(size_t size)
