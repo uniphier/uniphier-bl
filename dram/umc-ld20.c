@@ -1,7 +1,7 @@
 /*
- * Copyright (C) 2016-2017 Socionext Inc.
+ * Copyright (C) 2016-2018 Socionext Inc.
  *
- * based on commit 87cb0fa1cfe945be6d8d64dc4cacd5b707d76b9c of Diag
+ * based on commit f870bad27b3dc212a2d952f78b5242fc03e601f2 of Diag
  */
 
 #include <bitops.h>
@@ -40,27 +40,27 @@ enum dram_board {		/* board type */
 
 /* PHY */
 static const int ddrphy_adrctrl[DRAM_BOARD_NR][DRAM_CH_NR] = {
-	{268 - 262, 268 - 263, 268 - 378},	/* LD20 reference */
-	{268 - 262, 268 - 263, 268 - 378},	/* LD20 TV */
-	{268 - 262, 268 - 263, 268 - 378},	/* LD20 TV C1 */
-	{268 - 212, 268 - 268, /* No CH2 */},	/* LD21 reference */
-	{268 - 212, 268 - 268, /* No CH2 */},	/* LD21 TV */
+	{6, 5, -110},			/* LD20 reference */
+	{6, 5, -110},			/* LD20 TV */
+	{6, 5, -110},			/* LD20 TV C1 */
+	{56, 0, /* No CH2 */},		/* LD21 reference */
+	{56, 0, /* No CH2 */},		/* LD21 TV */
 };
 
 static const int ddrphy_dlltrimclk[DRAM_BOARD_NR][DRAM_CH_NR] = {
-	{268, 268, 268},			/* LD20 reference */
-	{189, 189, 189},			/* LD20 TV */
-	{189, 189, 189},			/* LD20 TV C1 */
-	{268, 268 + 252, /* No CH2 */},		/* LD21 reference */
-	{268, 268 + 202, /* No CH2 */},		/* LD21 TV */
+	{268, 268, 268},		/* LD20 reference */
+	{189, 189, 189},		/* LD20 TV */
+	{189, 189, 189},		/* LD20 TV C1 */
+	{268, 520, /* No CH2 */},	/* LD21 reference */
+	{268, 470, /* No CH2 */},	/* LD21 TV */
 };
 
 static const int ddrphy_dllrecalib[DRAM_BOARD_NR][DRAM_CH_NR] = {
-	{268 - 378, 268 - 263, 268 - 378},	/* LD20 reference */
-	{268 - 378, 268 - 263, 268 - 378},	/* LD20 TV */
-	{268 - 378, 268 - 263, 268 - 378},	/* LD20 TV C1 */
-	{268 - 212, 268 - 536, /* No CH2 */},	/* LD21 reference */
-	{268 - 212, 268 - 536, /* No CH2 */},	/* LD21 TV */
+	{-110, 5, -110},		/* LD20 reference */
+	{-110, 5, -110},		/* LD20 TV */
+	{-110, 5, -110},		/* LD20 TV C1 */
+	{56, -268, /* No CH2 */},	/* LD21 reference */
+	{56, -268, /* No CH2 */},	/* LD21 TV */
 };
 
 static const u32 ddrphy_phy_pad_ctrl[DRAM_BOARD_NR][DRAM_CH_NR] = {
