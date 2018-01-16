@@ -26,7 +26,9 @@ struct partition_table {
 
 struct mbr_tail {
 	u8 usb_boot_sig[4];
-	u8 reserve[186];
+	u8 reserve[180];
+	le32 disk_id;
+	u8 reserve2[2];
 	struct partition_table partition[4];
 	u8 signature[2];
 } __packed;
@@ -35,6 +37,7 @@ struct mbr_tail {
 extern const struct mbr_tail mbr_tail;
 const struct mbr_tail mbr_tail __section(.mbr) = {
 	.usb_boot_sig = {0xaa, 0x55, 0x55, 0xaa},
+	.disk_id = cpu_to_le32(0xdeadbeef),
 	.partition[0] = {
 		.start_chs = {0xfe, 0xff, 0xff},
 		.type = 0x0c,
