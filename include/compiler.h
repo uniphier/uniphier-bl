@@ -17,6 +17,9 @@
 #define __packed		__attribute__((packed))
 #define __printf(a, b)		__attribute__((format(printf, a, b)))
 #define __section(S)		__attribute__((__section__(#S)))
+#define __used			__attribute__((used))
+#define __always_unused		__attribute__((unused))
+#define __maybe_unused		__attribute__((unused))
 
 #define likely(x)		__builtin_expect(!!(x), 1)
 #define unlikely(x)		__builtin_expect(!!(x), 0)
