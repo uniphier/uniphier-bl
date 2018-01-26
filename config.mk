@@ -14,6 +14,7 @@ CONFIG_UART_BAUDRATE=115200
 # enable the SoC support
 CONFIG_SOC_LD11=y
 CONFIG_SOC_LD20=y
+CONFIG_SOC_PXS3=y
 
 # choose malloc implementation
 #  malloc() is needed for zlib.  The simple malloc should be enough for our

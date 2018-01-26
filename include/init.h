@@ -28,11 +28,14 @@ struct board_data {
 
 /* board type */
 #define BD_BOARD_GET_TYPE(f)		((f) & 0x7)
+
 #define BD_BOARD_LD20_REF		0	/* LD20 reference */
 #define BD_BOARD_LD20_GLOBAL		1	/* LD20 TV Set */
 #define BD_BOARD_LD20_C1		2	/* LD20 TV Set C1 */
 #define BD_BOARD_LD21_REF		3	/* LD21 reference */
 #define BD_BOARD_LD21_GLOBAL		4	/* LD21 TV Set */
+
+#define BD_BOARD_PXS3_REF		0	/* PXs3 reference */
 
 /* DRAM layout */
 #define BD_DRAM_SPARSE			BIT(8)
@@ -86,6 +89,7 @@ int memconf_init(const struct board_data *bd, int have_ch2);
 
 int ld11_umc_init(const struct board_data *bd);
 int ld20_umc_init(const struct board_data *bd);
+int pxs3_umc_init(const struct board_data *bd);
 
 void __noreturn next_entry(unsigned long entry_addr);
 
