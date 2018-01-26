@@ -9,6 +9,14 @@
 
 	.section ".head","ax"
 ENTRY(head)
+	/* The boot ROM has enabled D-cache.  Disable it first. */
+	mrs	x1, sctlr_el3
+	bic	x1, x1, #4		/* clear C */
+	bic	x1, x1, #1		/* clear M */
+	msr	sctlr_el3, x1
+	isb
+	dsb	sy
+
 	/* zero out .bss section */
 	ldr	x0, =_sbss
 	ldr	x1, =_ebss
