@@ -72,6 +72,8 @@ static void dram_param_check(const struct soc_data *sd, struct board_data *bd)
 			}
 		}
 
+		bd->dram_ch[i].base = base;
+
 		pr_info("DRAM ch%d: 0x%lx - ", i, base);
 
 		base += size;

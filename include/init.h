@@ -14,6 +14,7 @@
 #define MAX_NR_DRAM_CH		3
 
 struct dram_ch {
+	unsigned long base;
 	unsigned long size;
 	unsigned int width;
 };
