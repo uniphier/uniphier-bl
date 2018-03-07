@@ -15,23 +15,23 @@
  * The byte 256-259 is the SoC-specific signature (0xaa5555aa) for the USB boot.
  */
 
-struct partition_table {
+struct __packed partition_table {
 	u8 boot_flag;
 	u8 start_chs[3];
 	u8 type;
 	u8 end_chs[3];
 	le32 lba_start;
 	le32 lba_size;
-} __packed;
+};
 
-struct mbr_tail {
+struct __packed mbr_tail {
 	u8 usb_boot_sig[4];
 	u8 reserve[180];
 	le32 disk_id;
 	u8 reserve2[2];
 	struct partition_table partition[4];
 	u8 signature[2];
-} __packed;
+};
 
 static const struct mbr_tail mbr_tail __used __section(.mbr) = {
 	.usb_boot_sig = {0xaa, 0x55, 0x55, 0xaa},
