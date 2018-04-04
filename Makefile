@@ -98,7 +98,8 @@ UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -ffreestanding -ffunction-sections -fdata-sections -Os \
 		   -mgeneral-regs-only -mlittle-endian -mstrict-align
 UNPH_AFLAGS	:= -D__ASSEMBLY__ -mlittle-endian
-OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment -S
+OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment \
+		   --strip-all
 CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as
 
 export CROSS_COMPILE AR AS CC CPP LD CHECK
