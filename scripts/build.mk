@@ -27,7 +27,7 @@ endif
 __build: $(if $(strip $(obj-y) $(obj-)),$(link-target)) $(extra-y) $(subdir-y)
 	@:
 
-dep_flags	= -Wp,-MD,$(depfile),-MP -MT $@
+dep_flags	= -Wp,-MD,$(depfile) -MP -MT $@
 c_flags		= $(dep_flags) \
 		  $(filter-out $(CFLAGS_REMOVE_$(basetarget).o), \
 		  $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) $(CFLAGS_$(basetarget).o))
