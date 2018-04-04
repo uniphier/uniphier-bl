@@ -11,13 +11,13 @@ include $(srctree)/config.mk
 include $(src)/Makefile
 
 subdir-y	+= $(patsubst %/,%,$(filter %/, $(obj-y)))
-obj-y		:= $(patsubst %/,%/link.o, $(obj-y))
+obj-y		:= $(patsubst %/,%/link.a, $(obj-y))
 
 extra-y		:= $(strip $(addprefix $(obj)/,$(extra-y)))
 subdir-y	:= $(strip $(addprefix $(obj)/,$(subdir-y)))
 obj-y		:= $(strip $(addprefix $(obj)/,$(obj-y)))
-subdir-obj-y	:= $(filter %/link.o, $(obj-y))
-link-target	:= $(obj)/link.o
+subdir-obj-y	:= $(filter %/link.a, $(obj-y))
+link-target	:= $(obj)/link.a
 have-cmd-files	:= $(obj-y) $(extra-y) $(link-target)
 
 ifneq ($(srctree),.)
@@ -87,11 +87,11 @@ $(obj)/%.lds: $(src)/%.lds.S FORCE
 
 # Rule to generate an intermediate .o file
 # ---------------------------------------------------------------------------
-quiet_cmd_ar_link_o = AR      $@
-      cmd_ar_link_o = rm -f $@; $(AR) rcPST $@ $(obj-y)
+quiet_cmd_ar_link = AR      $@
+      cmd_ar_link = rm -f $@; $(AR) rcPST $@ $(obj-y)
 
 $(link-target): $(obj-y) FORCE
-	$(call if_changed,ar_link_o)
+	$(call if_changed,ar_link)
 
 $(sort $(subdir-obj-y)): $(subdir-y) ;
 

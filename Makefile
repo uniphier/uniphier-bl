@@ -136,7 +136,7 @@ board-$(CONFIG_SOC_PXS3)	+= pxs3_ref
 
 timestamp := common/timestamp.o
 lds := common/uniphier.lds
-objs := $(addsuffix /link.o, $(dir-y))
+objs := $(addsuffix /link.a, $(dir-y))
 elfs := $(patsubst %,bl_%.elf, $(board-y))
 bins := $(patsubst %,bl_%.bin, $(board-y))
 have-cmd-files := $(elfs) $(bins)
@@ -160,7 +160,7 @@ $(elfs): $(objs) $(timestamp) $(lds) FORCE
 $(timestamp): $(objs) $(lds)
 	$(Q)$(MAKE) $(build)=$(@D) $@
 
-$(objs): %/link.o: % ;
+$(objs): %/link.a: % ;
 $(lds): $(patsubst %/,%,$(dir $(lds))) ;
 
 PHONY += $(dir-y)
