@@ -2,6 +2,7 @@
 # Normal rules
 #
 .*
+*.a
 *.o
 *.s
 *.i
