@@ -4,38 +4,40 @@ UniPhier BL
 First stage boot loader for UniPhier 64bit SoCs.  This is supposed to be loaded
 by the Boot ROM and runs in the on-chip SRAM.  After basic initialization of SoC
 and DRAM, this loader expands the next image into the DRAM, then hands the
-control over to it.  Typically, the next image is [ARM Trusted Firmware]
+control over to it.  Typically, the next image is [Trusted Firmware-A] (TF-A)
 BL2 (at EL3) [1].
 
-[ARM Trusted Firmware]: https://github.com/ARM-software/arm-trusted-firmware
-[1]: Historically, UniPhier BL was introduced to load ARM Trusted Firmware BL1.
+[Trusted Firmware-A]: https://github.com/ARM-software/arm-trusted-firmware
+[1]: Trusted Firmware-A was originally called ARM Trusted Firmware.  It was
+     renamed for consistency and disambiguation when Arm Ltd. introduced
+     Trusted Firmware-M.  Historically, UniPhier BL was introduced to load BL1.
      BL1 was mandatory at that time because BL2 executes at BL1-S.  With a
      special mode, BL2_AT_EL3 supported, BL2 is now able to execute at EL3,
      allowing to skip BL1.  Then, the BL1 support for UniPhier platform was
-     dropped from the code base of ARM Trusted Firmware.
+     dropped from the code base of TF-A.
+
 
 Why is this necessary?
 ----------------------
 
-The UniPhier 64bit SoCs use ARM Trusted Firmware as the secure world firmware.
-It provides various features with flexibility; however, the images become too
-large to be loaded into the on-chip SRAM in some use-cases.
+The UniPhier 64bit SoCs use TF-A as the secure world firmware.  It provides
+various features with flexibility; however, the images become too large to be
+loaded into the on-chip SRAM in some use-cases.
 
 The Boot ROM of UniPhier SoCs loads 64KB [2] image from a non-volatile storage
 into the on-chip SRAM.  This size is large enough for the boot flow without
 firmware image authentication.
 
 For real products, it is important to verify images to prevent any malformed
-software from being run.  ARM Trusted Firmware provides a standard firmware
-authentication mechanism called Trusted Board Boot (TBB).  Unfortunately, if
-the TBB is enabled, the single image of ARM Trusted Firmware exceeds the 64KB
-limit.
+software from being run.  TF-A provides a standard firmware authentication
+mechanism called Trusted Board Boot (TBB).  Unfortunately, if the TBB is
+enabled, the TF-A BL2 exceeds the 64KB limit.
 
 This loader has been introduced to solve the memory footprint problem.  The BL2
-of ARM Trusted Firmware is GZIP-compressed and appended to this loader.  The
-concatenated image fits within the 64KB limit.  This loader initializes the DRAM
-and decompresses the BL2 into the DRAM.  With this, there is no more image size
-problem on the ARM Trusted Firmware side since all BL images run in the DRAM.
+of TF-A is GZIP-compressed and appended to this loader.  The concatenated image
+fits within the 64KB limit.  This loader initializes the DRAM and decompresses
+the BL2 into the DRAM.  With this, there is no more image size problem on the
+TF-A side since all BL images run in the DRAM.
 
 [2]: Some SoCs can load 80KB, but the software implementation must be aligned
      to the lowest common denominator.
@@ -56,16 +58,16 @@ Boot flow
   setup, it decompresses the appended BL2 image into the DRAM, then jumps to
   the BL2 entry.
 
-3. ARM Trusted Firmware BL2 (at EL3)
+3. TF-A BL2 (at EL3)
 
   This runs in the DRAM.  It extracts more images from an image container called
   Firmware Image Package (FIP).  If TBB is enabled, they are all authenticated
-  by the standard mechanism of ARM Trusted Firmware.  After loading all the
-  images, it jumps to the BL31 entry.
+  by the standard mechanism of TF-A.  After loading all the images, it jumps to
+  the BL31 entry.
 
-4. ARM Trusted Firmware BL31 and more
+4. TF-A BL31 and more
 
-  See ARM Trusted Firmware documentation for further boot sequence.
+  See TF-A documentation for further boot sequence.
 
 
 Compile
@@ -147,8 +149,7 @@ Generate final image
 --------------------
 
 To create the ready-to-burn image, the GZIP-compressed BL2 image `bl2.bin.gz`
-is also needed.  Follow the document in ARM Trusted Firmware to build this
-image.
+is also needed.  Follow the document in TF-A to build this image.
 
 Then, concatenate the two as follows:
 
