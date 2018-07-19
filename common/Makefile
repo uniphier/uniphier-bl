@@ -4,6 +4,7 @@ obj-$(CONFIG_DEBUG)	+= debug.o
 obj-y			+= head.o
 obj-y			+= heap.o
 obj-y			+= main.o
+obj-y			+= memory-test.o
 obj-y			+= mbr.o
 obj-y			+= next-entry.o
 obj-y			+= pinctrl.o

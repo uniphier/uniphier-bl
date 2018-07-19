@@ -88,7 +88,7 @@ static void dram_param_check(const struct soc_data *sd, struct board_data *bd)
 
 static int dram_init(const struct soc_data *sd, const struct board_data *bd)
 {
-	int ret;
+	int ret, i;
 
 	pr_info("Initializing DRAM... ");
 
@@ -106,6 +106,20 @@ static int dram_init(const struct soc_data *sd, const struct board_data *bd)
 	if (ret) {
 		pr_err("failed to init UMC (%d)\n", ret);
 		return ret;
+	}
+
+	pr_info("Done\n");
+
+	pr_info("Testing DRAM access... ");
+
+	for (i = 0; i < ARRAY_SIZE(bd->dram_ch); i++) {
+		if (!bd->dram_ch[i].size)
+			continue;
+		ret = memtest(bd->dram_ch[i].base, 0x100);
+		if (ret) {
+			pr_err("DRAM access test failed in ch%d (%d)\n", i, ret);
+			return ret;
+		}
 	}
 
 	pr_info("Done\n");
