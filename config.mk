@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0
+
 # uncomment for debug
 #CONFIG_DEBUG=y
 

@@ -1,7 +1,6 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Based on include/linux/kernel.h, Linux 4.14
- *
- * SPDX-License-Identifier:	GPL-2.0
  */
 
 #ifndef __UTILS_H__

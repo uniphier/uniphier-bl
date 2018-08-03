@@ -1,8 +1,8 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Copied from include/linux/build_bug.h, Linux 4.14
- *
- * SPDX-License-Identifier: GPL-2.0
  */
+
 #ifndef __BUILD_BUG_H__
 #define __BUILD_BUG_H__
 

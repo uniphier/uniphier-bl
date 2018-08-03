@@ -1,7 +1,6 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Based on include/asm-generic/bug.h, Linux 4.14
- *
- * SPDX-License-Identifier:	GPL-2.0
  */
 
 #ifndef __BUG_H__

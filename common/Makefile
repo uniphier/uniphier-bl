@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0
+
 obj-y			+= cache.o
 obj-y			+= clk.o
 obj-$(CONFIG_DEBUG)	+= debug.o

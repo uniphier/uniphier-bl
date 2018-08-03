@@ -1,7 +1,6 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Based on include/uapi/linux/byteorder/big_endian.h, Linux 4.10
- *
- * SPDX-License-Identifier:	GPL-2.0
  */
 
 #ifndef __BYTEORDER_BIG_ENDIAN_H__

@@ -1,6 +1,4 @@
-/*
- * SPDX-License-Identifier:	GPL-2.0+
- */
+/* SPDX-License-Identifier: GPL-2.0+ */
 
 #ifndef __COMPILER_H__
 #define __COMPILER_H__

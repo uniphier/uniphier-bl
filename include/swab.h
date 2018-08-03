@@ -1,7 +1,6 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Based on include/uapi/linux/swab.h, Linux 4.10
- *
- * SPDX-License-Identifier:	GPL-2.0
  */
 
 #ifndef __SWAB_H__

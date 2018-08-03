@@ -1,6 +1,4 @@
-/*
- * SPDX-License-Identifier:	GPL-2.0+
- */
+/* SPDX-License-Identifier: GPL-2.0+ */
 
 #ifndef __MALLOC_H__
 #define __MALLOC_H__

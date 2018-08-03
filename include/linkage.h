@@ -1,6 +1,4 @@
-/*
- * SPDX-License-Identifier:	GPL-2.0+
- */
+/* SPDX-License-Identifier: GPL-2.0+ */
 
 #ifndef __LINKAGE_H__
 #define __LINKAGE_H__

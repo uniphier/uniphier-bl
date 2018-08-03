@@ -1,8 +1,8 @@
-/*
- * Copyright (C) 2017 Socionext Inc.
- *
- * based on commit 40ca68de3bc947d49b7da6ad864ffb7cebcb2e0c of Diag
- */
+// SPDX-License-Identifier: GPL-2.0+
+//
+// Copyright (C) 2017 Socionext Inc.
+//
+// based on commit 40ca68de3bc947d49b7da6ad864ffb7cebcb2e0c of Diag
 
 #include <errno.h>
 #include <init.h>

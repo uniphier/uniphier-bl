@@ -1,8 +1,6 @@
-/*
- * Copied from lib/string.c, Linux 4.9
- *
- * SPDX-License-Identifier:	GPL-2.0
- */
+// SPDX-License-Identifier: GPL-2.0
+//
+// Copied from lib/string.c, Linux 4.9
 
 #include <string.h>
 #include <types.h>

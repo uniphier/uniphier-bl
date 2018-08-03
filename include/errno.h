@@ -1,7 +1,6 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Copied from include/uapi/asm-generic/errno-base.h, Linux 4.9
- *
- * SPDX-License-Identifier:	GPL-2.0
  */
 
 #ifndef __ERRNO_H__

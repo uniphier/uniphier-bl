@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: GPL-2.0
+
 VERSION := 1.2
 
 # Check make version

@@ -1,6 +1,4 @@
-/*
- * SPDX-License-Identifier:	GPL-2.0+
- */
+/* SPDX-License-Identifier: GPL-2.0+ */
 
 #ifndef __STRING_H__
 #define __STRING_H__

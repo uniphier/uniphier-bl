@@ -1,10 +1,9 @@
+/* SPDX-License-Identifier: GPL-2.0 */
 /*
  * Copied from include/linux/bitfield.h, Linux 4.14
  *
  * Copyright (C) 2014 Felix Fietkau <nbd@nbd.name>
  * Copyright (C) 2004 - 2009 Ivo van Doorn <IvDoorn@gmail.com>
- *
- * SPDX-License-Identifier:	GPL-2.0
  */
 
 #ifndef __BITFIELD_H__
