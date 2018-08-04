@@ -33,7 +33,6 @@ kecho := $($(quiet)kecho)
 # filechk is used to check if the content of a generated file is updated.
 define filechk
 	$(Q)set -e;				\
-	$(kecho) '  CHK     $@';		\
 	mkdir -p $(dir $@);			\
 	$(filechk_$(1)) < $< > $@.tmp;		\
 	if [ -r $@ ] && cmp -s $@ $@.tmp; then	\
