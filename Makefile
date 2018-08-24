@@ -99,13 +99,13 @@ UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Werror=date-time -std=gnu89 \
 		   -ffreestanding -ffunction-sections -fdata-sections -Os \
 		   -mgeneral-regs-only -mlittle-endian -mstrict-align
-UNPH_AFLAGS	:= -D__ASSEMBLY__ -mlittle-endian
+UNPH_ASFLAGS	:= -D__ASSEMBLY__ -mlittle-endian
 OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment \
 		   --strip-all
 CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as
 
 export CROSS_COMPILE AR AS CC CPP LD CHECK
-export UNPH_CPPFLAGS UNPH_CFLAGS UNPH_AFLAGS CHECKFLAGS
+export UNPH_CPPFLAGS UNPH_CFLAGS UNPH_ASFLAGS CHECKFLAGS
 
 include $(srctree)/scripts/common.mk
 

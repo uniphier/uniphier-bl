@@ -33,9 +33,9 @@ dep_flags	= -Wp,-MD,$(depfile) -MP -MT $@
 c_flags		= $(dep_flags) \
 		  $(filter-out $(CFLAGS_REMOVE_$(basetarget).o), \
 		  $(UNPH_CPPFLAGS) $(UNPH_CFLAGS) $(CFLAGS_$(basetarget).o))
-a_flags		= $(dep_flags) \
-		  $(filter-out $(AFLAGS_REMOVE_$(basetarget).o), \
-		  $(UNPH_CPPFLAGS) $(UNPH_AFLAGS) $(AFLAGS_$(basetarget).o))
+as_flags	= $(dep_flags) \
+		  $(filter-out $(ASFLAGS_REMOVE_$(basetarget).o), \
+		  $(UNPH_CPPFLAGS) $(UNPH_ASFLAGS) $(ASFLAGS_$(basetarget).o))
 cpp_flags	= $(dep_flags) \
 		  $(filter-out $(CPPFLAGS_REMOVE_$(@F)), \
 		  $(UNPH_CPPFLAGS) $(CPPFLAGS_$(@F)))
@@ -53,7 +53,7 @@ $(obj)/%.i: $(src)/%.c FORCE
 	$(call if_changed_dep,cpp_i_c)
 
 quiet_cmd_cpp_s_S = CPP     $@
-      cmd_cpp_s_S = $(CPP) $(a_flags) -o $@ $<
+      cmd_cpp_s_S = $(CPP) $(as_flags) -o $@ $<
 
 $(obj)/%.s: $(src)/%.S FORCE
 	$(call if_changed_dep,cpp_s_S)
@@ -73,7 +73,7 @@ $(obj)/%.o: $(src)/%.c FORCE
 	$(call if_changed_dep,cc_o_c)
 
 quiet_cmd_as_o_S = AS      $@
-      cmd_as_o_S = $(CC) $(a_flags) -c -o $@ $<
+      cmd_as_o_S = $(CC) $(as_flags) -c -o $@ $<
 
 $(obj)/%.o: $(src)/%.S FORCE
 	$(call if_changed_dep,as_o_S)
