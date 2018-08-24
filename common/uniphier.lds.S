@@ -29,6 +29,10 @@ SECTIONS
 		*(.rodata*)
 	}
 
+	.note : {
+		*(.note.*)
+	}
+
 	.data : {
 		_sdata = .;
 		*(.data*)
