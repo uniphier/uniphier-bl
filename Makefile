@@ -100,6 +100,7 @@ UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -ffreestanding -ffunction-sections -fdata-sections -Os \
 		   -mgeneral-regs-only -mlittle-endian -mstrict-align
 UNPH_ASFLAGS	:= -D__ASSEMBLY__ -mlittle-endian
+UNPH_LDFLAGS	:= --gc-sections
 OBJCOPYFLAGS	:= -O binary -R .note -R .note.gnu.build-id -R .comment \
 		   --strip-all
 CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as
@@ -147,7 +148,7 @@ all: $(bins)
 	@:
 
 quiet_cmd_link = LD      $@
-      cmd_link = $(LD) $(LDFLAGS) --gc-sections -o $@ \
+      cmd_link = $(LD) $(UNPH_LDFLAGS) -o $@ \
 	-e $(patsubst bl_%.elf,entry_%,$@) -T $(lds) \
 	$(timestamp) --whole-archive $(objs)
 
