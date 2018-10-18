@@ -3,7 +3,7 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-#include <bitops.h>
+#include <bits.h>
 #include <init.h>
 #include <io.h>
 

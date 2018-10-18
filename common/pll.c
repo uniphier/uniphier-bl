@@ -4,7 +4,7 @@
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
 #include <bitfield.h>
-#include <bitops.h>
+#include <bits.h>
 #include <delay.h>
 #include <init.h>
 #include <io.h>

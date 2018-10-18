@@ -6,7 +6,7 @@
 #ifndef __DDRUQPHY_REGS_H__
 #define __DDRUQPHY_REGS_H__
 
-#include <bitops.h>
+#include <bits.h>
 
 #define PHY_REG_SHIFT			2
 #define PHY_SLV_DLY_WIDTH		6

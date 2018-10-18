@@ -5,7 +5,7 @@
 
 #include <bug.h>
 #include <delay.h>
-#include <bitops.h>
+#include <bits.h>
 #include <errno.h>
 #include <io.h>
 #include <sysreg.h>

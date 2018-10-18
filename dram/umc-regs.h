@@ -6,7 +6,7 @@
 #ifndef __UMC_REGS_H__
 #define __UMC_REGS_H__
 
-#include <bitops.h>
+#include <bits.h>
 
 #define UMC_CMDCTLA		0x00000000
 #define UMC_CMDCTLB		0x00000004

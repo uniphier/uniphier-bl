@@ -4,7 +4,7 @@
 //
 // based on commit f870bad27b3dc212a2d952f78b5242fc03e601f2 of Diag
 
-#include <bitops.h>
+#include <bits.h>
 #include <bug.h>
 #include <errno.h>
 #include <init.h>
