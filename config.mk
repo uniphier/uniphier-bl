@@ -18,6 +18,9 @@ CONFIG_SOC_LD11=y
 CONFIG_SOC_LD20=y
 CONFIG_SOC_PXS3=y
 
+# enable the DRAM scramble feature in UMC
+CONFIG_DRAM_SCRAMBLE=y
+
 # choose malloc implementation
 #  malloc() is needed for zlib.  The simple malloc should be enough for our
 #  purpose.  You can play with dlmalloc if you like, though.

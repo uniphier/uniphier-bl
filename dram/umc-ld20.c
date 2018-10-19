@@ -15,6 +15,7 @@
 
 #include "ddruqphy-regs.h"
 #include "umc-regs.h"
+#include "umc-scramble.h"
 
 #define DRAM_CH_NR	3
 
@@ -538,6 +539,7 @@ static int umc_ch_init(void __iomem *umc_ch_base, void __iomem *phy_ch_base,
 		       unsigned long size, int ch)
 {
 	void __iomem *dc_base = umc_ch_base + 0x00011000;
+	void __iomem *sec_base = umc_ch_base + 0x00020000;
 	void __iomem *phy_base = phy_ch_base;
 	int ret;
 
@@ -561,6 +563,8 @@ static int umc_ch_init(void __iomem *umc_ch_base, void __iomem *phy_ch_base,
 	ret = ddrphy_training(phy_base, board, ch);
 	if (ret)
 		return ret;
+
+	umc_scramble_init(sec_base);
 
 	return 0;
 }

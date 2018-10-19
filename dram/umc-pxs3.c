@@ -13,6 +13,7 @@
 
 #include "ddr4phy-regs.h"
 #include "umc-legacy-regs.h"
+#include "umc-scramble.h"
 
 #define DRAM_CH_NR	3
 
@@ -532,6 +533,7 @@ static void um_init(void __iomem *um_base)
 #define UM_BASE			(IOMEM(0x5b600000))
 #define UMC_BASE(ch)		(IOMEM(0x5b800000) + 0x00200000 * (ch))
 #define UMC_DC_BASE(ch)		(UMC_BASE(ch) + 0x00011000)
+#define UMC_SEC_BASE(ch)	(UMC_BASE(ch) + 0x00020000)
 #define PHY_BASE(ch)		(IOMEM(0x6e200000) + 0x00004000 * (ch))
 
 static int pxs3_umc_is_resuming(void)
@@ -595,6 +597,8 @@ int pxs3_umc_init(const struct board_data *bd)
 			pr_err("failed to initialize UMC ch%d\n", ch);
 			return ret;
 		}
+
+		umc_scramble_init(UMC_SEC_BASE(ch));
 	}
 
 	/* MBUS */

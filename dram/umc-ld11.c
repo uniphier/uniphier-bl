@@ -14,6 +14,7 @@
 
 #include "ddrphy-regs.h"
 #include "umc-regs.h"
+#include "umc-scramble.h"
 
 #define DDR_FREQ		1600
 
@@ -422,8 +423,16 @@ static int umc_ch_init(void __iomem *umc_ch_base,
 		       enum dram_freq freq, unsigned long size, int ch)
 {
 	void __iomem *dc_base  = umc_ch_base;
+	void __iomem *sec_base = umc_ch_base + 0x0000c000;
+	int ret;
 
-	return umc_dc_init(dc_base, freq, size, ch);
+	ret = umc_dc_init(dc_base, freq, size, ch);
+	if (ret)
+		return ret;
+
+	umc_scramble_init(sec_base);
+
+	return 0;
 }
 
 static void um_init(void __iomem *um_base)
