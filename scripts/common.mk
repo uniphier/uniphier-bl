@@ -97,3 +97,6 @@ if_changed_dep = $(if $(strip $(any-prereq) $(arg-check) ),                  \
 	printf '%s\n\n' 'cmd_$@ := $(make-cmd)' > $(dot-target).cmd;         \
 	cat $(depfile) >> $(dot-target).cmd;                                 \
 	rm -f $(depfile), @:)
+
+# delete partially updated (i.e. corrupted) files on error
+.DELETE_ON_ERROR:
