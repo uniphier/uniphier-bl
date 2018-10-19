@@ -114,14 +114,14 @@ define filechk_config
 	 $(if $($v), echo \#define $v $(if $(filter y,$($v)),1,'$($v)');)))
 endef
 
-include/generated/config.h: $(srctree)/config.mk FORCE
+include/generated/config.h: FORCE
 	$(call filechk,config)
 
 define filechk_version
 	echo \#define VERSION \"$(VERSION)\"
 endef
 
-include/generated/version.h: $(srctree)/Makefile FORCE
+include/generated/version.h: FORCE
 	$(call filechk,version)
 
 PHONY += prepare
