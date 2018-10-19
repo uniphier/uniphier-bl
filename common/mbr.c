@@ -38,8 +38,8 @@ static const struct mbr_tail mbr_tail __used __section(.mbr) = {
 		.start_chs = {0xfe, 0xff, 0xff},
 		.type = 0x0c,
 		.end_chs = {0xfe, 0xff, 0xff},
-		.lba_start = cpu_to_le32(0x400),
-		.lba_size = cpu_to_le32(0xf600),
+		.lba_start = cpu_to_le32(0x800),
+		.lba_size = cpu_to_le32(0xff800),
 	},
 	.signature = {0x55, 0xaa},
 };
