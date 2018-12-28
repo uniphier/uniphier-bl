@@ -300,11 +300,9 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 					field_width = 2*sizeof(void *);
 					flags |= ZEROPAD;
 				}
-				str = number(str, end,
-						(unsigned long) va_arg(args, void *),
-						16, field_width, precision, flags);
-				continue;
 
+				qualifier = 'p';
+				break;
 
 			case 'n':
 				/* FIXME:
@@ -371,6 +369,8 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 			num = (unsigned short) va_arg(args, int);
 			if (flags & SIGN)
 				num = (signed short) num;
+		} else if (qualifier == 'p') {
+			num = (unsigned long)va_arg(args, void *);
 		} else {
 			num = va_arg(args, unsigned int);
 			if (flags & SIGN)
