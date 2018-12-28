@@ -3,9 +3,8 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-#include <stdarg.h>
-
 #include <printk.h>
+#include <stdarg.h>
 #include <uart.h>
 
 static void __putc(char c)

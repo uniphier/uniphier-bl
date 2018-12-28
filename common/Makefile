@@ -18,9 +18,6 @@ obj-y			+= uart.o
 
 extra-y			+= uniphier.lds
 
-# for <stdarg.h>
-CFLAGS_REMOVE_printk.o	:= -nostdinc
-
 # time stamp
 quiet_cmd_timestamp = GEN     $@
 define cmd_timestamp
