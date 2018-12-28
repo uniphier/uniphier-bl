@@ -10,6 +10,9 @@ else
 CONFIG_LOGLEVEL=6
 endif
 
+# Build with clang, llvm assember, linker.
+#CONFIG_LLVM=y
+
 # baudrate of serial console
 CONFIG_UART_BAUDRATE=115200
 

@@ -84,12 +84,24 @@ include $(srctree)/config.mk
 
 CROSS_COMPILE	?= aarch64-linux-gnu-
 
+ifeq ($(CONFIG_LLVM),y)
+CLANG_FLAGS	:= --target=aarch64-linux-gnu
+# llvm-ar does not recognize 'P' option. Still relying on binutils.
+AR		:= ar
+AS		:= $(LLVM_DIR)clang
+CC		:= $(LLVM_DIR)clang
+CPP		:= $(CC) -E
+LD		:= $(LLVM_DIR)ld.lld
+OBJCOPY		:= $(LLVM_DIR)llvm-objcopy
+else
 AR		:= $(CROSS_COMPILE)ar
 AS		:= $(CROSS_COMPILE)as
 CC		:= $(CROSS_COMPILE)gcc
 CPP		:= $(CC) -E
 LD		:= $(CROSS_COMPILE)ld
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
+endif
+
 CHECK		:= sparse
 
 UNPH_CPPFLAGS	:= -nostdinc -include include/generated/config.h \
@@ -98,8 +110,9 @@ UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-common -Werror-implicit-function-declaration \
 		   -Werror=date-time -std=gnu89 \
 		   -ffreestanding -ffunction-sections -fdata-sections -Os \
-		   -mgeneral-regs-only -mlittle-endian -mstrict-align
-UNPH_ASFLAGS	:= -D__ASSEMBLY__ -mlittle-endian
+		   -mgeneral-regs-only -mlittle-endian -mstrict-align \
+		   $(CLANG_FLAGS)
+UNPH_ASFLAGS	:= -D__ASSEMBLY__ -mlittle-endian $(CLANG_FLAGS)
 UNPH_LDFLAGS	:= --gc-sections --build-id
 OBJCOPYFLAGS	:= -O binary -R .comment --strip-all
 CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as

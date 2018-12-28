@@ -13,7 +13,11 @@ SECTIONS
 
 	.head : {
 		KEEP(*(.head))
-		. = 0x100;
+	}
+
+	. = __image_start + 0x100;
+
+	.mbr : {
 		KEEP(*(.mbr))
 	}
 
