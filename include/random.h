@@ -8,6 +8,7 @@
 #define __RANDOM_H__
 
 #include <types.h>
+#include <utils.h>
 
 void srand(unsigned int seed);
 void get_random_bytes(void *buf, int nbytes);
@@ -48,7 +49,6 @@ static inline unsigned long get_random_long(void)
 	return tmp;
 }
 
-#define INT_MAX		((int)(~0U >> 1))
 #define RAND_MAX	INT_MAX
 
 static inline int rand(void)
