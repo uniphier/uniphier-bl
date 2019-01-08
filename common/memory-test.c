@@ -31,7 +31,7 @@ int memtest(unsigned long start, unsigned long size)
 		u32 data = readl(IOMEM(addr));
 
 		if (data != expected) {
-			pr_err("memory error (addess: %lx, expect: %x, read as %x)\n",
+			pr_err("memory error (addess: %lx, expect: %08x, read as %08x)\n",
 			       addr, expected, data);
 			ret = -EIO;
 		}

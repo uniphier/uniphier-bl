@@ -18,7 +18,7 @@ void memdump(unsigned long start, unsigned long size)
 		if (column == 0)
 			printk("%lx:", addr);
 
-		printk(" %x", readl((void __iomem *)addr));
+		printk(" %08x", readl((void __iomem *)addr));
 
 		addr += 4;
 		column++;
