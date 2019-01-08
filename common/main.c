@@ -58,7 +58,7 @@ static void dram_param_check(const struct soc_data *sd, struct board_data *bd)
 		unsigned long size = bd->dram_ch[i].size;
 
 		if (!size)
-			break;
+			continue;
 
 		if (i == 1 && bd->flags & BD_DRAM_SPARSE) {
 			if (base > DRAM_CH1_SPARSE_BASE) {
