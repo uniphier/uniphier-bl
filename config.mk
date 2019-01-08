@@ -30,6 +30,18 @@ CONFIG_SOC_PXS3=y
 CONFIG_MALLOC_SIMPLE=y
 #CONFIG_MALLOC_DL=y
 
+# Support a full set of format specifies for formatted print functions,
+# such as printk(), pr_*(), s*printf(), and vs*printf().
+#
+# The following are supported by default:
+#  '0', '-', 'l', 'll', 'L', 'z', 'd', 'i', 'o', 'u', 'x', 'X', 'c', 's',
+#  'p', '%'
+#
+# In addition, the following are supported by enabling this option.
+#  '#', ' ', '+', '*', '.', 'h', 't', 'n'
+#
+#CONFIG_PRINTF_FULL=y
+
 # no need to change
 CONFIG_TEXT_BASE=0x30000000
 CONFIG_BSS_BASE=0x3000f800

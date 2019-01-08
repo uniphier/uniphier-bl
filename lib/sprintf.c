@@ -11,6 +11,17 @@
 #include <string.h>
 #include <utils.h>
 
+#ifdef CONFIG_PRINTF_FULL
+#define SUPPORT_PLUS
+#define SUPPORT_SPACE
+#define SUPPORT_POUND
+#define SUPPORT_STAR
+#define SUPPORT_DOT
+#define SUPPORT_H
+#define SUPPORT_T
+#define SUPPORT_N
+#endif
+
 static int skip_atoi(const char **s)
 {
 	int i=0;
@@ -200,9 +211,15 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 			++fmt;		/* this also skips first '%' */
 			switch (*fmt) {
 				case '-': flags |= LEFT; goto repeat;
+#ifdef SUPPORT_PLUS
 				case '+': flags |= PLUS; goto repeat;
+#endif
+#ifdef SUPPORT_SPACE
 				case ' ': flags |= SPACE; goto repeat;
+#endif
+#ifdef SUPPORT_POUND
 				case '#': flags |= SPECIAL; goto repeat;
+#endif
 				case '0': flags |= ZEROPAD; goto repeat;
 			}
 
@@ -210,6 +227,7 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 		field_width = -1;
 		if (isdigit(*fmt))
 			field_width = skip_atoi(&fmt);
+#ifdef SUPPORT_STAR
 		else if (*fmt == '*') {
 			++fmt;
 			/* it's the next argument */
@@ -219,13 +237,16 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 				flags |= LEFT;
 			}
 		}
+#endif
 
 		/* get the precision */
 		precision = -1;
+#ifdef SUPPORT_DOT
 		if (*fmt == '.') {
 			++fmt;
 			if (isdigit(*fmt))
 				precision = skip_atoi(&fmt);
+#ifdef SUPPORT_STAR
 			else if (*fmt == '*') {
 				++fmt;
 				/* it's the next argument */
@@ -233,7 +254,9 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 			}
 			if (precision < 0)
 				precision = 0;
+#endif
 		}
+#endif
 
 		/* get the conversion qualifier */
 		qualifier = -1;
@@ -304,6 +327,7 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 				qualifier = 'p';
 				break;
 
+#ifdef SUPPORT_N
 			case 'n':
 				/* FIXME:
 				* What does C99 say about the overflow case here? */
@@ -318,6 +342,7 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 					*ip = (str - buf);
 				}
 				continue;
+#endif
 
 			case '%':
 				if (str < end)
@@ -363,12 +388,16 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 				num = (signed long) num;
 		} else if (qualifier == 'Z' || qualifier == 'z') {
 			num = va_arg(args, size_t);
+#ifdef SUPPORT_T
 		} else if (qualifier == 't') {
 			num = va_arg(args, ptrdiff_t);
+#endif
+#ifdef SUPPORT_H
 		} else if (qualifier == 'h') {
 			num = (unsigned short) va_arg(args, int);
 			if (flags & SIGN)
 				num = (signed short) num;
+#endif
 		} else if (qualifier == 'p') {
 			num = (unsigned long)va_arg(args, void *);
 		} else {
