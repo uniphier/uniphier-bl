@@ -86,8 +86,7 @@ CROSS_COMPILE	?= aarch64-linux-gnu-
 
 ifeq ($(CONFIG_LLVM),y)
 CLANG_FLAGS	:= --target=aarch64-linux-gnu
-# llvm-ar does not recognize 'P' option. Still relying on binutils.
-AR		:= ar
+AR		:= $(LLVM_DIR)llvm-ar
 AS		:= $(LLVM_DIR)clang
 CC		:= $(LLVM_DIR)clang
 CPP		:= $(CC) -E
