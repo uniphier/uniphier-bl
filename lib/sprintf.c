@@ -6,10 +6,10 @@
 #include <compiler.h>
 #include <ctype.h>
 #include <div64.h>
+#include <limits.h>
 #include <sprintf.h>
 #include <stdarg.h>
 #include <string.h>
-#include <utils.h>
 
 #ifdef CONFIG_PRINTF_FULL
 #define SUPPORT_PLUS

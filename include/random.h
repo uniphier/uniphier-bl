@@ -7,8 +7,8 @@
 #ifndef __RANDOM_H__
 #define __RANDOM_H__
 
+#include <limits.h>
 #include <types.h>
-#include <utils.h>
 
 void srand(unsigned int seed);
 void get_random_bytes(void *buf, int nbytes);
