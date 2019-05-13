@@ -1,15 +1,15 @@
 #
-# Normal rules
+# Normal rules (sorted alphabetically)
 #
 .*
 *.a
-*.o
-*.s
+*.bin
+*.elf
 *.i
 *.lds
-*.elf
-*.bin
+*.o
 *.patch
+*.s
 
 #
 # Generated include files
