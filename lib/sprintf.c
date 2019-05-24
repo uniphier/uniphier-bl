@@ -323,9 +323,11 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 					field_width = 2*sizeof(void *);
 					flags |= ZEROPAD;
 				}
+				str = number(str, end,
+						(unsigned long) va_arg(args, void *),
+						16, field_width, precision, flags);
+				continue;
 
-				qualifier = 'p';
-				break;
 
 #ifdef SUPPORT_N
 			case 'n':
@@ -398,8 +400,6 @@ int vsnprintf(char *buf, size_t size, const char *fmt, va_list args)
 			if (flags & SIGN)
 				num = (signed short) num;
 #endif
-		} else if (qualifier == 'p') {
-			num = (unsigned long)va_arg(args, void *);
 		} else {
 			num = va_arg(args, unsigned int);
 			if (flags & SIGN)
