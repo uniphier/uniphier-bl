@@ -125,7 +125,7 @@ static int dram_init(const struct soc_data *sd, const struct board_data *bd)
 	return 0;
 }
 
-extern char __image_end[];
+extern char __image_end;
 
 static int uncompress_piggy(void)
 {
