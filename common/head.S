@@ -6,7 +6,7 @@
 
 #include <linkage.h>
 
-	.section ".head","ax"
+	.section .head,"ax"
 ENTRY(head)
 	/* The boot ROM has enabled D-cache.  Disable it first. */
 	mrs	x1, sctlr_el3
