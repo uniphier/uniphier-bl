@@ -126,6 +126,7 @@ static int dram_init(const struct soc_data *sd, const struct board_data *bd)
 }
 
 extern char __image_end;
+extern char _sbss;
 
 static int uncompress_piggy(void)
 {
@@ -134,8 +135,7 @@ static int uncompress_piggy(void)
 
 	pr_debug("Offset to uncompressed image: %p\n", &__image_end);
 	pr_info("Uncompressing next image... ");
-	ret = gunzip(&__image_end,
-		     CONFIG_BSS_BASE - (unsigned long)&__image_end,
+	ret = gunzip(&__image_end, &_sbss - &__image_end,
 		     (void *)CONFIG_NEXT_IMAGE_BASE, &out_pos);
 	if (ret) {
 		pr_err("failed to decompress image\n");
