@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 
-VERSION := 1.3
+VERSION := 1.4
 
 # Check make version
 MIN_MAKE_VERSION = 3.81
