@@ -28,13 +28,9 @@ static const struct soc_data pxs3_data = {
 	.umc_init = pxs3_umc_init,
 };
 
-static void __noreturn pxs3_init(const struct board_data *bd)
-{
-	main(&pxs3_data, bd);
-}
-
 static const struct board_data pxs3_ref_data = {
 	.board_name = "PXs3 Reference",
+	.soc_data = &pxs3_data,
 	.uart_port = 0,
 	.dram_ch[0] = {
 		.size = 0x40000000,
@@ -47,8 +43,4 @@ static const struct board_data pxs3_ref_data = {
 	},
 	.flags = BD_BOARD_PXS3_REF,
 };
-
-ENTRY(pxs3_ref)
-{
-	pxs3_init(&pxs3_ref_data);
-}
+BOARD_DECLARE(pxs3_ref, pxs3_ref_data);

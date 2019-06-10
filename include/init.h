@@ -20,6 +20,7 @@ struct dram_ch {
 
 struct board_data {
 	const char *board_name;
+	const struct soc_data *soc_data;
 	unsigned int uart_port;
 	unsigned int dram_freq;
 	struct dram_ch dram_ch[MAX_NR_DRAM_CH];
@@ -74,7 +75,7 @@ struct soc_data {
 	int (*soc_init)(const struct board_data *); /* SoC-specific init */
 };
 
-void __noreturn main(const struct soc_data *sd, const struct board_data *bd);
+void __noreturn main(const struct board_data *bd);
 
 void dpll_init(const struct soc_data *sd, const struct board_data *bd);
 void pll_set_freq(int pll_id, unsigned int freq, unsigned int divn);

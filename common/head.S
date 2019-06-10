@@ -28,6 +28,7 @@ ENTRY(head)
 	ldr	x0, =CONFIG_STACK_BASE
 	mov	sp, x0
 
-	ldr	x0, =_stext
-	br	x0
+	ldr	x0, =__entry
+	ldr	x0, [x0]
+	b	main
 ENDPROC(head)

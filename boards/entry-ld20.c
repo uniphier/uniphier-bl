@@ -43,13 +43,9 @@ static const struct soc_data ld20_data = {
 	.soc_init = ld20_soc_init,
 };
 
-static void __noreturn ld20_init(const struct board_data *bd)
-{
-	main(&ld20_data, bd);
-}
-
 static const struct board_data ld20_ref_data = {
 	.board_name = "LD20 Reference",
+	.soc_data = &ld20_data,
 	.uart_port = 0,
 	.dram_ch[0] = {
 		.size = 0x40000000,
@@ -62,14 +58,11 @@ static const struct board_data ld20_ref_data = {
 	},
 	.flags = BD_BOARD_LD20_REF,
 };
-
-ENTRY(ld20_ref)
-{
-	ld20_init(&ld20_ref_data);
-}
+BOARD_DECLARE(ld20_ref, ld20_ref_data);
 
 static const struct board_data ld20_global_data = {
 	.board_name = "LD20 Global",
+	.soc_data = &ld20_data,
 	.uart_port = 0,
 	.dram_ch[0] = {
 		.size = 0x40000000,
@@ -82,14 +75,11 @@ static const struct board_data ld20_global_data = {
 	},
 	.flags = BD_BOARD_LD20_GLOBAL,
 };
-
-ENTRY(ld20_global)
-{
-	ld20_init(&ld20_global_data);
-}
+BOARD_DECLARE(ld20_global, ld20_global_data);
 
 static const struct board_data ld21_ref_data = {
 	.board_name = "LD21 Reference",
+	.soc_data = &ld20_data,
 	.uart_port = 0,
 	.dram_ch[0] = {
 		.size = 0x20000000,
@@ -99,14 +89,11 @@ static const struct board_data ld21_ref_data = {
 	},
 	.flags = BD_DRAM_SPARSE | BD_BOARD_LD21_REF,
 };
-
-ENTRY(ld21_ref)
-{
-	ld20_init(&ld21_ref_data);
-}
+BOARD_DECLARE(ld21_ref, ld21_ref_data);
 
 static const struct board_data ld21_global_data = {
 	.board_name = "LD21 Global",
+	.soc_data = &ld20_data,
 	.uart_port = 0,
 	.dram_ch[0] = {
 		.size = 0x20000000,
@@ -116,8 +103,4 @@ static const struct board_data ld21_global_data = {
 	},
 	.flags = BD_DRAM_SPARSE | BD_BOARD_LD21_GLOBAL,
 };
-
-ENTRY(ld21_global)
-{
-	ld20_init(&ld21_global_data);
-}
+BOARD_DECLARE(ld21_global, ld21_global_data);

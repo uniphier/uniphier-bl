@@ -9,9 +9,9 @@
 
 #include <compiler.h>
 
-#define ENTRY(name)						\
+#define BOARD_DECLARE(name, data)					\
 	/* declaration to suppress "Should it be static?" warning of sparse */ \
-	void __noreturn entry_##name(void);			\
-	void __noreturn __section(.text_entry_##name) entry_##name(void)
+	extern typeof(data) *entry_##name;					\
+	typeof(data) *entry_##name __section(.entry_##name) = &data
 
 #endif /* __ENTRY_H__ */

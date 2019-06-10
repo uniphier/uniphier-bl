@@ -13,6 +13,8 @@ SECTIONS
 
 	.head : {
 		KEEP(*(.head))
+		__entry = .;
+		*(.entry*)
 	}
 
 	. = __image_start + 0x100;
@@ -24,8 +26,6 @@ SECTIONS
 	. = __image_start + 0x200;
 
 	.text : {
-		_stext = .;
-		*(.text_entry*)
 		*(.text*)
 	}
 

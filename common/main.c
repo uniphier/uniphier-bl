@@ -151,8 +151,9 @@ static int uncompress_piggy(void)
 	return 0;
 }
 
-void __noreturn main(const struct soc_data *sd, const struct board_data *bd)
+void __noreturn main(const struct board_data *bd)
 {
+	const struct soc_data *sd = bd->soc_data;
 	struct board_data bd_dup;
 	int ret;
 

@@ -44,13 +44,9 @@ static const struct soc_data ld11_data = {
 	.soc_init = ld11_soc_init,
 };
 
-static void __noreturn ld11_init(const struct board_data *bd)
-{
-	main(&ld11_data, bd);
-}
-
 static const struct board_data ld11_ref_data = {
 	.board_name = "LD11 Reference",
+	.soc_data = &ld11_data,
 	.uart_port = 0,
 	.dram_ch[0] = {
 		.size = 0x20000000,
@@ -59,14 +55,11 @@ static const struct board_data ld11_ref_data = {
 		.size = 0x20000000,
 	},
 };
-
-ENTRY(ld11_ref)
-{
-	ld11_init(&ld11_ref_data);
-}
+BOARD_DECLARE(ld11_ref, ld11_ref_data);
 
 static const struct board_data ld11_global_data = {
 	.board_name = "LD11 Global",
+	.soc_data = &ld11_data,
 	.uart_port = 0,
 	.dram_ch[0] = {
 		.size = 0x20000000,
@@ -75,8 +68,4 @@ static const struct board_data ld11_global_data = {
 		.size = 0x20000000,
 	},
 };
-
-ENTRY(ld11_global)
-{
-	ld11_init(&ld11_global_data);
-}
+BOARD_DECLARE(ld11_global, ld11_global_data);
