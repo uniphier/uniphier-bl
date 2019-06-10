@@ -7,6 +7,8 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
+#ifndef __ASSEMBLY__
+
 #define NULL			((void *)0)
 
 enum {
@@ -36,4 +38,5 @@ typedef u32 __bitwise		be32;
 typedef u64 __bitwise		le64;
 typedef u64 __bitwise		be64;
 
+#endif /* __ASSEMBLY__ */
 #endif /* __TYPES_H__ */
