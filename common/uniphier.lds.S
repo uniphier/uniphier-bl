@@ -46,7 +46,7 @@ SECTIONS
 
 	__image_end = .;
 
-	. = CONFIG_BSS_BASE;
+	. = __image_start + CONFIG_BSS_OFFSET;
 
 	.bss : {
 		_sbss = .;
