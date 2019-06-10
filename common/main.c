@@ -6,7 +6,6 @@
 #include <cache.h>
 #include <errno.h>
 #include <gunzip.h>
-#include <heap.h>
 #include <init.h>
 #include <printk.h>
 #include <soc-info.h>
@@ -173,10 +172,6 @@ void __noreturn main(const struct board_data *bd)
 	if (ret)
 		goto die;
 
-	ret = heap_init(sd->heap_start, sd->heap_end);
-	if (ret)
-		goto die;
-
 	ret = timer_init(sd->timer_clk_rate);
 	if (ret)
 		goto die;
@@ -199,8 +194,6 @@ void __noreturn main(const struct board_data *bd)
 	ret = uncompress_piggy();
 	if (ret)
 		goto die;
-
-	pr_debug("Heap top: %p\n", sbrk(0));
 
 	pr_info("Jumping to next image (0x%x)\n", CONFIG_NEXT_IMAGE_BASE);
 	next_entry(CONFIG_NEXT_IMAGE_BASE);

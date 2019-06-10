@@ -7,5 +7,5 @@
 
 unsigned long get_stack(const struct board_data *bd)
 {
-	return bd->soc_data->heap_end;
+	return bd->soc_data->stack_base;
 }

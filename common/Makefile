@@ -4,7 +4,6 @@ obj-y			+= cache.o
 obj-y			+= clk.o
 obj-$(CONFIG_DEBUG)	+= debug.o
 obj-y			+= head.o
-obj-y			+= heap.o
 obj-y			+= main.o
 obj-y			+= memory-test.o
 obj-y			+= mbr.o

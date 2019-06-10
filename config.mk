@@ -24,12 +24,6 @@ CONFIG_SOC_PXS3=y
 # enable the DRAM scramble feature in UMC
 #CONFIG_DRAM_SCRAMBLE=y
 
-# choose malloc implementation
-#  The simple malloc should be enough for our purpose.
-#  You can play with dlmalloc if you like, though.
-CONFIG_MALLOC_SIMPLE=y
-#CONFIG_MALLOC_DL=y
-
 # Support a full set of format specifies for formatted print functions,
 # such as printk(), pr_*(), s*printf(), and vs*printf().
 #
