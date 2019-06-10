@@ -1,4 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0
+# SPDX-License-Identifier: GPL-2.0-only
 
 obj-y				+= memconf.o
 obj-$(CONFIG_SOC_LD11)		+= umc-ld11.o

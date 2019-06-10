@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: GPL-2.0+
+// SPDX-License-Identifier: GPL-2.0-or-later
 //
 // Based on lib/decompress_inflate.c, Linux 4.9
 // Modified by Masahiro Yamada <yamada.masahiro@socionext.com>

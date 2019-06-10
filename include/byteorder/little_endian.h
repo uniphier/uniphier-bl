@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: GPL-2.0 */
+/* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Based on include/uapi/linux/byteorder/little_endian.h, Linux 4.10
  */

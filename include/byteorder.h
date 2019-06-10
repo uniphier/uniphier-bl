@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: GPL-2.0+ */
+/* SPDX-License-Identifier: GPL-2.0-or-later */
 /*
  * Based on arch/arm64/include/uapi/asm/byteorder.h, Linux 4.10
  */

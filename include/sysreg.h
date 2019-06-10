@@ -1,4 +1,4 @@
-/* SPDX-License-Identifier: GPL-2.0 */
+/* SPDX-License-Identifier: GPL-2.0-only */
 /*
  * Based on from arch/arm64/include/asm/sysreg.h, Linux 4.14
  */
