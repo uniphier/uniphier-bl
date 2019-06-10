@@ -38,7 +38,7 @@ CONFIG_SOC_PXS3=y
 
 # no need to change
 CONFIG_TEXT_BASE=0x30000000
-CONFIG_BSS_OFFSET=0x0000f800
+CONFIG_BSS_OFFSET=0x0000ff00
 CONFIG_MAX_SIZE=0x00010000
 
 # base (entry) address of the next image
