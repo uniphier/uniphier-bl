@@ -55,3 +55,5 @@ SECTIONS
 		_ebss = .;
 	}
 }
+
+ASSERT(. - __image_start <= CONFIG_MAX_SIZE, ".bss section is too big.");
