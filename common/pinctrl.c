@@ -10,8 +10,6 @@
 #define SG_PINCTRL_PINMUX_BASE	((SG_PINCTRL_BASE) + 0x000)
 #define SG_PINCTRL_IECTRL_BASE	((SG_PINCTRL_BASE) + 0xd00)
 
-#define SG_PINCTRL_PINMUX_BITS	8
-
 static void __pinctrl_update_field(void __iomem *base, int field_width,
 				   int pin, int val)
 {
