@@ -13,6 +13,7 @@ obj-y			+= pinctrl.o
 obj-y			+= pll.o
 obj-y			+= printk.o
 obj-y			+= soc-info.o
+obj-y			+= stack.o
 obj-y			+= timer.o
 obj-y			+= uart.o
 

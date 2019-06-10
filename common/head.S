@@ -24,11 +24,19 @@ ENTRY(head)
 1:	cmp	x0, x1
 	b.lo	0b
 
-	/* set stack */
-	ldr	x0, =CONFIG_STACK_BASE
+	/* set temporary sp for calling get_stack() */
+	ldr	x0, =__early_stack
 	mov	sp, x0
 
 	ldr	x0, =__entry
-	ldr	x0, [x0]
+	ldr	x0, [x0]		/* x0 = (struct board_data *) */
+	mov	x19, x0			/* x19: callee-saved */
+
+	bl	get_stack
+
+	/* set real stack pointer */
+	mov	sp, x0
+
+	mov	x0, x19
 	b	main
 ENDPROC(head)

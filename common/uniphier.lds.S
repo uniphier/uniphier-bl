@@ -24,6 +24,7 @@ SECTIONS
 	}
 
 	. = __image_start + 0x200;
+	__early_stack = .;
 
 	.text : {
 		*(.text*)

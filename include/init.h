@@ -75,6 +75,7 @@ struct soc_data {
 	int (*soc_init)(const struct board_data *); /* SoC-specific init */
 };
 
+unsigned long get_stack(const struct board_data *bd);
 void __noreturn main(const struct board_data *bd);
 
 void dpll_init(const struct soc_data *sd, const struct board_data *bd);
