@@ -5,14 +5,15 @@
  */
 
 #include <linkage.h>
+#include <sysreg.h>
 
 	.section .head,"ax"
 ENTRY(head)
 	/* The boot ROM has enabled D-cache.  Disable it first. */
-	mrs	x1, sctlr_el3
-	bic	x1, x1, #4		/* clear C */
-	bic	x1, x1, #1		/* clear M */
-	msr	sctlr_el3, x1
+	mrs	x0, sctlr_el3
+	bic	x0, x0, #SCTLR_ELx_C
+	bic	x0, x0, #SCTLR_ELx_M
+	msr	sctlr_el3, x0
 	isb
 	dsb	sy
 
