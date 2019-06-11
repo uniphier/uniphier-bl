@@ -6,6 +6,8 @@
 #include <compiler.h>
 #include <io.h>
 
+#include "umc-scramble.h"
+
 #define UMC_SEC_EN		0x000
 #define UMC_SEC_AREA7_EN	0x100
 
