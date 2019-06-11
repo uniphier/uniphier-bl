@@ -116,6 +116,10 @@ UNPH_LDFLAGS	:= --gc-sections --build-id
 OBJCOPYFLAGS	:= -O binary -R .comment --strip-all
 CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as
 
+ifdef CONFIG_PIE
+UNPH_LDFLAGS	+= -pie --no-dynamic-linker
+endif
+
 export CROSS_COMPILE AR AS CC CPP LD CHECK
 export UNPH_CPPFLAGS UNPH_CFLAGS UNPH_ASFLAGS CHECKFLAGS
 

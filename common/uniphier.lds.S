@@ -38,11 +38,23 @@ SECTIONS
 		*(.note.*)
 	}
 
+	.rela.dyn : {
+		__rela_dyn_start = .;
+		*(.rela*)
+		__rela_dyn_end = .;
+	}
+
 	.data : {
 		_sdata = .;
 		*(.data*)
 		_edata = .;
 	}
+
+	/*
+	 * make sure __image_end points to the end of image.
+	 * Without this, .got, .got.plt are layouted after __image_end.
+	 */
+	. = .;
 
 	__image_end = .;
 
@@ -53,6 +65,10 @@ SECTIONS
 		*(.bss*)
 		*(COMMON)
 		_ebss = .;
+	}
+
+	/DISCARD/ : {
+		*(.dynamic)
 	}
 }
 

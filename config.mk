@@ -36,6 +36,10 @@ CONFIG_SOC_PXS3=y
 #
 #CONFIG_PRINTF_FULL=y
 
+# Produce position independent executables. CONFIG_TEXT_BASE still specifies
+# the link address, but you can load the binaries anywhere.
+CONFIG_PIE=y
+
 # no need to change
 CONFIG_TEXT_BASE=0x30000000
 CONFIG_BSS_OFFSET=0x0000ff00

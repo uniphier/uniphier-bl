@@ -17,6 +17,27 @@ ENTRY(head)
 	isb
 	dsb	sy
 
+#ifdef CONFIG_PIE
+	adr	x0, here
+	ldr	x1, here
+	sub	x2, x0, x1		/* run-time-address - link-address */
+	adr	x0, __rela_dyn_start
+	adr	x1, __rela_dyn_end
+	b	1f
+0:	ldp	x4, x5, [x0], #16	/* x4: r_offset, x5: r_info */
+	ldr	x6, [x0], #8		/* x6: r_addend */
+	cmp	w5, #1027		/* R_AARCH64_RELATIVE */
+	bne	1f
+	add	x4, x4, x2
+	add	x6, x6, x2
+	str	x6, [x4]
+1:	cmp	x0, x1
+	b.lo	0b
+
+	ic	iallu			/* invalidate icache */
+	isb	sy
+#endif
+
 	/* zero out .bss section */
 	ldr	x0, =_sbss
 	ldr	x1, =_ebss
@@ -41,3 +62,10 @@ ENTRY(head)
 	mov	x0, x19
 	b	main
 ENDPROC(head)
+
+#ifdef CONFIG_PIE
+	.section .rodata,"a"
+	.align	3
+here:
+	.quad	.
+#endif
