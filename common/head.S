@@ -11,6 +11,7 @@
 ENTRY(head)
 	/* The boot ROM has enabled D-cache.  Disable it first. */
 	mrs	x0, sctlr_el3
+	orr	x0, x0, #SCTLR_ELx_I
 	bic	x0, x0, #SCTLR_ELx_C
 	bic	x0, x0, #SCTLR_ELx_M
 	msr	sctlr_el3, x0
