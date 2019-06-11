@@ -21,7 +21,7 @@
 static void uart_soc_init(const struct soc_data *sd,
 			  const struct board_data *bd)
 {
-	const struct uart_pinmux *pinmux;
+	const struct pinmux *pinmux;
 
 	pinmux = &sd->uart_pinmux[bd->uart_port];
 	pinctrl_set_mux(pinmux->pin, pinmux->mux);

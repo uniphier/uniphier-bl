@@ -52,7 +52,7 @@ struct board_data {
 
 #define MAX_NR_UART_PORTS	4
 
-struct uart_pinmux {
+struct pinmux {
 	unsigned int pin;
 	unsigned int mux;
 };
@@ -61,7 +61,7 @@ struct soc_data {
 	unsigned int soc_id;
 	unsigned int uart_clk_bits;
 	unsigned int uart_clk_rate;
-	const struct uart_pinmux uart_pinmux[MAX_NR_UART_PORTS];
+	const struct pinmux uart_pinmux[MAX_NR_UART_PORTS];
 	unsigned long stack_base;
 	unsigned int timer_clk_rate;
 	unsigned int dram_rst_bits;
