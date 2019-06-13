@@ -11,21 +11,26 @@
 #include <soc-data.h>
 #include <umc.h>
 
-#define SC_CPU_GEAR_BASE	(IOMEM(0x61848000))
-#define SC_CA53_GEAR_SET	((SC_CPU_GEAR_BASE) + 0x84)
-#define SC_CA53_GEAR_UPD	((SC_CPU_GEAR_BASE) + 0x88)
+#define SC_CA53_GEAR_SET	0x8084
+#define SC_CA53_GEAR_UPD	0x8088
 
 static int ld11_soc_init(const struct board_data *bd)
 {
-	pll_set_freq(0, 1960, 2);	/* CPLL: 2000MHz -> 1960MHz */
-	writel(0, SC_CA53_GEAR_SET);	/* Gear0: CPLL/2 */
-	writel(1, SC_CA53_GEAR_UPD);	/* update */
+	const struct soc_data *sd = bd->soc_data;
+
+	pll_set_freq(sd, 0, 1960, 2);		/* CPLL: 2000MHz -> 1960MHz */
+	writel(0, sd->sysctrl_base + SC_CA53_GEAR_SET);	/* Gear0: CPLL/2 */
+	writel(1, sd->sysctrl_base + SC_CA53_GEAR_UPD);	/* update */
 
 	return 0;
 }
 
 static const struct soc_data ld11_data = {
 	.soc_id = 0x31,
+	.cntctrl_base = IOMEM(0x60e00000),
+	.socglue_base = IOMEM(0x5f800000),
+	.sysctrl_base = IOMEM(0x61840000),
+	.uart_base = IOMEM(0x54006800),
 	.uart_clk_rate = 58823529,
 	.uart_clk_regmap = { .reg = 0x0c, .mask = 0x00000080 },
 	.uart_pinmux = {

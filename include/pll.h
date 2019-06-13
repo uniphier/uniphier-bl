@@ -10,7 +10,8 @@
 struct board_data;
 struct soc_data;
 
-void dpll_init(const struct soc_data *sd, const struct board_data *bd);
-void pll_set_freq(int pll_id, unsigned int freq, unsigned int divn);
+void dpll_init(const struct board_data *bd);
+void pll_set_freq(const struct soc_data *sd, int pll_id,
+		  unsigned int freq, unsigned int divn);
 
 #endif /* __PLL_H__ */

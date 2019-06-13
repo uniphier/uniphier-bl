@@ -8,7 +8,8 @@
 #define __PINCTRL_H__
 
 struct pinmux;
+struct soc_data;
 
-void pinctrl_set_mux(const struct pinmux *mux);
+void pinctrl_set_mux(const struct soc_data *sd, const struct pinmux *mux);
 
 #endif /* __PINCTRL_H__ */

@@ -8,8 +8,9 @@
 #define __CLK_H__
 
 struct regmap;
+struct soc_data;
 
-void clk_enable(const struct regmap *regmap);
-void rst_deassert(const struct regmap *regmap);
+void clk_enable(const struct soc_data *sd, const struct regmap *regmap);
+void rst_deassert(const struct soc_data *sd, const struct regmap *regmap);
 
 #endif /* __CLK_H__ */

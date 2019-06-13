@@ -7,8 +7,8 @@
 #include <io.h>
 #include <soc-data.h>
 
-#define SC_RSTCTRL_BASE		(IOMEM(0x61842000))
-#define SC_CLKCTRL_BASE		(IOMEM(0x61842100))
+#define SC_RSTCTRL_BASE		0x2000
+#define SC_CLKCTRL_BASE		0x2100
 
 static void regmap_update(void __iomem *base, const struct regmap *regmap)
 {
@@ -22,12 +22,12 @@ static void regmap_update(void __iomem *base, const struct regmap *regmap)
 	writel(tmp, reg);
 }
 
-void clk_enable(const struct regmap *regmap)
+void clk_enable(const struct soc_data *sd, const struct regmap *regmap)
 {
-	regmap_update(SC_CLKCTRL_BASE, regmap);
+	regmap_update(sd->sysctrl_base + SC_CLKCTRL_BASE, regmap);
 }
 
-void rst_deassert(const struct regmap *regmap)
+void rst_deassert(const struct soc_data *sd, const struct regmap *regmap)
 {
-	regmap_update(SC_RSTCTRL_BASE, regmap);
+	regmap_update(sd->sysctrl_base + SC_RSTCTRL_BASE, regmap);
 }

@@ -10,20 +10,27 @@
 #include <soc-data.h>
 #include <umc.h>
 
-#define SC_PVTCTRL_BASE		(IOMEM(0x6184e000))
+#define SC_PVTCTRL_BASE		0xe000
 
 static int ld20_soc_init(const struct board_data *bd)
 {
+	const struct soc_data *sd = bd->soc_data;
+	void __iomem *pvtctrl_base = sd->sysctrl_base + SC_PVTCTRL_BASE;
+
 	/* increase the VDD09 voltage line up to 0.93V to suppress jitter */
-	writel(0x00000002, SC_PVTCTRL_BASE + 0x4);
-	writel(0x0000001e, SC_PVTCTRL_BASE + 0x78);
-	writel(0x00000001, SC_PVTCTRL_BASE + 0x0);
+	writel(0x00000002, pvtctrl_base + 0x4);
+	writel(0x0000001e, pvtctrl_base + 0x78);
+	writel(0x00000001, pvtctrl_base + 0x0);
 
 	return 0;
 }
 
 static const struct soc_data ld20_data = {
 	.soc_id = 0x32,
+	.cntctrl_base = IOMEM(0x60e00000),
+	.socglue_base = IOMEM(0x5f800000),
+	.sysctrl_base = IOMEM(0x61840000),
+	.uart_base = IOMEM(0x54006800),
 	.uart_clk_rate = 58823529,
 	.uart_clk_regmap = { .reg = 0x0c, .mask = 0x00000080 },
 	.uart_pinmux = {

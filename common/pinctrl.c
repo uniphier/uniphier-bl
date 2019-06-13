@@ -7,12 +7,11 @@
 #include <pinctrl.h>
 #include <soc-data.h>
 
-#define SG_PINCTRL_BASE		(IOMEM(0x5f801000))
-#define SG_PINCTRL_PINMUX_BASE	((SG_PINCTRL_BASE) + 0x000)
-#define SG_PINCTRL_IECTRL_BASE	((SG_PINCTRL_BASE) + 0xd00)
+#define SG_PINCTRL_PINMUX_BASE	0x1000
+#define SG_PINCTRL_IECTRL_BASE	0x1d00
 
-static void __pinctrl_update_field(void __iomem *base, int field_width,
-				   int pin, int val)
+static void pinctrl_update_field(void __iomem *base, int field_width,
+				 int pin, int val)
 {
 	u32 mask, tmp;
 	void __iomem *reg;
@@ -28,11 +27,13 @@ static void __pinctrl_update_field(void __iomem *base, int field_width,
 	writel(tmp, reg);
 }
 
-void pinctrl_set_mux(const struct pinmux *mux)
+void pinctrl_set_mux(const struct soc_data *sd, const struct pinmux *mux)
 {
 	/* mux */
-	__pinctrl_update_field(SG_PINCTRL_PINMUX_BASE, 8, mux->pin, mux->mux);
+	pinctrl_update_field(sd->socglue_base + SG_PINCTRL_PINMUX_BASE,
+			     8, mux->pin, mux->mux);
 
 	/* enable input */
-	__pinctrl_update_field(SG_PINCTRL_IECTRL_BASE, 1, mux->pin, 1);
+	pinctrl_update_field(sd->socglue_base + SG_PINCTRL_IECTRL_BASE,
+			     1, mux->pin, 1);
 }

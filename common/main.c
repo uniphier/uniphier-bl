@@ -23,19 +23,20 @@
 #define DRAM_CH0_BASE		0x80000000
 #define DRAM_CH1_SPARSE_BASE	0xc0000000
 
-static void uart_soc_init(const struct soc_data *sd,
-			  const struct board_data *bd)
+static void uart_soc_init(const struct board_data *bd)
 {
-	pinctrl_set_mux(&sd->uart_pinmux[bd->uart_port]);
-	clk_enable(&sd->uart_clk_regmap);
-	uart_init(bd->uart_port, sd->uart_clk_rate);
+	const struct soc_data *sd = bd->soc_data;
+
+	pinctrl_set_mux(sd, &sd->uart_pinmux[bd->uart_port]);
+	clk_enable(sd, &sd->uart_clk_regmap);
+	uart_init(sd, bd->uart_port);
 }
 
 static int soc_id_check(const struct soc_data *sd)
 {
 	unsigned int soc_id;
 
-	soc_id = get_soc_id();
+	soc_id = get_soc_id(sd);
 	if (soc_id != sd->soc_id) {
 		pr_err("SoC ID unmatch: (read as: %x, expected: %x)\n"
 		       "You are running an image built for a different SoC\n",
@@ -46,8 +47,9 @@ static int soc_id_check(const struct soc_data *sd)
 	return 0;
 }
 
-static void dram_param_check(const struct soc_data *sd, struct board_data *bd)
+static void dram_param_check(struct board_data *bd)
 {
+	const struct soc_data *sd = bd->soc_data;
 	unsigned long base = DRAM_CH0_BASE;
 	int i;
 
@@ -85,13 +87,14 @@ static void dram_param_check(const struct soc_data *sd, struct board_data *bd)
 	}
 }
 
-static int dram_init(const struct soc_data *sd, const struct board_data *bd)
+static int dram_init(const struct board_data *bd)
 {
+	const struct soc_data *sd = bd->soc_data;
 	int ret, i;
 
 	pr_info("Initializing DRAM... ");
 
-	dpll_init(sd, bd);
+	dpll_init(bd);
 
 	ret = sd->memconf_init(bd);
 	if (ret) {
@@ -99,8 +102,8 @@ static int dram_init(const struct soc_data *sd, const struct board_data *bd)
 		return ret;
 	}
 
-	rst_deassert(&sd->dram_rst_regmap);
-	clk_enable(&sd->dram_clk_regmap);
+	rst_deassert(sd, &sd->dram_rst_regmap);
+	clk_enable(sd, &sd->dram_clk_regmap);
 
 	ret = sd->umc_init(bd);
 	if (ret) {
@@ -159,7 +162,7 @@ void __noreturn main(const struct board_data *bd)
 	struct board_data bd_dup;
 	int ret;
 
-	uart_soc_init(sd, bd);
+	uart_soc_init(bd);
 
 	/* The console is ready now; print welcome message */
 	pr_info("\nUniPhier BL version " VERSION "\n");
@@ -175,7 +178,7 @@ void __noreturn main(const struct board_data *bd)
 	if (ret)
 		goto die;
 
-	ret = timer_init(sd->timer_clk_rate);
+	ret = timer_init(sd);
 	if (ret)
 		goto die;
 
@@ -188,9 +191,9 @@ void __noreturn main(const struct board_data *bd)
 	/* Use a non-const copy to modify */
 	bd_dup = *bd;
 
-	dram_param_check(sd, &bd_dup);
+	dram_param_check(&bd_dup);
 
-	ret = dram_init(sd, &bd_dup);
+	ret = dram_init(&bd_dup);
 	if (ret)
 		goto die;
 

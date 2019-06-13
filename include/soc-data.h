@@ -25,6 +25,10 @@ struct pinmux {
 
 struct soc_data {
 	unsigned int soc_id;
+	void __iomem *cntctrl_base;
+	void __iomem *socglue_base;
+	void __iomem *sysctrl_base;
+	void __iomem *uart_base;
 	unsigned int uart_clk_rate;
 	struct regmap uart_clk_regmap;
 	struct pinmux uart_pinmux[MAX_NR_UART_PORTS];

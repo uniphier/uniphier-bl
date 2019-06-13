@@ -12,7 +12,7 @@
 #include <soc-data.h>
 #include <utils.h>
 
-#define SC_PLLCTRL_BASE		(IOMEM(0x61841400))
+#define SC_PLLCTRL_BASE		0x1400
 #define   SC_PLLCTRL_SSC_DK_MASK	GENMASK(14, 0)
 #define   SC_PLLCTRL2_NRSTDS		BIT(28)
 #define   SC_PLLCTRL2_SSC_JK_MASK	GENMASK(26, 0)
@@ -20,13 +20,14 @@
 /* SSC rate = 1% is a reasonable default */
 #define SSC_RATE_DEFAULT	1
 
-static void pll_set_ssc_mod_val(int pll_id, unsigned int freq,
-				unsigned int ssc_rate, unsigned int divn)
+static void pll_set_ssc_mod_val(const struct soc_data *sd, int pll_id,
+				unsigned int freq, unsigned int ssc_rate,
+				unsigned int divn)
 {
 	void __iomem *reg;
 	u32 tmp;
 
-	reg = SC_PLLCTRL_BASE + 0x10 * pll_id;
+	reg = sd->sysctrl_base + SC_PLLCTRL_BASE + 0x10 * pll_id;
 
 	tmp = readl(reg);		/* SSCPLLCTRL */
 	tmp &= ~SC_PLLCTRL_SSC_DK_MASK;
@@ -42,20 +43,21 @@ static void pll_set_ssc_mod_val(int pll_id, unsigned int freq,
 	writel(tmp, reg + 4);
 }
 
-static void pll_enable_ssc_mod(int pll_id)
+static void pll_enable_ssc_mod(const struct soc_data *sd, int pll_id)
 {
 	void __iomem *reg;
 	u32 tmp;
 
-	reg = SC_PLLCTRL_BASE + 0x10 * pll_id + 4;
+	reg = sd->sysctrl_base + SC_PLLCTRL_BASE + 0x10 * pll_id + 4;
 
 	tmp = readl(reg);		/* SSCPLLCTRL2 */
 	tmp |= SC_PLLCTRL2_NRSTDS;
 	writel(tmp, reg);
 }
 
-void dpll_init(const struct soc_data *sd, const struct board_data *bd)
+void dpll_init(const struct board_data *bd)
 {
+	const struct soc_data *sd = bd->soc_data;
 	unsigned int ssc_rate;
 	int pll_id, i;
 
@@ -71,7 +73,8 @@ void dpll_init(const struct soc_data *sd, const struct board_data *bd)
 			if (pll_id < 0)
 				break;
 
-			pll_set_ssc_mod_val(pll_id, bd->dram_freq, ssc_rate, 2);
+			pll_set_ssc_mod_val(sd, pll_id, bd->dram_freq,
+					    ssc_rate, 2);
 		}
 		udelay(50);
 	}
@@ -82,13 +85,14 @@ void dpll_init(const struct soc_data *sd, const struct board_data *bd)
 		if (pll_id < 0)
 			break;
 
-		pll_enable_ssc_mod(pll_id);
+		pll_enable_ssc_mod(sd, pll_id);
 	}
 }
 
-void pll_set_freq(int pll_id, unsigned int freq, unsigned int divn)
+void pll_set_freq(const struct soc_data *sd, int pll_id,
+		  unsigned int freq, unsigned int divn)
 {
-	pll_set_ssc_mod_val(pll_id, freq, SSC_RATE_DEFAULT, divn);
+	pll_set_ssc_mod_val(sd, pll_id, freq, SSC_RATE_DEFAULT, divn);
 	udelay(50);
-	pll_enable_ssc_mod(pll_id);
+	pll_enable_ssc_mod(sd, pll_id);
 }

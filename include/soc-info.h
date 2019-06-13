@@ -7,6 +7,8 @@
 #ifndef __SOC_INFO_H__
 #define __SOC_INFO_H__
 
-unsigned int get_soc_id(void);
+struct soc_data;
+
+unsigned int get_soc_id(const struct soc_data *sd);
 
 #endif /* __SOC_INFO_H__ */

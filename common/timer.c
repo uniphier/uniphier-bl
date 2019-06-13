@@ -4,34 +4,37 @@
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
 #include <bug.h>
-#include <delay.h>
 #include <bits.h>
+#include <delay.h>
 #include <errno.h>
 #include <io.h>
 #include <sysreg.h>
+#include <soc-data.h>
 #include <timer.h>
 #include <types.h>
 #include <utils.h>
 
-#define CNTCR			(IOMEM(0x60e00000))
+#define CNTCR			0
 #define   CNTCR_EN			BIT(0)
 
 static unsigned int timer_clk_rate;
 
-int timer_init(unsigned int clk_rate)
+int timer_init(const struct soc_data *sd)
 {
+	void __iomem *reg;
 	u32 tmp;
 
-	if (WARN_ON(!clk_rate))
+	timer_clk_rate = sd->timer_clk_rate;
+
+	if (WARN_ON(!timer_clk_rate))
 		return -EINVAL;
 
-	tmp = readl(CNTCR);
+	reg = sd->cntctrl_base + CNTCR;
+	tmp = readl(reg);
 	tmp |= CNTCR_EN;
-	writel(tmp, CNTCR);
+	writel(tmp, reg);
 
-	write_sysreg(clk_rate, cntfrq_el0);
-
-	timer_clk_rate = clk_rate;
+	write_sysreg(timer_clk_rate, cntfrq_el0);
 
 	return 0;
 }

@@ -5,12 +5,17 @@
 
 #include <board-data.h>
 #include <entry.h>
+#include <io.h>
 #include <memconf.h>
 #include <soc-data.h>
 #include <umc.h>
 
 static const struct soc_data pxs3_data = {
 	.soc_id = 0x35,
+	.cntctrl_base = IOMEM(0x60e00000),
+	.socglue_base = IOMEM(0x5f800000),
+	.sysctrl_base = IOMEM(0x61840000),
+	.uart_base = IOMEM(0x54006800),
 	.uart_clk_rate = 58823529,
 	.uart_clk_regmap = { .reg = 0x0c, .mask = 0x00000800 },
 	.uart_pinmux = {

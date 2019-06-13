@@ -7,7 +7,9 @@
 #ifndef __UART_H__
 #define __UART_H__
 
-void uart_init(unsigned int port, unsigned int clk_rate);
+struct soc_data;
+
+void uart_init(const struct soc_data *sd, unsigned int port);
 void uart_putc(char c);
 
 #endif /* __UART_H__ */

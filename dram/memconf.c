@@ -11,7 +11,7 @@
 #include <sizes.h>
 #include <soc-data.h>
 
-#define SG_MEMCONF		(IOMEM(0x5f800400))
+#define SG_MEMCONF		0x400
 
 #define SG_MEMCONF_CH0_SZ_MASK		((0x1 << 10) | (0x03 << 0))
 #define SG_MEMCONF_CH0_SZ_64M		((0x0 << 10) | (0x01 << 0))
@@ -48,6 +48,7 @@
 
 static int memconf_init(const struct board_data *bd, bool have_ch2)
 {
+	const struct soc_data *sd = bd->soc_data;
 	u32 val = 0;
 	unsigned long size_per_word;
 
@@ -172,7 +173,7 @@ static int memconf_init(const struct board_data *bd, bool have_ch2)
 	}
 
 out:
-	writel(val, SG_MEMCONF);
+	writel(val, sd->socglue_base + SG_MEMCONF);
 
 	return 0;
 }

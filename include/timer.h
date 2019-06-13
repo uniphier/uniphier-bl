@@ -7,6 +7,8 @@
 #ifndef __TIMER_H__
 #define __TIMER_H__
 
-int timer_init(unsigned int clk_rate);
+struct soc_data;
+
+int timer_init(const struct soc_data *sd);
 
 #endif /* __TIMER_H__ */
