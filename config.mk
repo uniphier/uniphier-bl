@@ -45,8 +45,8 @@ CONFIG_TEXT_BASE=0x00000000
 CONFIG_BSS_OFFSET=0x0000ff00
 CONFIG_MAX_SIZE=0x00010000
 
-# base (entry) address of the next image
-CONFIG_NEXT_IMAGE_BASE=0x80000000
+# offset from the DRAM base to the entry address of the next image
+CONFIG_NEXT_IMAGE_OFFSET=0x00000000
 
 # disable time-stamp and git hash for reproducible build
 #CONFIG_REPRODUCIBLE_BUILD=y

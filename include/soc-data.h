@@ -34,6 +34,8 @@ struct soc_data {
 	struct pinmux uart_pinmux[MAX_NR_UART_PORTS];
 	unsigned long stack_base;
 	unsigned int timer_clk_rate;
+	unsigned long dram_base;
+	unsigned long dram_ch1_sparse_base;
 	struct regmap dram_rst_regmap;
 	struct regmap dram_clk_regmap;
 	unsigned int dram_default_freq;

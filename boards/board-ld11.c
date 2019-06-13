@@ -41,6 +41,8 @@ static const struct soc_data ld11_data = {
 	},
 	.stack_base = 0x30014c00,
 	.timer_clk_rate = 50000000,
+	.dram_base = 0x80000000,
+	.dram_ch1_sparse_base = 0xc0000000,
 	.dram_rst_regmap = { .reg = 0x18, .mask = 0x00000003 },
 	.dram_clk_regmap = { .reg = 0x18, .mask = 0x00000003 },
 	.dram_default_freq = 1600,

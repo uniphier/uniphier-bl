@@ -26,6 +26,8 @@ static const struct soc_data pxs3_data = {
 	},
 	.stack_base = 0x30020000,
 	.timer_clk_rate = 50000000,
+	.dram_base = 0x80000000,
+	.dram_ch1_sparse_base = 0xc0000000,
 	.dram_rst_regmap = { .reg = 0x18, .mask = 0x07010707 },
 	.dram_clk_regmap = { .reg = 0x18, .mask = 0x00010007 },
 	.dram_default_freq = 2133,

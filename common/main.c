@@ -20,9 +20,6 @@
 #include <utils.h>
 #include <version.h>
 
-#define DRAM_CH0_BASE		0x80000000
-#define DRAM_CH1_SPARSE_BASE	0xc0000000
-
 static void uart_soc_init(const struct board_data *bd)
 {
 	const struct soc_data *sd = bd->soc_data;
@@ -50,7 +47,7 @@ static int soc_id_check(const struct soc_data *sd)
 static void dram_param_check(struct board_data *bd)
 {
 	const struct soc_data *sd = bd->soc_data;
-	unsigned long base = DRAM_CH0_BASE;
+	unsigned long base = sd->dram_base;
 	int i;
 
 	/* If dram_freq is not set, use the SoC default value. */
@@ -64,12 +61,12 @@ static void dram_param_check(struct board_data *bd)
 			continue;
 
 		if (i == 1 && bd->flags & BD_DRAM_SPARSE) {
-			if (base > DRAM_CH1_SPARSE_BASE) {
+			if (base > sd->dram_ch1_sparse_base) {
 				pr_warn("DRAM ch1 size is too large.\n");
 				pr_warn("Sparse mem flag is ignored.\n");
 				bd->flags &= ~BD_DRAM_SPARSE;
 			} else {
-				base = DRAM_CH1_SPARSE_BASE;
+				base = sd->dram_ch1_sparse_base;
 			}
 		}
 
@@ -133,7 +130,7 @@ static int dram_init(const struct board_data *bd)
 extern char __image_end;
 extern char _sbss;
 
-static int uncompress_piggy(void)
+static int uncompress_piggy(unsigned long dest)
 {
 	int ret;
 	void *out_pos;
@@ -141,7 +138,7 @@ static int uncompress_piggy(void)
 	pr_debug("Offset to uncompressed image: %p\n", &__image_end);
 	pr_info("Uncompressing next image... ");
 	ret = gunzip(&__image_end, &_sbss - &__image_end,
-		     (void *)CONFIG_NEXT_IMAGE_BASE, &out_pos);
+		     (void *)dest, &out_pos);
 	if (ret) {
 		pr_err("failed to decompress image\n");
 		return ret;
@@ -151,7 +148,7 @@ static int uncompress_piggy(void)
 
 	pr_debug("End of decompressor pointer: %p\n", out_pos);
 
-	flush_dcache_range(CONFIG_NEXT_IMAGE_BASE, (unsigned long)out_pos);
+	flush_dcache_range(dest, (unsigned long)out_pos);
 
 	return 0;
 }
@@ -160,6 +157,7 @@ void __noreturn main(const struct board_data *bd)
 {
 	const struct soc_data *sd = bd->soc_data;
 	struct board_data bd_dup;
+	unsigned long next_image_base;
 	int ret;
 
 	uart_soc_init(bd);
@@ -197,12 +195,14 @@ void __noreturn main(const struct board_data *bd)
 	if (ret)
 		goto die;
 
-	ret = uncompress_piggy();
+	next_image_base = sd->dram_base + CONFIG_NEXT_IMAGE_OFFSET;
+
+	ret = uncompress_piggy(next_image_base);
 	if (ret)
 		goto die;
 
-	pr_info("Jumping to next image (0x%x)\n", CONFIG_NEXT_IMAGE_BASE);
-	next_entry(CONFIG_NEXT_IMAGE_BASE);
+	pr_info("Jumping to next image (0x%lx)\n", next_image_base);
+	next_entry(next_image_base);
 
 die:
 	while (1)
