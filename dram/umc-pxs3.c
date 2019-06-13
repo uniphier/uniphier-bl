@@ -5,11 +5,12 @@
 // based on commit 40ca68de3bc947d49b7da6ad864ffb7cebcb2e0c of Diag
 
 #include <errno.h>
-#include <init.h>
+#include <board-data.h>
 #include <io.h>
 #include <printk.h>
 #include <sizes.h>
 #include <types.h>
+#include <umc.h>
 
 #include "ddr4phy-regs.h"
 #include "umc-legacy-regs.h"

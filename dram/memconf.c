@@ -3,11 +3,13 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
+#include <board-data.h>
 #include <errno.h>
 #include <init.h>
 #include <io.h>
 #include <printk.h>
 #include <sizes.h>
+#include <soc-data.h>
 
 #define SG_MEMCONF		(IOMEM(0x5f800400))
 

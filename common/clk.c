@@ -3,8 +3,7 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-#include <bits.h>
-#include <init.h>
+#include <clk.h>
 #include <io.h>
 
 #define SC_RSTCTRL_BASE		(IOMEM(0x61842000))

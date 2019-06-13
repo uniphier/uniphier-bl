@@ -3,10 +3,11 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-#include <compiler.h>
+#include <board-data.h>
 #include <entry.h>
-#include <init.h>
 #include <io.h>
+#include <soc-data.h>
+#include <umc.h>
 
 #define SC_PVTCTRL_BASE		(IOMEM(0x6184e000))
 

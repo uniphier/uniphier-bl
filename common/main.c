@@ -3,11 +3,16 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
+#include <board-data.h>
 #include <cache.h>
+#include <clk.h>
 #include <errno.h>
 #include <gunzip.h>
 #include <init.h>
+#include <pll.h>
+#include <pinctrl.h>
 #include <printk.h>
+#include <soc-data.h>
 #include <soc-info.h>
 #include <timer.h>
 #include <timestamp.h>

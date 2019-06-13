@@ -5,9 +5,11 @@
 
 #include <bitfield.h>
 #include <bits.h>
+#include <board-data.h>
 #include <delay.h>
-#include <init.h>
 #include <io.h>
+#include <pll.h>
+#include <soc-data.h>
 #include <utils.h>
 
 #define SC_PLLCTRL_BASE		(IOMEM(0x61841400))

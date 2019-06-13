@@ -3,8 +3,8 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-#include <init.h>
 #include <io.h>
+#include <pinctrl.h>
 
 #define SG_PINCTRL_BASE		(IOMEM(0x5f801000))
 #define SG_PINCTRL_PINMUX_BASE	((SG_PINCTRL_BASE) + 0x000)

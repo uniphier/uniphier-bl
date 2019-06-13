@@ -5,11 +5,12 @@
 // based on commit f870bad27b3dc212a2d952f78b5242fc03e601f2 of Diag
 
 #include <bits.h>
+#include <board-data.h>
 #include <bug.h>
 #include <errno.h>
-#include <init.h>
 #include <io.h>
 #include <printk.h>
+#include <umc.h>
 #include <utils.h>
 #include <sizes.h>
 

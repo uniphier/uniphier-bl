@@ -3,10 +3,12 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
-#include <compiler.h>
+#include <board-data.h>
 #include <entry.h>
-#include <init.h>
 #include <io.h>
+#include <pll.h>
+#include <soc-data.h>
+#include <umc.h>
 
 #define SC_CPU_GEAR_BASE	(IOMEM(0x61848000))
 #define SC_CA53_GEAR_SET	((SC_CPU_GEAR_BASE) + 0x84)

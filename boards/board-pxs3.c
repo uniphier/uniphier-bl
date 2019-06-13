@@ -3,8 +3,10 @@
 // Copyright (C) 2017 Socionext Inc.
 //   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
 
+#include <board-data.h>
 #include <entry.h>
-#include <init.h>
+#include <soc-data.h>
+#include <umc.h>
 
 static const struct soc_data pxs3_data = {
 	.soc_id = 0x35,
