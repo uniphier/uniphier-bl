@@ -12,5 +12,6 @@ struct board_data;
 int ld11_umc_init(const struct board_data *bd);
 int ld20_umc_init(const struct board_data *bd);
 int pxs3_umc_init(const struct board_data *bd);
+int nx1_umc_init(const struct board_data *bd);
 
 #endif /* __UMC_H__ */
