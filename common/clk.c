@@ -5,32 +5,29 @@
 
 #include <clk.h>
 #include <io.h>
+#include <soc-data.h>
 
 #define SC_RSTCTRL_BASE		(IOMEM(0x61842000))
-#define SC_RSTCTRL7		((SC_RSTCTRL_BASE) + 0x18)
-
 #define SC_CLKCTRL_BASE		(IOMEM(0x61842100))
-#define SC_CLKCTRL4		((SC_CLKCTRL_BASE) + 0x0c)
-#define SC_CLKCTRL7		((SC_CLKCTRL_BASE) + 0x18)
 
-void clk_enable_uart(unsigned int clk_bits)
+static void regmap_update(void __iomem *base, const struct regmap *regmap)
 {
+	void __iomem *reg;
 	u32 tmp;
 
-	tmp = readl(SC_CLKCTRL4);
-	tmp |= clk_bits;
-	writel(tmp, SC_CLKCTRL4);
+	reg = base + regmap->reg;
+
+	tmp = readl(reg);
+	tmp |= regmap->mask;
+	writel(tmp, reg);
 }
 
-void clk_enable_dram(unsigned int clk_bits, unsigned int rst_bits)
+void clk_enable(const struct regmap *regmap)
 {
-	u32 tmp;
+	regmap_update(SC_CLKCTRL_BASE, regmap);
+}
 
-	tmp = readl(SC_RSTCTRL7);
-	tmp |= rst_bits;
-	writel(tmp, SC_RSTCTRL7);
-
-	tmp = readl(SC_CLKCTRL7);
-	tmp |= clk_bits;
-	writel(tmp, SC_CLKCTRL7);
+void rst_deassert(const struct regmap *regmap)
+{
+	regmap_update(SC_RSTCTRL_BASE, regmap);
 }

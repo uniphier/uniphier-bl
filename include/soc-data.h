@@ -13,6 +13,11 @@ struct board_data;
 
 #define MAX_NR_UART_PORTS	4
 
+struct regmap {
+	unsigned int reg;
+	unsigned int mask;
+};
+
 struct pinmux {
 	unsigned int pin;
 	unsigned int mux;
@@ -20,13 +25,13 @@ struct pinmux {
 
 struct soc_data {
 	unsigned int soc_id;
-	unsigned int uart_clk_bits;
 	unsigned int uart_clk_rate;
+	struct regmap uart_clk_regmap;
 	struct pinmux uart_pinmux[MAX_NR_UART_PORTS];
 	unsigned long stack_base;
 	unsigned int timer_clk_rate;
-	unsigned int dram_rst_bits;
-	unsigned int dram_clk_bits;
+	struct regmap dram_rst_regmap;
+	struct regmap dram_clk_regmap;
 	unsigned int dram_default_freq;
 	unsigned int dram_default_width[MAX_NR_DRAM_CH];
 	int dram_have_ch2;

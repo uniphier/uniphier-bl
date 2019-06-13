@@ -7,7 +7,9 @@
 #ifndef __CLK_H__
 #define __CLK_H__
 
-void clk_enable_uart(unsigned int clk_bits);
-void clk_enable_dram(unsigned int clk_bits, unsigned int rst_bits);
+struct regmap;
+
+void clk_enable(const struct regmap *regmap);
+void rst_deassert(const struct regmap *regmap);
 
 #endif /* __CLK_H__ */

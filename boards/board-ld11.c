@@ -25,8 +25,8 @@ static int ld11_soc_init(const struct board_data *bd)
 
 static const struct soc_data ld11_data = {
 	.soc_id = 0x31,
-	.uart_clk_bits = 0x80,
 	.uart_clk_rate = 58823529,
+	.uart_clk_regmap = { .reg = 0x0c, .mask = 0x00000080 },
 	.uart_pinmux = {
 		{ .pin = 54, .mux = 0 },
 		{ .pin = 58, .mux = 1 },
@@ -35,8 +35,8 @@ static const struct soc_data ld11_data = {
 	},
 	.stack_base = 0x30014c00,
 	.timer_clk_rate = 50000000,
-	.dram_rst_bits = 0x00000003,
-	.dram_clk_bits = 0x00000003,
+	.dram_rst_regmap = { .reg = 0x18, .mask = 0x00000003 },
+	.dram_clk_regmap = { .reg = 0x18, .mask = 0x00000003 },
 	.dram_default_freq = 1600,
 	.dram_default_width = { 16, 16 },
 	.dram_have_ch2 = 0,

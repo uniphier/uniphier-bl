@@ -30,7 +30,7 @@ static void uart_soc_init(const struct soc_data *sd,
 
 	pinmux = &sd->uart_pinmux[bd->uart_port];
 	pinctrl_set_mux(pinmux->pin, pinmux->mux);
-	clk_enable_uart(sd->uart_clk_bits);
+	clk_enable(&sd->uart_clk_regmap);
 	uart_init(bd->uart_port, sd->uart_clk_rate);
 }
 
@@ -102,7 +102,8 @@ static int dram_init(const struct soc_data *sd, const struct board_data *bd)
 		return ret;
 	}
 
-	clk_enable_dram(sd->dram_clk_bits, sd->dram_rst_bits);
+	rst_deassert(&sd->dram_rst_regmap);
+	clk_enable(&sd->dram_clk_regmap);
 
 	ret = sd->umc_init(bd);
 	if (ret) {
