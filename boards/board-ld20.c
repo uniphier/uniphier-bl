@@ -5,6 +5,7 @@
 
 #include <board-data.h>
 #include <entry.h>
+#include <memconf.h>
 #include <io.h>
 #include <soc-data.h>
 #include <umc.h>
@@ -37,8 +38,8 @@ static const struct soc_data ld20_data = {
 	.dram_clk_regmap = { .reg = 0x18, .mask = 0x00010007 },
 	.dram_default_freq = 1866,
 	.dram_default_width = { 32, 32, 32 },
-	.dram_have_ch2 = 1,
 	.dpll = { 6, 7, 8 },
+	.memconf_init = memconf_3ch_init,
 	.umc_init = ld20_umc_init,
 	.soc_init = ld20_soc_init,
 };

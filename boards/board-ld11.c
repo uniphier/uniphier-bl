@@ -6,6 +6,7 @@
 #include <board-data.h>
 #include <entry.h>
 #include <io.h>
+#include <memconf.h>
 #include <pll.h>
 #include <soc-data.h>
 #include <umc.h>
@@ -39,8 +40,8 @@ static const struct soc_data ld11_data = {
 	.dram_clk_regmap = { .reg = 0x18, .mask = 0x00000003 },
 	.dram_default_freq = 1600,
 	.dram_default_width = { 16, 16 },
-	.dram_have_ch2 = 0,
 	.dpll = { 6, -1, -1 },
+	.memconf_init = memconf_2ch_init,
 	.umc_init = ld11_umc_init,
 	.soc_init = ld11_soc_init,
 };

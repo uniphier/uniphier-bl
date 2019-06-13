@@ -5,6 +5,7 @@
 
 #include <board-data.h>
 #include <entry.h>
+#include <memconf.h>
 #include <soc-data.h>
 #include <umc.h>
 
@@ -24,8 +25,8 @@ static const struct soc_data pxs3_data = {
 	.dram_clk_regmap = { .reg = 0x18, .mask = 0x00010007 },
 	.dram_default_freq = 2133,
 	.dram_default_width = { 32, 32, 32 },
-	.dram_have_ch2 = 1,
 	.dpll = { 8, 9, 10 },
+	.memconf_init = memconf_3ch_init,
 	.umc_init = pxs3_umc_init,
 };
 

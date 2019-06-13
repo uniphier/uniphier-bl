@@ -5,8 +5,8 @@
 
 #include <board-data.h>
 #include <errno.h>
-#include <init.h>
 #include <io.h>
+#include <memconf.h>
 #include <printk.h>
 #include <sizes.h>
 #include <soc-data.h>
@@ -46,7 +46,7 @@
 #define SG_MEMCONF_CH2_DISABLE		(0x1 << 21)
 #define SG_MEMCONF_SPARSEMEM		(0x1 << 4)
 
-int memconf_init(const struct board_data *bd, int have_ch2)
+static int memconf_init(const struct board_data *bd, bool have_ch2)
 {
 	u32 val = 0;
 	unsigned long size_per_word;
@@ -174,5 +174,20 @@ int memconf_init(const struct board_data *bd, int have_ch2)
 out:
 	writel(val, SG_MEMCONF);
 
+	return 0;
+}
+
+int memconf_2ch_init(const struct board_data *bd)
+{
+	return memconf_init(bd, false);
+}
+
+int memconf_3ch_init(const struct board_data *bd)
+{
+	return memconf_init(bd, true);
+}
+
+int memconf_dummy_init(const struct board_data *bd)
+{
 	return 0;
 }

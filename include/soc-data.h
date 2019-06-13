@@ -34,8 +34,8 @@ struct soc_data {
 	struct regmap dram_clk_regmap;
 	unsigned int dram_default_freq;
 	unsigned int dram_default_width[MAX_NR_DRAM_CH];
-	int dram_have_ch2;
 	int dpll[MAX_NR_DRAM_CH];
+	int (*memconf_init)(const struct board_data *); /* MEMCONF register */
 	int (*umc_init)(const struct board_data *); /* DRAM controller init */
 	int (*soc_init)(const struct board_data *); /* SoC-specific init */
 };
