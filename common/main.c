@@ -26,10 +26,7 @@
 static void uart_soc_init(const struct soc_data *sd,
 			  const struct board_data *bd)
 {
-	const struct pinmux *pinmux;
-
-	pinmux = &sd->uart_pinmux[bd->uart_port];
-	pinctrl_set_mux(pinmux->pin, pinmux->mux);
+	pinctrl_set_mux(&sd->uart_pinmux[bd->uart_port]);
 	clk_enable(&sd->uart_clk_regmap);
 	uart_init(bd->uart_port, sd->uart_clk_rate);
 }
