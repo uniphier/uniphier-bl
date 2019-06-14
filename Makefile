@@ -113,7 +113,8 @@ UNPH_CFLAGS	:= -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   $(CLANG_FLAGS)
 UNPH_ASFLAGS	:= -D__ASSEMBLY__ -mlittle-endian $(CLANG_FLAGS)
 UNPH_LDFLAGS	:= --gc-sections --build-id
-OBJCOPYFLAGS	:= -O binary -R .comment --strip-all
+# '-R .bss' is needed for the recent llvm-objcopy
+OBJCOPYFLAGS	:= -O binary -R .comment -R .bss --strip-all
 CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as
 
 ifdef CONFIG_PIE
