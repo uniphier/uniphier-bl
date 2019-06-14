@@ -118,7 +118,7 @@ OBJCOPYFLAGS	:= -O binary -R .comment -R .bss --strip-all
 CHECKFLAGS	:= -Wbitwise -Wno-return-void -Wcast-to-as
 
 ifdef CONFIG_PIE
-UNPH_LDFLAGS	+= -pie --no-dynamic-linker
+UNPH_LDFLAGS	+= -pie --no-dynamic-linker -z notext
 endif
 
 export CROSS_COMPILE AR AS CC CPP LD CHECK
