@@ -10,9 +10,9 @@
 
 static void __putc(char c)
 {
-	uart_putc(c);
 	if (c == '\n')
 		uart_putc('\r');
+	uart_putc(c);
 }
 
 static void __puts(const char *s)
