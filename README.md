@@ -7,7 +7,7 @@ and DRAM, this loader expands the next image into the DRAM, then hands the
 control over to it.  Typically, the next image is [Trusted Firmware-A] (TF-A)
 BL2 (at EL3) [1].
 
-[Trusted Firmware-A]: https://github.com/ARM-software/arm-trusted-firmware
+[Trusted Firmware-A]: https://www.trustedfirmware.org
 [1]: Trusted Firmware-A was originally called ARM Trusted Firmware.  It was
      renamed for consistency and disambiguation when Arm Ltd. introduced
      Trusted Firmware-M.  Historically, UniPhier BL was introduced to load BL1.
