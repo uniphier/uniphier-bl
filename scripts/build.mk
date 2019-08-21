@@ -87,7 +87,7 @@ quiet_cmd_cpp_lds_S = CPP     $@
 $(obj)/%.lds: $(src)/%.lds.S FORCE
 	$(call if_changed_dep,cpp_lds_S)
 
-# Rule to generate an intermediate .o file
+# Rule to generate an intermediate .a file
 # ---------------------------------------------------------------------------
 quiet_cmd_ar_link = AR      $@
       cmd_ar_link = rm -f $@; $(AR) rcPST $@ $(real-prereqs)
