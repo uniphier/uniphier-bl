@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 /*
- * Copyright (C) 2017-2019 Socionext Inc.
+ * Copyright (C) 2017-2020 Socionext Inc.
  *   Author: Masahiro Yamada <yamada.masahiro@socionext.com>
  */
 
@@ -13,10 +13,12 @@ struct board_data;
 
 #define MAX_NR_UART_PORTS	4
 
-struct regmap {
-	unsigned int reg;
-	unsigned int mask;
-};
+#define CLK_UART		0
+#define CLK_DRAM		1
+#define MAX_NR_CLKS		2
+
+#define RST_DRAM		0
+#define MAX_NR_RSTS		1
 
 struct pinmux {
 	unsigned int pin;
@@ -30,14 +32,19 @@ struct soc_data {
 	void __iomem *sysctrl_base;
 	void __iomem *uart_base;
 	unsigned int uart_clk_rate;
-	struct regmap uart_clk_regmap;
 	struct pinmux uart_pinmux[MAX_NR_UART_PORTS];
+	struct {
+		unsigned int reg;
+		unsigned int mask;
+	} clks[MAX_NR_CLKS];
+	struct {
+		unsigned int reg;
+		unsigned int mask;
+	} rsts[MAX_NR_RSTS];
 	unsigned long stack_base;
 	unsigned int timer_clk_rate;
 	unsigned long dram_base;
 	unsigned long dram_ch1_sparse_base;
-	struct regmap dram_rst_regmap;
-	struct regmap dram_clk_regmap;
 	unsigned int dram_default_freq;
 	unsigned int dram_default_width[MAX_NR_DRAM_CH];
 	int dpll[MAX_NR_DRAM_CH];

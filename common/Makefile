@@ -1,7 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
 obj-y			+= cache.o
-obj-y			+= clk.o
 obj-$(CONFIG_DEBUG)	+= debug.o
 obj-y			+= head.o
 obj-y			+= main.o
@@ -9,10 +8,10 @@ obj-y			+= memory-test.o
 obj-y			+= mbr.o
 obj-y			+= next-entry.o
 obj-y			+= pinctrl.o
-obj-y			+= pll.o
 obj-y			+= printk.o
 obj-y			+= soc-info.o
 obj-y			+= stack.o
+obj-y			+= sysctrl.o
 obj-y			+= timer.o
 obj-y			+= uart.o
 

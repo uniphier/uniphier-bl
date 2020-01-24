@@ -7,8 +7,8 @@
 #include <entry.h>
 #include <io.h>
 #include <memconf.h>
-#include <pll.h>
 #include <soc-data.h>
+#include <sysctrl.h>
 #include <umc.h>
 
 #define SC_CA53_GEAR_SET	0x8084
@@ -32,19 +32,23 @@ static const struct soc_data ld11_data = {
 	.sysctrl_base = IOMEM(0x61840000),
 	.uart_base = IOMEM(0x54006800),
 	.uart_clk_rate = 58823529,
-	.uart_clk_regmap = { .reg = 0x0c, .mask = 0x00000080 },
 	.uart_pinmux = {
 		{ .pin = 54, .mux = 0 },
 		{ .pin = 58, .mux = 1 },
 		{ .pin = 90, .mux = 1 },
 		{ .pin = 94, .mux = 1 },
 	},
+	.clks = {
+		[CLK_UART] = { .reg = 0x0c, .mask = 0x00000080 },
+		[CLK_DRAM] = { .reg = 0x18, .mask = 0x00000003 },
+	},
+	.rsts = {
+		[RST_DRAM] = { .reg = 0x18, .mask = 0x00000003 },
+	},
 	.stack_base = 0x30014c00,
 	.timer_clk_rate = 50000000,
 	.dram_base = 0x80000000,
 	.dram_ch1_sparse_base = 0xc0000000,
-	.dram_rst_regmap = { .reg = 0x18, .mask = 0x00000003 },
-	.dram_clk_regmap = { .reg = 0x18, .mask = 0x00000003 },
 	.dram_default_freq = 1600,
 	.dram_default_width = { 16, 16 },
 	.dpll = { 6, -1, -1 },

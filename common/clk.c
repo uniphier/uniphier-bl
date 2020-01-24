@@ -22,12 +22,14 @@ static void regmap_update(void __iomem *base, const struct regmap *regmap)
 	writel(tmp, reg);
 }
 
-void clk_enable(const struct soc_data *sd, const struct regmap *regmap)
+void clk_enable(const struct soc_data *sd, unsigned int id)
 {
+	BUG_ON(id >= ARRAY_SIZE(sd->clks));
 	regmap_update(sd->sysctrl_base + SC_CLKCTRL_BASE, regmap);
 }
 
 void rst_deassert(const struct soc_data *sd, const struct regmap *regmap)
 {
+	BUG_ON(id >= ARRAY_SIZE(sd->rsts));
 	regmap_update(sd->sysctrl_base + SC_RSTCTRL_BASE, regmap);
 }

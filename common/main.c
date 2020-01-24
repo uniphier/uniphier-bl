@@ -5,15 +5,14 @@
 
 #include <board-data.h>
 #include <cache.h>
-#include <clk.h>
 #include <errno.h>
 #include <gunzip.h>
 #include <init.h>
-#include <pll.h>
 #include <pinctrl.h>
 #include <printk.h>
 #include <soc-data.h>
 #include <soc-info.h>
+#include <sysctrl.h>
 #include <timer.h>
 #include <timestamp.h>
 #include <uart.h>
@@ -25,7 +24,7 @@ static void uart_soc_init(const struct board_data *bd)
 	const struct soc_data *sd = bd->soc_data;
 
 	pinctrl_set_mux(sd, &sd->uart_pinmux[bd->uart_port]);
-	clk_enable(sd, &sd->uart_clk_regmap);
+	clk_enable(sd, CLK_UART);
 	uart_init(sd, bd->uart_port);
 }
 
@@ -99,8 +98,8 @@ static int dram_init(const struct board_data *bd)
 		return ret;
 	}
 
-	rst_deassert(sd, &sd->dram_rst_regmap);
-	clk_enable(sd, &sd->dram_clk_regmap);
+	rst_deassert(sd, RST_DRAM);
+	clk_enable(sd, CLK_DRAM);
 
 	ret = sd->umc_init(bd);
 	if (ret) {
