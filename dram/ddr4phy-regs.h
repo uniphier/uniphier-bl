@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
 /*
- * Copyright (C) 2017 Socionext Inc.
+ * Copyright (C) 2017-2020 Socionext Inc.
  */
 
 #ifndef __DDR4PHY_REGS_H__
@@ -85,10 +85,15 @@
 #define PHY_DTPR4		(0x048 << (PHY_REG_SHIFT))
 #define PHY_DTPR5		(0x049 << (PHY_REG_SHIFT))
 #define PHY_DTPR6		(0x04a << (PHY_REG_SHIFT))
+#define PHY_SCHCR0		(0x05a << (PHY_REG_SHIFT))
+#define PHY_SCHCR1		(0x05b << (PHY_REG_SHIFT))
 #define PHY_MR0			(0x060 << (PHY_REG_SHIFT))
 #define PHY_MR1			(0x061 << (PHY_REG_SHIFT))
 #define PHY_MR2			(0x062 << (PHY_REG_SHIFT))
 #define PHY_MR3			(0x063 << (PHY_REG_SHIFT))
+#define PHY_MR4			(0x064 << (PHY_REG_SHIFT))
+#define PHY_MR5			(0x065 << (PHY_REG_SHIFT))
+#define PHY_MR6			(0x066 << (PHY_REG_SHIFT))
 #define PHY_DTCR0		(0x080 << (PHY_REG_SHIFT))
 #define PHY_DTCR1		(0x081 << (PHY_REG_SHIFT))
 #define PHY_DCUAR		(0x0c0 << (PHY_REG_SHIFT))
@@ -97,12 +102,18 @@
 #define PHY_DCULR		(0x0c3 << (PHY_REG_SHIFT))
 #define PHY_DCUTPR		(0x0c5 << (PHY_REG_SHIFT))
 #define PHY_DCUSR0		(0x0c6 << (PHY_REG_SHIFT))
+#define PHY_DCUSR0_RDONE	BIT(0)	/* Run Done */
+#define PHY_BISTRR		(0x100 << (PHY_REG_SHIFT))
+#define PHY_BISTAR1		(0x107 << (PHY_REG_SHIFT))
+#define PHY_BISTUDPR		(0x10b << (PHY_REG_SHIFT))
 #define PHY_RANKIDR		(0x137 << (PHY_REG_SHIFT))
 #define PHY_ACIOCR0		(0x140 << (PHY_REG_SHIFT))
 #define PHY_ACIOCR1		(0x141 << (PHY_REG_SHIFT))
 #define PHY_ACIOCR2		(0x142 << (PHY_REG_SHIFT))
 #define PHY_ACIOCR3		(0x143 << (PHY_REG_SHIFT))
 #define PHY_ACIOCR4		(0x144 << (PHY_REG_SHIFT))
+#define PHY_VTCR0		(0x14a << (PHY_REG_SHIFT))
+#define PHY_VTCR1		(0x14b << (PHY_REG_SHIFT))
 #define PHY_ACBDLR0		(0x150 << (PHY_REG_SHIFT))
 #define PHY_ACBDLR1		(0x151 << (PHY_REG_SHIFT))
 #define PHY_ACBDLR2		(0x152 << (PHY_REG_SHIFT))
@@ -126,6 +137,8 @@
 #define PHY_DXGCR2(dx)		((0x1c2 + 0x040 * (dx)) << (PHY_REG_SHIFT))
 #define PHY_DXGCR3(dx)		((0x1c3 + 0x040 * (dx)) << (PHY_REG_SHIFT))
 #define PHY_DXGCR4(dx)		((0x1c4 + 0x040 * (dx)) << (PHY_REG_SHIFT))
+#define PHY_DXGCR5(dx)		((0x1c5 + 0x040 * (dx)) << (PHY_REG_SHIFT))
+#define PHY_DXGCR6(dx)		((0x1c6 + 0x040 * (dx)) << (PHY_REG_SHIFT))
 #define PHY_DXBDLR2(dx)		((0x1d2 + 0x040 * (dx)) << (PHY_REG_SHIFT))
 #define PHY_DXLCDLR0(dx)	((0x1e0 + 0x040 * (dx)) << (PHY_REG_SHIFT))
 #define PHY_DXLCDLR1(dx)	((0x1e1 + 0x040 * (dx)) << (PHY_REG_SHIFT))
@@ -167,5 +180,18 @@
 #define PHY_DQSGX_SHIFT			6
 #define PHY_DQSGX_MASK			(GENMASK(PHY_DQSGX_WIDTH - 1, 0)  << \
 						PHY_DQSGX_SHIFT)
+
+#define PHY_SCHTRIG_WIDTH		4
+#define PHY_SCHTRIG_MASK		GENMASK(PHY_SCHTRIG_WIDTH - 1, 0)
+
+#define PHY_PGSR0_VERR_SHIFT		19
+#define PHY_PGSR0_ERR_WIDTH		12
+#define PHY_PGSR0_ERR_MASK		(GENMASK(PHY_PGSR0_ERR_WIDTH - 1, 0) << \
+						PHY_PGSR0_VERR_SHIFT)
+
+#define PHY_ODT_PU_SHIFT		24
+#define PHY_ODT_PU_WIDTH		8
+#define PHY_ODT_PU_MASK			(GENMASK(PHY_ODT_PU_WIDTH - 1, 0) << \
+						PHY_ODT_PU_SHIFT)
 
 #endif /* __DDR4PHY_REGS_H__ */
