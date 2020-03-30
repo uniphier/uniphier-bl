@@ -13,7 +13,7 @@
 #include <umc.h>
 
 #include "ddr4phy-regs.h"
-#include "umc-legacy-regs.h"
+#include "umc-pxs3-regs.h"
 #include "umc-scramble.h"
 
 #define DRAM_CH_NR	3
