@@ -87,14 +87,12 @@ CROSS_COMPILE	?= aarch64-linux-gnu-
 ifeq ($(CONFIG_LLVM),y)
 CLANG_FLAGS	:= --target=aarch64-linux-gnu
 AR		:= $(LLVM_DIR)llvm-ar
-AS		:= $(LLVM_DIR)clang
 CC		:= $(LLVM_DIR)clang
 CPP		:= $(CC) -E
 LD		:= $(LLVM_DIR)ld.lld
 OBJCOPY		:= $(LLVM_DIR)llvm-objcopy
 else
 AR		:= $(CROSS_COMPILE)ar
-AS		:= $(CROSS_COMPILE)as
 CC		:= $(CROSS_COMPILE)gcc
 CPP		:= $(CC) -E
 LD		:= $(CROSS_COMPILE)ld
