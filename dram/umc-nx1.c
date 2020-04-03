@@ -20,8 +20,8 @@
 /* PHY */
 #define PHY_RANK_NR	2
 
-static const int ddrphy_rof_pos_shift[DRAM_DX_NR] = {-20, -20, -20, -20};
-static const int ddrphy_rof_neg_shift[DRAM_DX_NR] = {-20, -20, -20, -20};
+static const int ddrphy_rof_pos_shift[DRAM_DX_NR] = {0, 0, 0, 0};
+static const int ddrphy_rof_neg_shift[DRAM_DX_NR] = {0, 0, 0, 0};
 
 static void ddrphy_maskwritel(u32 data, u32 mask, void __iomem *addr)
 {
@@ -152,7 +152,7 @@ static void ddrphy_ch_init(void __iomem *phy_base, int resume)
 		writel(0x00000000, phy_base + PHY_DXGCR2(i));
 		writel(0xF7FC0000, phy_base + PHY_DXGCR3(i));
 		writel(0x0E00000C, phy_base + PHY_DXGCR4(i));
-		writel(0x2F2F2F2F, phy_base + PHY_DXGCR5(i));
+		writel(0x19191919, phy_base + PHY_DXGCR5(i));
 		writel(0x09090909, phy_base + PHY_DXGCR6(i));
 	}
 
@@ -345,8 +345,8 @@ static bool ddrphy_training(void __iomem *phy_base, int resume)
 	writel(0x40400205, phy_base + PHY_DXGCR0(1));
 	writel(0x40400204, phy_base + PHY_DXGCR0(2));
 	writel(0x40400204, phy_base + PHY_DXGCR0(3));
-	writel(0x2F2F2F2F, phy_base + PHY_DXGCR5(0));
-	writel(0x2F2F2F2F, phy_base + PHY_DXGCR5(1));
+	writel(0x19191919, phy_base + PHY_DXGCR5(0));
+	writel(0x19191919, phy_base + PHY_DXGCR5(1));
 	writel(0x00010A31, phy_base + PHY_DTCR1);
 	writel(0x00000000, phy_base + PHY_BISTAR1);
 
@@ -370,8 +370,8 @@ static bool ddrphy_training(void __iomem *phy_base, int resume)
 	writel(0x40400204, phy_base + PHY_DXGCR0(1));
 	writel(0x40400205, phy_base + PHY_DXGCR0(2));
 	writel(0x40400205, phy_base + PHY_DXGCR0(3));
-	writel(0x2F2F2F2F, phy_base + PHY_DXGCR5(2));
-	writel(0x2F2F2F2F, phy_base + PHY_DXGCR5(3));
+	writel(0x19191919, phy_base + PHY_DXGCR5(2));
+	writel(0x19191919, phy_base + PHY_DXGCR5(3));
 	writel(0x00020A31, phy_base + PHY_DTCR1);
 	writel(0x00010001, phy_base + PHY_BISTAR1);
 
