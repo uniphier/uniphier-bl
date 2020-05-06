@@ -190,7 +190,7 @@ FIND_IGNORE := -name .git -prune -o
 quiet_cmd_clean = $(if $(wildcard $($2)),CLEAN   $(wildcard $($2)))
       cmd_clean = rm -rf $($2)
 
-clean-files := $(wildcard include/generated)
+clean-files := include/generated
 clean-dirs := $(addprefix _clean_,$(dir-y) $(dir-))
 PHONY += $(clean-dirs)
 $(clean-dirs):
