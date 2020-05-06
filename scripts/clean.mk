@@ -20,7 +20,7 @@ quiet_cmd_clean    = CLEAN   $(__clean-files)
 
 __clean: $(__subdirs)
 ifneq ($(strip $(__clean-files)),)
-	+$(call cmd,clean)
+	$(call cmd,clean)
 endif
 	@:
 
