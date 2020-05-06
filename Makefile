@@ -86,18 +86,17 @@ CROSS_COMPILE	?= aarch64-linux-gnu-
 
 ifeq ($(CONFIG_LLVM),y)
 CLANG_FLAGS	:= --target=aarch64-linux-gnu
-AR		:= $(LLVM_DIR)llvm-ar
-CC		:= $(LLVM_DIR)clang
-CPP		:= $(CC) -E
-LD		:= $(LLVM_DIR)ld.lld
-OBJCOPY		:= $(LLVM_DIR)llvm-objcopy
+AR		:= llvm-ar
+CC		:= clang
+LD		:= ld.lld
+OBJCOPY		:= llvm-objcopy
 else
 AR		:= $(CROSS_COMPILE)ar
 CC		:= $(CROSS_COMPILE)gcc
-CPP		:= $(CC) -E
 LD		:= $(CROSS_COMPILE)ld
 OBJCOPY		:= $(CROSS_COMPILE)objcopy
 endif
+CPP		:= $(CC) -E
 
 CHECK		:= sparse
 
