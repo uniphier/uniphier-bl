@@ -9,8 +9,8 @@
 
 /*
  * The first 512 bytes should form the MBR when the boot image is created for
- * the USB boot mode.  The struct mbr_tail represents byte 256-511 of the MBR.
- * The byte 256-259 is the SoC-specific signature (0xaa5555aa) for the USB boot.
+ * the USB/SD boot mode. The struct mbr_tail represents byte 256-511 of the MBR.
+ * The byte 256-259 is our special signature (0xaa5555aa) for the USB/SD boot.
  */
 
 struct __packed partition_table {
@@ -23,7 +23,7 @@ struct __packed partition_table {
 };
 
 struct __packed mbr_tail {
-	u8 usb_boot_sig[4];
+	u8 boot_sig[4];		/* checked by the Boot ROM */
 	u8 reserve[180];
 	le32 disk_id;
 	u8 reserve2[2];
@@ -32,7 +32,7 @@ struct __packed mbr_tail {
 };
 
 static const struct mbr_tail mbr_tail __used __section(.mbr) = {
-	.usb_boot_sig = {0xaa, 0x55, 0x55, 0xaa},
+	.boot_sig = {0xaa, 0x55, 0x55, 0xaa},
 	.disk_id = cpu_to_le32(0xdeadbeef),
 	.partition[0] = {
 		.start_chs = {0xfe, 0xff, 0xff},
