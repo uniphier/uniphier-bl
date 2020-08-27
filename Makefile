@@ -140,11 +140,6 @@ include/generated/version.h: FORCE
 PHONY += prepare
 prepare: include/generated/config.h include/generated/version.h
 
-dir-y		+= boards
-dir-y		+= common
-dir-y		+= dram
-dir-y		+= lib
-
 board-$(CONFIG_SOC_LD11)	+= ld11_ref ld11_global
 board-$(CONFIG_SOC_LD20)	+= ld20_ref ld20_global \
 				   ld21_ref ld21_global
@@ -153,7 +148,7 @@ board-$(CONFIG_SOC_NX1)		+= nx1_ref
 
 timestamp := common/timestamp.o
 lds := common/uniphier.lds
-objs := $(addsuffix /link.a, $(dir-y))
+objs := link.a
 elfs := $(patsubst %,bl_%.elf, $(board-y))
 bins := $(patsubst %,bl_%.bin, $(board-y))
 have-cmd-files := $(elfs) $(bins)
@@ -177,12 +172,11 @@ $(elfs): $(objs) $(timestamp) $(lds) FORCE
 $(timestamp): $(objs) $(lds)
 	$(Q)$(MAKE) $(build)=$(@D) $@
 
-$(objs): %/link.a: % ;
-$(lds): $(patsubst %/,%,$(dir $(lds))) ;
+link.a $(lds): descend
 
-PHONY += $(dir-y)
-$(dir-y): prepare
-	$(Q)$(MAKE) $(build)=$@
+PHONY += descend
+descend: prepare
+	$(Q)$(MAKE) $(build)=.
 
 FIND_IGNORE := -name .git -prune -o
 
@@ -190,12 +184,9 @@ quiet_cmd_clean = $(if $(wildcard $($2)),CLEAN   $(wildcard $($2)))
       cmd_clean = rm -rf $($2)
 
 clean-files := include/generated
-clean-dirs := $(addprefix _clean_,$(dir-y) $(dir-))
-PHONY += $(clean-dirs)
-$(clean-dirs):
-	$(Q)$(MAKE) $(clean)=$(patsubst _clean_%,%,$@)
 PHONY += clean
-clean: $(clean-dirs)
+clean:
+	$(Q)$(MAKE) $(clean)=.
 	$(call cmd,clean,clean-files)
 	@find . $(FIND_IGNORE) \
 		\( -name '*.[aios]' -o -name '*.elf' -o -name '*.bin' \

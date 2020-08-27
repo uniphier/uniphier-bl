@@ -6,7 +6,7 @@ PHONY := __clean
 __clean:
 
 include $(srctree)/scripts/common.mk
-include $(src)/Makefile
+include $(if $(wildcard $(src)/Build), $(src)/Build, $(src)/Makefile)
 
 __subdirs	:= $(subdir-y) $(subdir-) \
 		   $(patsubst %/,%,$(filter %/, $(obj-y) $(obj-)))

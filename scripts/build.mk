@@ -10,7 +10,7 @@ obj-y		:=
 
 include $(srctree)/scripts/common.mk
 include $(srctree)/config.mk
-include $(src)/Makefile
+include $(if $(wildcard $(src)/Build), $(src)/Build, $(src)/Makefile)
 
 subdir-y	+= $(patsubst %/,%,$(filter %/, $(obj-y)))
 obj-y		:= $(patsubst %/,%/link.a, $(obj-y))

@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+obj-y += boards/
+obj-y += common/
+obj-y += dram/
+obj-y += lib/
